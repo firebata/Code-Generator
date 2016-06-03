@@ -1,6 +1,6 @@
 # 自动生成服务端代码
-### 你可以
-1.  watch项目，因为还要完善
+### >你可以
+1.  >>watch项目，因为还要完善
 2.  fork项目，有bug和好建议，然后pull request给我
 3.  有问题，email我：firebata@gmail.com
 
