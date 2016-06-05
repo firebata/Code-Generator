@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 创建xml映射文件
  * @author zhangjh
  */
 public class MapperXmlCreator extends AbstractFileCreator {

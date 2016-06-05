@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ����mapperClass��
+ * 创建mapperClass
  *
  * @author zhangjh
  */

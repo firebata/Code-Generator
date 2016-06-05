@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Éú³Ébean
+ * åˆ›å»ºbean
  *
  * @author zhangjh
  */

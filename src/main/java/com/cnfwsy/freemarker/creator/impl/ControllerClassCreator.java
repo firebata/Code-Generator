@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ���ɿ��Ʋ�
+ * 创建controller
  *
  * @author zhangjh
  */

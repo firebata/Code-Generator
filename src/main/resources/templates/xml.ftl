@@ -16,7 +16,12 @@
     <sql id="searchInfoSql">
         id AS id,
         <#list keys as key>
-        ${propertiesAnColumns["${key}"]} AS ${key},
+            <#if !key_has_next>
+                ${propertiesAnColumns["${key}"]} AS ${key}
+            <#else>
+                ${propertiesAnColumns["${key}"]} AS ${key},
+            </#if>
+
         </#list>
     </sql>
 
@@ -67,9 +72,11 @@
             ${tableName}  a
         <set>
             <#list keys as key>
+            <#if key !="delFlag" && key !="createTime" && key !="id">
             <if test="${key} !=null and ${key} != ''">
                 ${propertiesAnColumns["${key}"]}  =<@mapperEl key/>,
             </if>
+            </#if>
             </#list>
         </set>
         WHERE
@@ -93,12 +100,16 @@
         ${tableName}
         (
         <#list keys as key>
-        ${propertiesAnColumns["${key}"]} ,
+            <#if propertiesAnColumns["${key}"] !="del_flag" && propertiesAnColumns["${key}"] !="create_time">
+                ${propertiesAnColumns["${key}"]}<#if key_has_next>,</#if>
+            </#if>
         </#list>)
         values (
             <#list keys as key>
-            <@mapperEl key/>,
-        </#list>)
+                <#if key !="delFlag" && key !="createTime">
+                    <@mapperEl key/><#if key_has_next>,</#if>
+                </#if>
+             </#list>)
     </insert>
 
 
