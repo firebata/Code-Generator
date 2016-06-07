@@ -2,7 +2,7 @@ package ${conf.base_package}.${conf.controller_package};
 <#assign beanName = table.beanName/>
 <#assign beanNameuncap_first = beanName?uncap_first/>
 <#assign implName = beanNameuncap_first+"ServiceImpl"/>
-import com.cnfwsy.core.action.BaseController;
+import com.cnfwsy.core.controller.BaseController;
 import com.cnfwsy.core.annotation.IgnoreSecurity;
 import com.cnfwsy.core.annotation.SystemControllerLog;
 import com.cnfwsy.core.bean.Response;
@@ -85,8 +85,7 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     @RequestMapping(value = "/${beanNameuncap_first}s", method = RequestMethod.GET)
     @IgnoreSecurity
     public Response search(HttpServletRequest request,@RequestBody ${beanName} ${beanNameuncap_first}) {
-         List<${beanName}> userInfos = ${implName}.searchInfos(${beanNameuncap_first});
-         Response response = buildRespone(userInfos);
+         Response response = buildSearchJsonMap(${beanNameuncap_first},request,${implName});
          return response;
      }
 

@@ -27,8 +27,7 @@ public class ${beanName}ServiceImpl extends CommonServiceImpl<${beanName}> imple
         }
 
         @Override
-        public List<${beanName}> searchInfos(${beanName} info) {
-
+        public List<${beanName}> searchInfos(BaseForm info) {
             List<${beanName}> resut = null;
             resut= super.searchInfos(info);
             return resut;

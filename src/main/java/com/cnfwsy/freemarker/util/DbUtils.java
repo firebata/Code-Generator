@@ -110,9 +110,9 @@ public class DbUtils {
                     // 字段处理
                     Map<String, String> columns = getAllColumns(metaData, tableName);// 表的所有字段
                     Set<String> packages = new HashSet<String>();
-                    Map<String,  Map<String, String>> pros = columns2Properties(columns, packages);// 字段转属性
-                    Map<String, String> properties =pros.get("properties");
-                    Map<String, String> propertiesAnColumns =pros.get("propertiesAnColumns");
+                    Map<String, Map<String, String>> pros = columns2Properties(columns, packages);// 字段转属性
+                    Map<String, String> properties = pros.get("properties");
+                    Map<String, String> propertiesAnColumns = pros.get("propertiesAnColumns");
 
                     // 主键处理(主键唯一)
                     String primaryKey = primaryKeyColumnName(metaData, tableName);
@@ -146,7 +146,7 @@ public class DbUtils {
      * @param columns
      * @return
      */
-    private Map<String,  Map<String, String>> columns2Properties(Map<String, String> columns, Set<String> packages) {
+    private Map<String, Map<String, String>> columns2Properties(Map<String, String> columns, Set<String> packages) {
         Map<String, String> properties = new HashMap<String, String>();
         Map<String, String> propertiesAnColumns = new HashMap<String, String>();
         for (Entry<String, String> entry : columns.entrySet()) {
@@ -155,11 +155,11 @@ public class DbUtils {
             String propertyName = Underline2CamelUtils.underline2Camel2(columnName);
             String propertyType = getFieldType(columnType, packages);
             properties.put(propertyName, propertyType);
-            propertiesAnColumns.put(propertyName,columnName);
+            propertiesAnColumns.put(propertyName, columnName);
         }
-        Map<String,  Map<String, String>> pros = new HashMap<>();
-        pros.put("properties",properties);
-        pros.put("propertiesAnColumns",propertiesAnColumns);
+        Map<String, Map<String, String>> pros = new HashMap<>();
+        pros.put("properties", properties);
+        pros.put("propertiesAnColumns", propertiesAnColumns);
         return pros;
     }
 
@@ -271,6 +271,8 @@ public class DbUtils {
         } else if (columnType.equals("bit") || columnType.equals("int") || columnType.equals("tinyint")
                 || columnType.equals("smallint")) // ||columnType.equals("bool")||columnType.equals("mediumint")
         {
+            return "int";
+        } else if (columnType.equals("int unsigned")) {
             return "int";
         } else if (columnType.equals("bigint unsigned")) {
             packages.add("import java.math.BigInteger;");
