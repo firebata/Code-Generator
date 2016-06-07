@@ -33,6 +33,11 @@ public abstract class AbstractFileCreator implements FileCreator {
 
     protected void createFile(boolean force, String fileName, Map<String, Object> root, Template temp) throws IOException, TemplateException {
         File file = new File(fileName);
+        String directoryPath = fileName.substring(0, fileName.lastIndexOf(separator));
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            file.mkdirs();
+        }
         logger.info(" file path =" + fileName);
         boolean needCreatFile = false;
         if (!file.exists()) {
