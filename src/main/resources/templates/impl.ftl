@@ -3,12 +3,11 @@ package ${conf.base_package}.${conf.service_package}.impl;
 <#assign beanName = table.beanName/>
 <#assign beanNameUncap_first = beanName?uncap_first/>
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 import com.cnfwsy.core.model.common.impl.CommonServiceImpl;
+import com.cnfwsy.core.bean.BaseForm;
 import ${conf.base_package}.${conf.bean_package}.${beanName};
 import ${conf.base_package}.${conf.service_package}.I${beanName}Service;
 import ${conf.base_package}.${conf.mapper_package}.${beanName}Mapper;

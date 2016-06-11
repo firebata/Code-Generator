@@ -113,7 +113,7 @@ public class DbUtils {
                     Map<String, Map<String, String>> pros = columns2Properties(columns, packages);// 字段转属性
                     Map<String, String> properties = pros.get("properties");
                     Map<String, String> propertiesAnColumns = pros.get("propertiesAnColumns");
-
+                    Map<String, String> insertPropertiesAnColumns = pros.get("insertPropertiesAnColumns");
                     // 主键处理(主键唯一)
                     String primaryKey = primaryKeyColumnName(metaData, tableName);
                     String primaryKeyProperty = Underline2CamelUtils.underline2Camel2(primaryKey);
@@ -130,6 +130,7 @@ public class DbUtils {
                     tableInfo.setPrimaryKey(primaryKeyMap);
                     tableInfo.setPackages(packages);
                     tableInfo.setPropertiesAnColumns(propertiesAnColumns);
+                    tableInfo.setInsertPropertiesAnColumns(insertPropertiesAnColumns);
 
                     tables.add(tableInfo);
                 }
@@ -149,6 +150,8 @@ public class DbUtils {
     private Map<String, Map<String, String>> columns2Properties(Map<String, String> columns, Set<String> packages) {
         Map<String, String> properties = new HashMap<String, String>();
         Map<String, String> propertiesAnColumns = new HashMap<String, String>();
+        Map<String, String> insertPropertiesAnColumns = new HashMap<String, String>();
+
         for (Entry<String, String> entry : columns.entrySet()) {
             String columnName = entry.getKey();// 字段名
             String columnType = entry.getValue();// 字段类型
@@ -156,11 +159,21 @@ public class DbUtils {
             String propertyType = getFieldType(columnType, packages);
             properties.put(propertyName, propertyType);
             propertiesAnColumns.put(propertyName, columnName);
+            if (!excludeInsertProperties(propertyName)) {
+                insertPropertiesAnColumns.put(propertyName, columnName);
+            }
         }
+
         Map<String, Map<String, String>> pros = new HashMap<>();
         pros.put("properties", properties);
         pros.put("propertiesAnColumns", propertiesAnColumns);
+        pros.put("insertPropertiesAnColumns", insertPropertiesAnColumns);
+
         return pros;
+    }
+
+    public boolean excludeInsertProperties(String propertyName) {
+        return "id".equals(propertyName) || "createTime".equals(propertyName) || "updateTime".equals(propertyName) || "delFlag".equals(propertyName);
     }
 
     /**

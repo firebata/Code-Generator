@@ -7,109 +7,121 @@ import java.util.Set;
  * 表对象
  *
  * @author zhangjh
- *
  */
 public class TableInfo {
-	/**
-	 * 表名
-	 */
-	private String tableName;
+    /**
+     * 表名
+     */
+    private String tableName;
 
-	/**
-	 * bean
-	 */
-	private String beanName;
+    /**
+     * bean
+     */
+    private String beanName;
 
-	/**
-	 * 表名
-	 */
-	private String tableDesc;
+    /**
+     * 表名
+     */
+    private String tableDesc;
 
-	/**
-	 * 主键映射
-	 */
-	private Map<String, String> primaryKey;
-	/**
-	 * 字段类型映射
-	 */
-	private Map<String, String> columns;
+    /**
+     * 主键映射
+     */
+    private Map<String, String> primaryKey;
+    /**
+     * 字段类型映射
+     */
+    private Map<String, String> columns;
 
-	/**
-	 * 属性,属性类型
-	 */
-	private Map<String, String> properties;
+    /**
+     * 属性,属性类型
+     */
+    private Map<String, String> properties;
 
-	/**
-	 * 属性,属性类型
-	 */
-	private Map<String, String> propertiesAnColumns;
+    /**
+     * 属性,属性类型
+     */
+    private Map<String, String> propertiesAnColumns;
 
-	/**
-	 * bean类导入的包
-	 */
-	private Set<String> packages;
+    /**
+     * 属性,属性类型
+     */
+    private Map<String, String> insertPropertiesAnColumns;
 
-	public String getTableName() {
-		return tableName;
-	}
+    /**
+     * bean类导入的包
+     */
+    private Set<String> packages;
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
+    public String getTableName() {
+        return tableName;
+    }
 
-	public String getTableDesc() {
-		return tableDesc;
-	}
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-	public void setTableDesc(String tableDesc) {
-		this.tableDesc = tableDesc;
-	}
+    public String getTableDesc() {
+        return tableDesc;
+    }
 
-	public Map<String, String> getPrimaryKey() {
-		return primaryKey;
-	}
+    public void setTableDesc(String tableDesc) {
+        this.tableDesc = tableDesc;
+    }
 
-	public void setPrimaryKey(Map<String, String> primaryKey) {
-		this.primaryKey = primaryKey;
-	}
+    public Map<String, String> getPrimaryKey() {
+        return primaryKey;
+    }
 
-	public Map<String, String> getColumns() {
-		return columns;
-	}
+    public void setPrimaryKey(Map<String, String> primaryKey) {
+        this.primaryKey = primaryKey;
+    }
 
-	public void setColumns(Map<String, String> columns) {
-		this.columns = columns;
-	}
+    public Map<String, String> getColumns() {
+        return columns;
+    }
 
-	public String getBeanName() {
-		return beanName;
-	}
+    public void setColumns(Map<String, String> columns) {
+        this.columns = columns;
+    }
 
-	public void setBeanName(String beanName) {
-		this.beanName = beanName;
-	}
+    public String getBeanName() {
+        return beanName;
+    }
 
-	public Map<String, String> getProperties() {
-		return properties;
-	}
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
+    }
 
-	public void setProperties(Map<String, String> properties) {
-		this.properties = properties;
-	}
+    public Map<String, String> getProperties() {
+        return properties;
+    }
 
-	public Set<String> getPackages() {
-		return packages;
-	}
+    public void setProperties(Map<String, String> properties) {
+        this.properties = properties;
+    }
 
-	public void setPackages(Set<String> packages) {
-		this.packages = packages;
-	}
+    public Set<String> getPackages() {
+        return packages;
+    }
 
-	public Map<String, String> getPropertiesAnColumns() {
-		return propertiesAnColumns;
-	}
+    public void setPackages(Set<String> packages) {
+        this.packages = packages;
+    }
 
-	public void setPropertiesAnColumns(Map<String, String> propertiesAnColumns) {
-		this.propertiesAnColumns = propertiesAnColumns;
-	}
+    public Map<String, String> getPropertiesAnColumns() {
+        return propertiesAnColumns;
+    }
+
+    public void setPropertiesAnColumns(Map<String, String> propertiesAnColumns) {
+        this.propertiesAnColumns = propertiesAnColumns;
+    }
+
+    public Map<String, String> getInsertPropertiesAnColumns() {
+        return insertPropertiesAnColumns;
+    }
+
+    public void setInsertPropertiesAnColumns(Map<String, String> insertPropertiesAnColumns) {
+        this.insertPropertiesAnColumns = insertPropertiesAnColumns;
+    }
 }

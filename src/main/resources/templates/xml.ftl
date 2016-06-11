@@ -5,23 +5,23 @@
 <#assign beanName = table.beanName/>
 <#assign tableName = table.tableName/>
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
+<#--<#macro batchMapperEl value>${r"#{"}${value}}</#batchMapperEl>-->
+
 <#assign bean = conf.base_package+"."+conf.bean_package+"."+beanName/>
 <#assign propertiesAnColumns = table.propertiesAnColumns/>
 <#assign keys = propertiesAnColumns?keys/>
 <#assign primaryKey = table.primaryKey/>
 <#assign keys2 = primaryKey?keys/>
+<#assign insertPropertiesAnColumns = table.insertPropertiesAnColumns/>
+<#assign keys3 = insertPropertiesAnColumns?keys/>
+
 
 <mapper namespace="${conf.base_package}.${conf.mapper_package}.${beanName}Mapper">
 
     <sql id="searchInfoSql">
         id AS id,
         <#list keys as key>
-            <#if !key_has_next>
-                ${propertiesAnColumns["${key}"]} AS ${key}
-            <#else>
-                ${propertiesAnColumns["${key}"]} AS ${key},
-            </#if>
-
+        ${propertiesAnColumns["${key}"]}<#if key_has_next>,</#if>
         </#list>
     </sql>
 
@@ -48,9 +48,9 @@
         FROM  ${tableName}
         where del_flag=0
         <#list keys as key>
-                <if test="${key} !=null and ${key} != ''">
-                    and  ${propertiesAnColumns["${key}"]}  =<@mapperEl key/>
-                </if>
+         <if test="${key} !=null and ${key} != ''">
+            and  ${propertiesAnColumns["${key}"]}  =<@mapperEl key/>
+         </if>
          </#list>
     </select>
 
@@ -71,10 +71,10 @@
         update
             ${tableName}  a
         <set>
-            <#list keys as key>
+            <#list keys3 as key>
             <#if key !="delFlag" && key !="createTime" && key !="id">
             <if test="${key} !=null and ${key} != ''">
-                ${propertiesAnColumns["${key}"]}  =<@mapperEl key/>,
+                ${propertiesAnColumns["${key}"]}  = <@mapperEl key/>,
             </if>
             </#if>
             </#list>
@@ -97,20 +97,22 @@
 
     <insert id="add">
         insert into
-        ${tableName}
-        (
-        <#list keys as key>
-            <#if propertiesAnColumns["${key}"] !="del_flag" && propertiesAnColumns["${key}"] !="create_time">
-                ${propertiesAnColumns["${key}"]}<#if key_has_next>,</#if>
-            </#if>
-        </#list>)
-        values (
-            <#list keys as key>
-                <#if key !="delFlag" && key !="createTime">
-                    <@mapperEl key/><#if key_has_next>,</#if>
-                </#if>
-             </#list>)
+        ${tableName}(<#list keys3 as key>${insertPropertiesAnColumns["${key}"]}<#if key_has_next>,</#if></#list>)
+        values (<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
     </insert>
 
+<#--
+    <insert id="batchAdd">
+            insert into
+            ${tableName}
+            (<#list keys as key>
+                <#if propertiesAnColumns["${key}"] !="del_flag" && propertiesAnColumns["${key}"] !="create_time" && propertiesAnColumns["${key}"] !="id"&& propertiesAnColumns["${key}"] !="update_time">${propertiesAnColumns["${key}"]}</#if><#if key_has_next>,</#if></#list>
+            )
+            values
+            <foreach collection="list" item="item" index="index" separator="," >
+               (<#list keys as key <#if key !="delFlag" && key !="createTime"&& key !="id"&& key !="updateTime"><@batchMapperEl key/></#if><#if key_has_next>,</#if></#list>)
+            </foreach>
+    </insert>
+-->
 
 </mapper>
