@@ -1,5 +1,6 @@
 package com.cnfwsy.freemarker.bean;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,13 +32,17 @@ public class TableInfo {
     /**
      * 字段类型映射
      */
-    private Map<String, String> columns;
+    private List<ColumnInfo> columns;
 
     /**
      * 属性,属性类型
      */
     private Map<String, String> properties;
 
+    /**
+     * 属性,属性类型
+     */
+    private List<BeanInfo> properties2;
     /**
      * 属性,属性类型
      */
@@ -61,6 +66,14 @@ public class TableInfo {
         this.tableName = tableName;
     }
 
+    public String getBeanName() {
+        return beanName;
+    }
+
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
+    }
+
     public String getTableDesc() {
         return tableDesc;
     }
@@ -77,20 +90,12 @@ public class TableInfo {
         this.primaryKey = primaryKey;
     }
 
-    public Map<String, String> getColumns() {
+    public List<ColumnInfo> getColumns() {
         return columns;
     }
 
-    public void setColumns(Map<String, String> columns) {
+    public void setColumns(List<ColumnInfo> columns) {
         this.columns = columns;
-    }
-
-    public String getBeanName() {
-        return beanName;
-    }
-
-    public void setBeanName(String beanName) {
-        this.beanName = beanName;
     }
 
     public Map<String, String> getProperties() {
@@ -101,12 +106,12 @@ public class TableInfo {
         this.properties = properties;
     }
 
-    public Set<String> getPackages() {
-        return packages;
+    public List<BeanInfo> getProperties2() {
+        return properties2;
     }
 
-    public void setPackages(Set<String> packages) {
-        this.packages = packages;
+    public void setProperties2(List<BeanInfo> properties2) {
+        this.properties2 = properties2;
     }
 
     public Map<String, String> getPropertiesAnColumns() {
@@ -123,5 +128,13 @@ public class TableInfo {
 
     public void setInsertPropertiesAnColumns(Map<String, String> insertPropertiesAnColumns) {
         this.insertPropertiesAnColumns = insertPropertiesAnColumns;
+    }
+
+    public Set<String> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Set<String> packages) {
+        this.packages = packages;
     }
 }

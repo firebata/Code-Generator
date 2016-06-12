@@ -31,14 +31,41 @@ public abstract class AbstractFileCreator implements FileCreator {
 
     }
 
-    protected void createFile(boolean force, String fileName, Map<String, Object> root, Template temp) throws IOException, TemplateException {
-        File file = new File(fileName);
-        String directoryPath = fileName.substring(0, fileName.lastIndexOf(separator));
-        File directory = new File(directoryPath);
+    /**
+     * @param filePath 文件路径
+     * @param root     data
+     * @param temp     模板
+     * @throws IOException
+     * @throws TemplateException
+     */
+    protected void createFile(String filePath, Map<String, Object> root, Template temp) throws IOException, TemplateException {
+        boolean force = conf.isForce();
+//        boolean prefix = conf.isPrefix();
+        String fileName = filePath.substring(filePath.lastIndexOf(separator) + 1);
+        String subPath;
+//        if (prefix) {
+//            String sub = filePath.substring(filePath.lastIndexOf(separator) + 1, filePath.lastIndexOf(separator) + 4).toLowerCase();//分模块存放
+//            String directoryPath = filePath.substring(0, filePath.lastIndexOf(separator));
+//            subPath = directoryPath + separator + sub;
+//        } else {
+//            File file = new File(filePath);
+//            subPath = filePath.substring(0, filePath.lastIndexOf(separator));
+//            File directory = new File(subPath);
+//            if (!directory.exists()) {
+//                file.mkdirs();
+//            }
+//        }
+
+
+        subPath = filePath.substring(0, filePath.lastIndexOf(separator));
+        File directory = new File(subPath);
         if (!directory.exists()) {
-            file.mkdirs();
+            directory.mkdirs();
         }
-        logger.info(" file path =" + fileName);
+
+
+        File file = new File(filePath);
+        logger.info(" file path =" + filePath);
         boolean needCreatFile = false;
         if (!file.exists()) {
             file.createNewFile();

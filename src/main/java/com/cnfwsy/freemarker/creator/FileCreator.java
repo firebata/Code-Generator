@@ -12,6 +12,6 @@ import java.io.IOException;
  */
 public interface FileCreator {
     String separator = File.separator;
-    void createFile(TableInfo tableInfo, Conf conf) throws IOException, TemplateException;
+    void createFile(TableInfo tableInfo) throws IOException, TemplateException;
 
 }

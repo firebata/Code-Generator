@@ -1,5 +1,5 @@
 <#import "base/date.ftl" as dt>
-package ${conf.base_package}.${conf.service_package}.impl;
+package ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.impl;
 <#assign beanName = table.beanName/>
 <#assign beanNameUncap_first = beanName?uncap_first/>
 import org.springframework.beans.factory.InitializingBean;
@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.cnfwsy.core.model.common.impl.CommonServiceImpl;
 import com.cnfwsy.core.bean.BaseForm;
-import ${conf.base_package}.${conf.bean_package}.${beanName};
-import ${conf.base_package}.${conf.service_package}.I${beanName}Service;
-import ${conf.base_package}.${conf.mapper_package}.${beanName}Mapper;
+import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${beanName};
+import ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.I${beanName}Service;
+import ${conf.base_package}.${conf.mapper_package}<#if prefixName??>.${prefixName}</#if>.${beanName}Mapper;
+import java.util.List;
 /**
 * 类说明:
 * Created by zhangjh on ${.now}

@@ -71,7 +71,7 @@ public class ExcuteMain {
         for (TableInfo tableInfo : tableInfos) {
             for (String module : modules) {
                 creator = SimpleFactory.create(module, conf);
-                creator.createFile(tableInfo, conf);
+                creator.createFile(tableInfo);
             }
         }
     }

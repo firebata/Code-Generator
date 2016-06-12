@@ -1,6 +1,7 @@
 package com.cnfwsy.freemarker.bean;
 
 import com.cnfwsy.freemarker.util.DbUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +24,32 @@ public class Conf {
     String tables;
     String needModules;
     List<String> modules;
-    String force;
+    boolean force;//重新生成文件
+    boolean prefix;//表名前缀
+
+    public static List getAllModules() {
+        return allModules;
+    }
+
+    public static void setAllModules(List allModules) {
+        Conf.allModules = allModules;
+    }
+
+    public boolean isForce() {
+        return force;
+    }
+
+    public void setForce(boolean force) {
+        this.force = force;
+    }
+
+    public boolean isPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(boolean prefix) {
+        this.prefix = prefix;
+    }
 
     public String getBase_package() {
         return base_package;
@@ -90,13 +116,6 @@ public class Conf {
         this.needModules = needModules;
     }
 
-    public String getForce() {
-        return force;
-    }
-
-    public void setForce(String force) {
-        this.force = force;
-    }
 
     public List<String> getModules() {
         List<String> modules = new ArrayList<>();
@@ -132,7 +151,8 @@ public class Conf {
         String controller_package = pro.getProperty("controller_package");
         String tables = pro.getProperty("tables");
         String needModules = pro.getProperty("needModules");
-        String force = pro.getProperty("force");
+        String forceStr = pro.getProperty("force");
+        String prefixStr = pro.getProperty("prefix");
         this.setBase_package(base_package);
         this.setBean_package(bean_package);
         this.setMapper_package(mapper_package);
@@ -141,28 +161,20 @@ public class Conf {
         this.setController_package(controller_package);
         this.setTables(tables);
         this.setNeedModules(needModules);
+        boolean force = false;
+        boolean prefix = true;
+        if (StringUtils.isNotBlank(forceStr) && (forceStr.equals("true") || forceStr.equals("false"))) {
+            force = Boolean.parseBoolean(forceStr);
+        }
+        if (StringUtils.isNotBlank(prefixStr) && (prefixStr.equals("true") || prefixStr.equals("false"))) {
+            prefix = Boolean.parseBoolean(prefixStr);
+        }
+
         this.setForce(force);
+        this.setPrefix(prefix);
 
         return this;
     }
 
-    public static void main(String[] args) {
-        Conf conf = new Conf();
-        String proPath = System.getProperty("user.dir") + "/main/java/";
-        URL path1 = conf.getClass().getResource("");
 
-        URL path2 = conf.getClass().getResource("/");
-
-        URL path3 = conf.getClass().getClassLoader().getResource("/");
-
-        URL path4 = ClassLoader.getSystemResource("");
-
-        URL path5 = Thread.currentThread().getContextClassLoader().getResource("");
-        System.out.println("proPath==>" + proPath.toString());
-        System.out.println("path1==>" + path1.toString());
-        System.out.println("path2==>" + path2.toString());
-        System.out.println("path3==>" + path3);
-        System.out.println("path4==>" + path4.toString());
-        System.out.println("path5==>" + path5.toString());
-    }
 }

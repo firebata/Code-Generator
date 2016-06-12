@@ -1,5 +1,5 @@
 <#-- bean template -->
-package ${conf.base_package}.${conf.bean_package};
+package ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>;
 import com.cnfwsy.core.bean.BaseForm;
 <#list table.packages as package>
 ${package}
@@ -10,12 +10,13 @@ ${package}
 */
 public class ${table.beanName} extends BaseForm{
 <#assign properties = table.properties/>
+<#assign properties2 = table.properties2/>
 <#assign keys = properties?keys/>
-<#list keys as key>
+<#list properties2 as bean>
     /**
-    *
+    *${bean.propertyDesc}
     */
-    private ${properties["${key}"]} ${key};
+    private ${bean.propertyType} ${bean.propertyName};
 </#list>
 
 <#list keys as key>

@@ -1,5 +1,7 @@
 package com.cnfwsy.freemarker.util;
 
+import com.cnfwsy.freemarker.bean.BeanInfo;
+import com.cnfwsy.freemarker.bean.ColumnInfo;
 import com.cnfwsy.freemarker.bean.TableInfo;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -105,15 +107,17 @@ public class DbUtils {
             TableInfo tableInfo = new TableInfo();
             String tableName = tableRet.getString("TABLE_NAME");// 表明
             String tableDesc = tableRet.getString("REMARKS");// 表注释
+            System.out.println("===tableName:" + tableName + "-tableDesc:" + tableDesc);
             for (String _tableName : tableNames) {
                 if (_tableName.equals("all") || tableName.trim().equals(_tableName)) {
                     // 字段处理
-                    Map<String, String> columns = getAllColumns(metaData, tableName);// 表的所有字段
+                    List<ColumnInfo> columns = getAllColumns(metaData, tableName);// 表的所有字段
                     Set<String> packages = new HashSet<String>();
-                    Map<String, Map<String, String>> pros = columns2Properties(columns, packages);// 字段转属性
-                    Map<String, String> properties = pros.get("properties");
-                    Map<String, String> propertiesAnColumns = pros.get("propertiesAnColumns");
-                    Map<String, String> insertPropertiesAnColumns = pros.get("insertPropertiesAnColumns");
+                    Map<String, Object> pros = columns2Properties(columns, packages);// 字段转属性
+                    Map<String, String> properties = (Map<String, String>) pros.get("properties");
+                    List<BeanInfo> properties2 = (List<BeanInfo>) pros.get("properties2");
+                    Map<String, String> propertiesAnColumns = (Map<String, String>) pros.get("propertiesAnColumns");
+                    Map<String, String> insertPropertiesAnColumns = (Map<String, String>) pros.get("insertPropertiesAnColumns");
                     // 主键处理(主键唯一)
                     String primaryKey = primaryKeyColumnName(metaData, tableName);
                     String primaryKeyProperty = Underline2CamelUtils.underline2Camel2(primaryKey);
@@ -127,6 +131,7 @@ public class DbUtils {
                     tableInfo.setColumns(columns);
                     tableInfo.setBeanName(beanName);
                     tableInfo.setProperties(properties);
+                    tableInfo.setProperties2(properties2);
                     tableInfo.setPrimaryKey(primaryKeyMap);
                     tableInfo.setPackages(packages);
                     tableInfo.setPropertiesAnColumns(propertiesAnColumns);
@@ -147,25 +152,33 @@ public class DbUtils {
      * @param columns
      * @return
      */
-    private Map<String, Map<String, String>> columns2Properties(Map<String, String> columns, Set<String> packages) {
+    private Map<String, Object> columns2Properties(List<ColumnInfo> columns, Set<String> packages) {
         Map<String, String> properties = new HashMap<String, String>();
+        List<BeanInfo> properties2 = new ArrayList<>();
         Map<String, String> propertiesAnColumns = new HashMap<String, String>();
         Map<String, String> insertPropertiesAnColumns = new HashMap<String, String>();
 
-        for (Entry<String, String> entry : columns.entrySet()) {
-            String columnName = entry.getKey();// 字段名
-            String columnType = entry.getValue();// 字段类型
+        for (ColumnInfo entry : columns) {
+            String columnName = entry.getColumnName();// 字段名
+            String columnType = entry.getColumnType();// 字段类型
+            String columnRemarks = entry.getColumnRemarks();// 字段类型
             String propertyName = Underline2CamelUtils.underline2Camel2(columnName);
             String propertyType = getFieldType(columnType, packages);
             properties.put(propertyName, propertyType);
+            BeanInfo beanInfo = new BeanInfo();
+            beanInfo.setPropertyName(propertyName);
+            beanInfo.setPropertyType(propertyType);
+            beanInfo.setPropertyDesc(columnRemarks);
+            properties2.add(beanInfo);
             propertiesAnColumns.put(propertyName, columnName);
             if (!excludeInsertProperties(propertyName)) {
                 insertPropertiesAnColumns.put(propertyName, columnName);
             }
         }
 
-        Map<String, Map<String, String>> pros = new HashMap<>();
+        Map<String, Object> pros = new HashMap<>();
         pros.put("properties", properties);
+        pros.put("properties2", properties2);
         pros.put("propertiesAnColumns", propertiesAnColumns);
         pros.put("insertPropertiesAnColumns", insertPropertiesAnColumns);
 
@@ -184,19 +197,25 @@ public class DbUtils {
      * @return
      * @throws SQLException
      */
-    public Map<String, String> getAllColumns(DatabaseMetaData metaData, String tableName) throws SQLException {
+    public List<ColumnInfo> getAllColumns(DatabaseMetaData metaData, String tableName) throws SQLException {
         String columnName;
         String columnType;
+        String remarks;
         ResultSet colRet = metaData.getColumns(null, "%", tableName, "%");
-        Map<String, String> columns = new HashMap<String, String>();
+        List<ColumnInfo> columns = new ArrayList<>();
         while (colRet.next()) {
             columnName = colRet.getString("COLUMN_NAME");
             columnType = colRet.getString("TYPE_NAME");
             int datasize = colRet.getInt("COLUMN_SIZE");
             int digits = colRet.getInt("DECIMAL_DIGITS");
             int nullable = colRet.getInt("NULLABLE");
-            columns.put(columnName, columnType);
-            System.out.println(columnName + " " + columnType + " " + datasize + " " + digits + " " + nullable);
+            remarks = colRet.getString("remarks");
+            ColumnInfo info = new ColumnInfo();
+            info.setColumnName(columnName);
+            info.setColumnType(columnType);
+            info.setColumnRemarks(remarks);
+            columns.add(info);
+            System.out.println(remarks + "-" + columnName + "-" + columnType + "-" + datasize + "-" + digits + "-" + nullable);
         }
         return columns;
     }

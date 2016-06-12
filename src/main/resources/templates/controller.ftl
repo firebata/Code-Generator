@@ -1,4 +1,4 @@
-package ${conf.base_package}.${conf.controller_package};
+package ${conf.base_package}.${conf.controller_package}<#if prefixName??>.${prefixName}</#if>;
 <#assign beanName = table.beanName/>
 <#assign beanNameuncap_first = beanName?uncap_first/>
 <#assign implName = beanNameuncap_first+"ServiceImpl"/>
@@ -6,8 +6,8 @@ import com.cnfwsy.core.controller.BaseController;
 import com.cnfwsy.core.annotation.IgnoreSecurity;
 import com.cnfwsy.core.annotation.SystemControllerLog;
 import com.cnfwsy.core.bean.Response;
-import ${conf.base_package}.${conf.bean_package}.${beanName};
-import ${conf.base_package}.${conf.service_package}.I${beanName}Service;
+import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${beanName};
+import ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.I${beanName}Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,7 +32,8 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     */
     @SystemControllerLog(description = "新增")
     @RequestMapping(value = "/${beanNameuncap_first}", method = RequestMethod.POST)
-        public Response create(@Valid @RequestBody ${beanName} ${beanNameuncap_first}) {
+    @IgnoreSecurity
+    public Response create(@Valid @RequestBody ${beanName} ${beanNameuncap_first}) {
         ${implName}.add(${beanNameuncap_first});
         Response response = buildResponea(${beanNameuncap_first});
         return response;
@@ -45,7 +46,7 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     */
     @SystemControllerLog(description = "查询详细信息")
     @RequestMapping(value = "/${beanNameuncap_first}/{businessKey}", method = RequestMethod.GET)
-    //    @IgnoreSecurity
+    @IgnoreSecurity
     public Response queryByBusinessKey(@PathVariable("businessKey") String businessKey) {
         ${beanName} ${beanNameuncap_first} =${implName}.queryInfoByNatrualKey(businessKey);
         Response response = buildResponea(${beanNameuncap_first});
@@ -59,7 +60,8 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     */
     @SystemControllerLog(description = "删除")
     @RequestMapping(value = "/${beanNameuncap_first}/{businessKey}", method = RequestMethod.DELETE)
-        public Response deleteByBusinessKey(@PathVariable("businessKey") String businessKey) {
+    @IgnoreSecurity
+    public Response deleteByBusinessKey(@PathVariable("businessKey") String businessKey) {
         ${beanName} ${beanNameuncap_first} = null;
         ${implName}.del(businessKey);
         Response response = buildResponea(${beanNameuncap_first});
@@ -72,19 +74,35 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     */
     @SystemControllerLog(description = "更新")
     @RequestMapping(value = "/${beanNameuncap_first}/{businessKey}", method = RequestMethod.PUT)
-        public Response update(@PathVariable("businessKey") String businessKey, @Valid @RequestBody ${beanName} ${beanNameuncap_first}) {
+    @IgnoreSecurity
+    public Response update(@PathVariable("businessKey") String businessKey,  /**@Valid*/ @RequestBody ${beanName} ${beanNameuncap_first}) {
         ${implName}.edit(${beanNameuncap_first});
         Response response = buildResponea(${beanNameuncap_first});
         return response;
     }
 
     /**
-    * @return 查询集合
-    */
-    @SystemControllerLog(description = "查询列表")
-    @RequestMapping(value = "/${beanNameuncap_first}s", method = RequestMethod.GET)
-    @IgnoreSecurity
-    public Response search(HttpServletRequest request,@RequestBody ${beanName} ${beanNameuncap_first}) {
+     *
+     * @param infos  List<${beanName}>
+     * @return
+     */
+     @SystemControllerLog(description = "批量更新")
+     @RequestMapping(value = "/${beanNameuncap_first}", method = RequestMethod.PUT)
+     @IgnoreSecurity
+     public Response updateBatch(@RequestBody List<${beanName}> infos) {
+         ${implName}.updateBatch(infos);
+         Response response = buildResponea(null);
+         return response;
+     }
+
+
+     /**
+     * @return 查询集合
+     */
+     @SystemControllerLog(description = "查询列表")
+     @RequestMapping(value = "/${beanNameuncap_first}s", method = RequestMethod.POST)
+     @IgnoreSecurity
+     public Response search(HttpServletRequest request, @RequestBody ${beanName} ${beanNameuncap_first}) {
          Response response = buildSearchJsonMap(${beanNameuncap_first},request,${implName});
          return response;
      }

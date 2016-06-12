@@ -35,18 +35,22 @@ public class BeanClassCreator extends AbstractFileCreator {
     }
 
     @Override
-    public void createFile(TableInfo tableInfo, Conf _conf) throws IOException, TemplateException {
-        boolean force = Boolean.parseBoolean(conf.getForce());
+    public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
         String ftl = "bean.ftl";
         String fileName = tableInfo.getBeanName() + ".java";
         String selfPath = conf.getBean_package();
-
+        String prefixName = tableInfo.getBeanName().substring(0, 3).toLowerCase();
         Map<String, Object> root = new HashMap<String, Object>();
         root.put("table", tableInfo);
         root.put("conf", conf);
+        if (conf.isPrefix()) {//有表名类别
+            root.put("prefixName", prefixName);
+        }
+
+
         Template temp = cfg.getTemplate(ftl);
-        fileName = javaPath + selfPath + separator + fileName;
-        createFile(force, fileName, root, temp);
+        fileName = javaPath + selfPath + separator + prefixName + separator + fileName;
+        createFile(fileName, root, temp);
 
 
     }

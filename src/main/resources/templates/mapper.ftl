@@ -1,7 +1,7 @@
-package ${conf.base_package}.${conf.mapper_package};
+package ${conf.base_package}.${conf.mapper_package}<#if prefixName??>.${prefixName}</#if>;
 
 import com.cnfwsy.core.mapper.CommonMapper;
-import ${conf.base_package}.${conf.bean_package}.${table.beanName};
+import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${table.beanName};
 import org.springframework.stereotype.Repository;
 
 /**
