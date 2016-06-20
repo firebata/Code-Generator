@@ -67,7 +67,7 @@
             and  `${propertiesAnColumns["${key}"]}`  =<@mapperEl key/>
         </if>
         </#list>
-        ORDER BY a.`update_time` desc <@mapperEl "limit"/>
+        limit #{start},#{pageSize}
     </select>
 
     <update id="updateInfo">

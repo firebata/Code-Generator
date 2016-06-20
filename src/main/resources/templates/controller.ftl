@@ -9,7 +9,6 @@ import com.cnfwsy.core.bean.Response;
 import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${beanName};
 import ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.I${beanName}Service;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,9 +33,11 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     @RequestMapping(value = "/${beanNameuncap_first}", method = RequestMethod.POST)
     @IgnoreSecurity
     public Response create(@Valid @RequestBody ${beanName} ${beanNameuncap_first}) {
+
         ${implName}.add(${beanNameuncap_first});
-        Response response = buildResponea(${beanNameuncap_first});
+        Response response = buildResponse(${beanNameuncap_first});
         return response;
+
     }
 
 
@@ -48,9 +49,11 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     @RequestMapping(value = "/${beanNameuncap_first}/{businessKey}", method = RequestMethod.GET)
     @IgnoreSecurity
     public Response queryByBusinessKey(@PathVariable("businessKey") String businessKey) {
+
         ${beanName} ${beanNameuncap_first} =${implName}.queryInfoByNatrualKey(businessKey);
-        Response response = buildResponea(${beanNameuncap_first});
+        Response response = buildResponse(${beanNameuncap_first});
         return response;
+
     }
 
 
@@ -62,10 +65,12 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     @RequestMapping(value = "/${beanNameuncap_first}/{businessKey}", method = RequestMethod.DELETE)
     @IgnoreSecurity
     public Response deleteByBusinessKey(@PathVariable("businessKey") String businessKey) {
+
         ${beanName} ${beanNameuncap_first} = null;
         ${implName}.del(businessKey);
-        Response response = buildResponea(${beanNameuncap_first});
+        Response response = buildResponse(${beanNameuncap_first});
         return response;
+
     }
 
     /**
@@ -76,9 +81,11 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
     @RequestMapping(value = "/${beanNameuncap_first}/{businessKey}", method = RequestMethod.PUT)
     @IgnoreSecurity
     public Response update(@PathVariable("businessKey") String businessKey,  /**@Valid*/ @RequestBody ${beanName} ${beanNameuncap_first}) {
+
         ${implName}.edit(${beanNameuncap_first});
-        Response response = buildResponea(${beanNameuncap_first});
+        Response response = buildResponse(${beanNameuncap_first});
         return response;
+
     }
 
     /**
@@ -90,9 +97,11 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
      @RequestMapping(value = "/${beanNameuncap_first}", method = RequestMethod.PUT)
      @IgnoreSecurity
      public Response updateBatch(@RequestBody List<${beanName}> infos) {
+
          ${implName}.updateBatch(infos);
-         Response response = buildResponea(null);
+         Response response = buildResponse(infos);
          return response;
+
      }
 
 
@@ -103,8 +112,10 @@ public class ${beanName}Controller extends BaseController<${beanName}> {
      @RequestMapping(value = "/${beanNameuncap_first}s", method = RequestMethod.POST)
      @IgnoreSecurity
      public Response search(HttpServletRequest request, @RequestBody ${beanName} ${beanNameuncap_first}) {
+
          Response response = buildSearchJsonMap(${beanNameuncap_first},request,${implName});
          return response;
+
      }
 
 }
