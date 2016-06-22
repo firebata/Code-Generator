@@ -67,7 +67,8 @@
             and  `${propertiesAnColumns["${key}"]}`  =<@mapperEl key/>
         </if>
         </#list>
-        limit #{start},#{pageSize}
+        where `del_flag`=0
+        limit <@mapperEl "start"/>,<@mapperEl "pageSize"/>
     </select>
 
     <update id="updateInfo">
