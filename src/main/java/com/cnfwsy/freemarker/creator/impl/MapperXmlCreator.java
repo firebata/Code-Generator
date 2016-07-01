@@ -47,7 +47,7 @@ public class MapperXmlCreator extends AbstractFileCreator {
             root.put("prefixName", prefixName);
         }
         Template temp = cfg.getTemplate(ftl);
-        fileName = resourcesbasePath + selfPath + separator + prefixName +separator+ fileName;
+        fileName = resourcesbasePath + selfPath + separator + prefixName + separator + fileName;
         createFile(fileName, root, temp);
     }
 

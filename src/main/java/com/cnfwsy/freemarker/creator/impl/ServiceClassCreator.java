@@ -47,7 +47,7 @@ public class ServiceClassCreator extends AbstractFileCreator {
             root.put("prefixName", prefixName);
         }
         Template temp = cfg.getTemplate(ftl);
-        fileName = javaPath + selfPath + separator + prefixName +separator+ fileName;
+        fileName = javaPath + selfPath + separator + prefixName + separator + fileName;
         createFile(fileName, root, temp);
     }
 
