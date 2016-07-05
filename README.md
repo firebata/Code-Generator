@@ -17,6 +17,8 @@
 
 ### 最后的补充
 1.  IDE建议用IntelliJ IDEA
+2.  微信
+![image](http://images2015.cnblogs.com/blog/278133/201607/278133-20160705104559655-1857735161.jpg)
 
 ### 代码举例
 #### controller
@@ -27,10 +29,8 @@
  */
  @RestController
  public class SysCityController extends BaseController<SysCity> {
-
      @Resource(name = "sysCityServiceImpl")
      private ISysCityService sysCityServiceImpl;
-
      /**
      * 新增
      *
@@ -44,8 +44,6 @@
          Response response = buildResponea(sysCity);
          return response;
      }
-
-
      /**
      * @param businessKey
      * @return
@@ -58,8 +56,6 @@
          Response response = buildResponea(sysCity);
          return response;
      }
-
-
      /**
      * @param businessKey
      * @return
@@ -73,7 +69,6 @@
          Response response = buildResponea(sysCity);
          return response;
      }
-
      /**
      * @param sysCity
      * @return
@@ -86,7 +81,6 @@
          Response response = buildResponea(sysCity);
          return response;
      }
-
      /**
       *
       * @param infos  List<SysCity>
@@ -100,8 +94,6 @@
           Response response = buildResponea(null);
           return response;
       }
-
-
       /**
       * @return 查询集合
       */
@@ -112,7 +104,6 @@
           Response response = buildSearchJsonMap(sysCity,request,sysCityServiceImpl);
           return response;
       }
-
  }
 ```
 #### bean
@@ -122,97 +113,41 @@
 * Created by zhangjh on 2016-6-11 22:58:51
 */
 public class SysCity extends BaseForm{
-    /**
-    *
-    */
     private String cityName;
-    /**
-    *
-    */
     private String state;
-    /**
-    *
-    */
     private int id;
-    /**
-    *
-    */
     private int cityId;
-    /**
-    *
-    */
     private int provinceId;
-
-    /**
-    *
-    */
     public  String getCityName(){
         return this.cityName;
     }
-
-    /**
-    *
-    */
     public  void setCityName(String cityName){
         this.cityName = cityName;
     }
-
-    /**
-    *
-    */
     public  String getState(){
         return this.state;
     }
-
-    /**
-    *
-    */
     public  void setState(String state){
         this.state = state;
     }
-
-    /**
-    *
-    */
     public  int getId(){
         return this.id;
     }
-
-    /**
-    *
-    */
     public  void setId(int id){
         this.id = id;
     }
-
-    /**
-    *
-    */
     public  int getCityId(){
         return this.cityId;
     }
-
-    /**
-    *
-    */
     public  void setCityId(int cityId){
         this.cityId = cityId;
     }
-
-    /**
-    *
-    */
     public  int getProvinceId(){
         return this.provinceId;
     }
-
-    /**
-    *
-    */
     public  void setProvinceId(int provinceId){
         this.provinceId = provinceId;
     }
-
 }
 ```
 #### mapperXml
@@ -222,10 +157,7 @@ public class SysCity extends BaseForm{
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
 <mapper namespace="com.cnfwsy.interfaces.mapper.SysCityMapper">
-
     <sql id="searchInfoSql">
         id AS id,
         city_name,
@@ -234,8 +166,6 @@ public class SysCity extends BaseForm{
         city_id,
         province_id
     </sql>
-
-
     <select id="queryInfo" resultType="com.cnfwsy.interfaces.bean.SysCity">
         select
         <include refid="searchInfoSql"/>
@@ -244,13 +174,11 @@ public class SysCity extends BaseForm{
             city_id = #{cityId}
         limit 1
     </select>
-
     <select id="listInfosCounts" resultType="Integer">
         SELECT COUNT(*)
         FROM  t_sys_city a
         where del_flag=0
     </select>
-
     <select id="listFilteredInfosCounts" resultType="Integer">
         SELECT COUNT(*)
         FROM  t_sys_city
@@ -271,7 +199,6 @@ public class SysCity extends BaseForm{
             and  province_id  =#{provinceId}
          </if>
     </select>
-
     <select id="searchInfos" resultType="com.cnfwsy.interfaces.bean.SysCity">
         SELECT
         <include refid="searchInfoSql"/>
@@ -292,9 +219,8 @@ public class SysCity extends BaseForm{
         <if test="provinceId !=null and provinceId != ''">
             and  province_id  =#{provinceId}
         </if>
-        ORDER BY a.update_time desc #{limit}
+        #{limit}
     </select>
-
     <update id="updateInfo">
         update
             t_sys_city  a
@@ -315,22 +241,17 @@ public class SysCity extends BaseForm{
         WHERE
             city_id = #{cityId}
     </update>
-
     <update id="del">
         update  t_sys_city a
         set  del_flag=1
         where
             city_id = #{cityId}
     </update>
-
-
     <insert id="add">
         insert into
         t_sys_city(city_name,state,city_id,province_id)
         values (#{cityName},#{state},#{cityId},#{provinceId})
     </insert>
-
-
 </mapper>
 
 ```
