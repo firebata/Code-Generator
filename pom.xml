@@ -30,8 +30,8 @@
 	<properties>
 		<mysql.version>5.1.18</mysql.version>
 		<project.build.sourceEncoding>utf8</project.build.sourceEncoding>
-		<javaLanguage.version>1.8</javaLanguage.version>
-		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+		<javaLanguage.version>1.7</javaLanguage.version>
+		<maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -87,6 +87,18 @@
 					<target>${javaLanguage.version}</target>
 				</configuration>
 			</plugin>
+			 <plugin>
+                  <groupId>org.eclipse.jetty</groupId>
+                  <artifactId>jetty-maven-plugin</artifactId>
+                  <version>9.2.15.v20160210</version>
+                  <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <war>${project.basedir}/target/code.war</war>
+                    <webApp>
+                          <contextPath>/code</contextPath>
+                    </webApp>
+                  </configuration>
+            </plugin>
 		</plugins>
 	</build>
 </project>

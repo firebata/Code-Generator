@@ -1,17 +1,38 @@
 package ${conf.base_package}.${conf.mapper_package}<#if prefixName??>.${prefixName}</#if>;
-
-import com.cnfwsy.core.mapper.CommonMapper;
+<#--
+import java.util.List;
+-->
+import com.hpxs.base.BaseDao;
 import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${table.beanName};
-import org.springframework.stereotype.Repository;
+
 
 /**
 * 类说明:
-* Created by zhangjh on ${.now}
+* Created by noname on ${.now}
 */
-@Repository("${(table.beanName + "Mapper")?uncap_first}")
-public interface ${table.beanName}Mapper  extends CommonMapper<${table.beanName}> {
+public interface ${table.beanName}Dao extends BaseDao<${table.beanName}> {
+
+<#--
 
 
+	${table.beanName} selectById(int id);
+	
+	int selectCount();
+	
+	int selectCountByCondition();
+	
+	List<${table.beanName}> selectByCondition();
+	
+	int updateById(${table.beanName} entity);
+    
+    int deleteById(int id);
 
+    int insert(${table.beanName} entity);
 
+    int insertList(List<${table.beanName}> entityList);
+
+    
+
+    
+-->
 }

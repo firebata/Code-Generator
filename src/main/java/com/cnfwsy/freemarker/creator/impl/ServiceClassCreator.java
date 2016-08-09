@@ -37,7 +37,8 @@ public class ServiceClassCreator extends AbstractFileCreator {
     @Override
     public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
         String ftl = "service.ftl";
-        String fileName = "I" + tableInfo.getBeanName() + "Service.java";
+        //String fileName = "I" + tableInfo.getBeanName() + "Service.java";
+        String fileName = tableInfo.getBeanName() + "Service.java";
         String selfPath = conf.getService_package();
         String prefixName = tableInfo.getBeanName().substring(0, 3).toLowerCase();
         Map<String, Object> root = new HashMap<String, Object>();

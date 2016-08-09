@@ -5,13 +5,14 @@
 <#assign beanName = table.beanName/>
 <#assign tableName = table.tableName/>
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
+<#macro mapperEl2 value>${r"${"}${value}}</#macro>
 <#--<#macro batchMapperEl value>${r"#{"}${value}}</#batchMapperEl>-->
 <#if prefixName??>
 <#assign bean = conf.base_package+"."+conf.bean_package+"."+prefixName+"."+beanName/>
-<#assign mapper = conf.base_package+"."+conf.mapper_package+"."+prefixName+"."+beanName+"Mapper"/>
+<#assign mapper = conf.base_package+"."+conf.mapper_package+"."+prefixName+"."+beanName+"Dao"/>
 <#else>
 <#assign bean = conf.base_package+"."+conf.bean_package+"."+beanName/>
-<#assign mapper = conf.base_package+"."+conf.mapper_package+"."+beanName+"Mapper"/>
+<#assign mapper = conf.base_package+"."+conf.mapper_package+"."+beanName+"Dao"/>
 </#if>
 <#assign propertiesAnColumns = table.propertiesAnColumns/>
 <#assign keys = propertiesAnColumns?keys/>
@@ -21,7 +22,7 @@
 <#assign keys3 = insertPropertiesAnColumns?keys/>
 <mapper namespace="${mapper}">
 
-    <sql id="searchInfoSql">
+    <sql id="selectBasicSql">
         `id` AS id,
         <#list keys as key>
         `${propertiesAnColumns["${key}"]}` AS  ${key}<#if key_has_next>,</#if>
@@ -29,9 +30,9 @@
     </sql>
 
 
-    <select id="queryInfo" resultType="${bean}">
+    <select id="selectById" resultType="${bean}">
         select
-        <include refid="searchInfoSql"/>
+        <include refid="selectBasicSql"/>
         FROM    ${tableName} a
         WHERE
         <#list keys2 as key>
@@ -40,16 +41,15 @@
         limit 1
     </select>
 
-    <select id="listInfosCounts" resultType="Integer">
+    <select id="selectCount" resultType="Integer">
         SELECT COUNT(*)
         FROM  ${tableName} a
-        where `del_flag`=0
     </select>
 
-    <select id="listFilteredInfosCounts" resultType="Integer">
+    <select id="selectCountByCondition" resultType="Integer">
         SELECT COUNT(*)
         FROM  ${tableName}
-        where `del_flag`=0
+        where 1=1 
         <#list keys as key>
          <if test="${key} !=null and ${key} != ''">
             and  `${propertiesAnColumns["${key}"]}`  =<@mapperEl key/>
@@ -57,11 +57,11 @@
          </#list>
     </select>
 
-    <select id="searchInfos" resultType="${bean}">
+    <select id="selectByCondition" resultType="${bean}">
         SELECT
-        <include refid="searchInfoSql"/>
+        <include refid="selectBasicSql"/>
         FROM  ${tableName} a
-        WHERE del_flag=0
+        WHERE 1=1
         <#list keys as key>
         <if test="${key} !=null and ${key} != ''">
             and  `${propertiesAnColumns["${key}"]}`  =<@mapperEl key/>
@@ -70,7 +70,7 @@
         limit <@mapperEl "start"/>,<@mapperEl "pageSize"/>
     </select>
 
-    <update id="updateInfo">
+    <update id="updateById">
         update
             ${tableName}  a
         <set>
@@ -88,9 +88,9 @@
         </#list>
     </update>
 
-    <update id="del">
+    <update id="deleteById">
         update  ${tableName} a
-        set  `del_flag`=1
+        set  `isDeleted`=1
         where
         <#list keys2 as key>
             `${key}` = <@mapperEl primaryKey["${key}"]/>
@@ -98,24 +98,49 @@
     </update>
 
 
-    <insert id="add">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into
         ${tableName}(<#list keys3 as key>`${insertPropertiesAnColumns["${key}"]}`<#if key_has_next>,</#if></#list>)
         values (<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
     </insert>
 
 <#--
-    <insert id="batchAdd">
-            insert into
-            ${tableName}
-            (<#list keys as key>
-                <#if propertiesAnColumns["${key}"] !="del_flag" && propertiesAnColumns["${key}"] !="create_time" && propertiesAnColumns["${key}"] !="id"&& propertiesAnColumns["${key}"] !="update_time">`${propertiesAnColumns["${key}"]}`</#if><#if key_has_next>,</#if></#list>
-            )
-            values
-            <foreach collection="list" item="item" index="index" separator="," >
-               (<#list keys as key <#if key !="delFlag" && key !="createTime"&& key !="id"&& key !="updateTime"><@batchMapperEl key/></#if><#if key_has_next>,</#if></#list>)
-            </foreach>
-    </insert>
--->
 
+-->
+    <insert id="insertList" useGeneratedKeys="true" keyProperty="id">
+    	insert into
+        ${tableName}
+        (<#list keys3 as key>`${insertPropertiesAnColumns["${key}"]}`<#if key_has_next>,</#if></#list>)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
+        </foreach>
+    </insert>
+
+
+	<sql id="limitsSql">
+		<if test="pageSql != null and pageSql != ''">
+            <@mapperEl2 "pageSql"/>
+		</if>
+	</sql>
+	<sql id="whereAll">
+		<where>
+			<if test="findContent != null and findContent !='' " >
+			and (
+				LOWER(`name`) like CONCAT("%",<@mapperEl "findContent"/>,"%")
+			)
+			</if>
+		</where>
+	</sql>
+	<select id="findAll" resultType="${bean}" >
+		select 
+			<include refid="selectBasicSql" />
+		from ${tableName} 
+			<include refid="whereAll"/>
+			<include refid="limitsSql" />
+	</select>
+	<select id="findCount" >
+		select count(id) from  ${tableName}
+		<include refid="whereAll" />
+	</select>
 </mapper>

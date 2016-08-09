@@ -1,14 +1,21 @@
 <#-- bean template -->
 package ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>;
-import com.cnfwsy.core.bean.BaseForm;
+import com.hpxs.base.BaseEntity;
+import java.io.Serializable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 <#list table.packages as package>
 ${package}
 </#list>
 /**
 * 实体bean
-* Created by zhangjh on ${.now}
+* Created by noname on ${.now}
 */
-public class ${table.beanName} extends BaseForm{
+public class ${table.beanName} extends BaseEntity implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 <#assign properties = table.properties/>
 <#assign properties2 = table.properties2/>
 <#assign keys = properties?keys/>
@@ -35,4 +42,8 @@ public class ${table.beanName} extends BaseForm{
     }
 
 </#list>
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 }

@@ -38,7 +38,7 @@ public class MapperClassCreator extends AbstractFileCreator {
     public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
 
         String ftl = "mapper.ftl";
-        String fileName = tableInfo.getBeanName() + "Mapper.java";
+        String fileName = tableInfo.getBeanName() + "Dao.java";
         String selfPath = conf.getMapper_package();
         String prefixName = tableInfo.getBeanName().substring(0, 3).toLowerCase();
         Map<String, Object> root = new HashMap<String, Object>();

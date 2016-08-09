@@ -61,7 +61,13 @@ public class DbUtils {
 			String user = pro.getProperty("jdbc_username");
 			String password = pro.getProperty("jdbc_password");
 			Class.forName(driverClass);
-			connection = DriverManager.getConnection(url, user, password);
+			//connection = DriverManager.getConnection(url, user, password);
+			Properties props =new Properties();
+			props.setProperty("user", user);
+            props.setProperty("password", password);
+            props.setProperty("remarks", "true"); //设置可以获取remarks信息 
+            props.setProperty("useInformationSchema", "true");//设置可以获取tables remarks信息
+			connection = DriverManager.getConnection(url, props);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -105,6 +111,7 @@ public class DbUtils {
 			TableInfo tableInfo = new TableInfo();
 			String tableName = tableRet.getString("TABLE_NAME");// 表明
 			String tableDesc = tableRet.getString("REMARKS");// 表注释
+			//String tableDesc = tableRet.getString("TABLE_COMMENT");// 表注释
 			System.out.println("===tableName:" + tableName + "-tableDesc:" + tableDesc);
 			for (String _tableName : tableNames) {
 				if (_tableName.equals("all") || tableName.trim().equals(_tableName)) {
@@ -193,8 +200,9 @@ public class DbUtils {
 	}
 
 	public boolean excludeInsertProperties(String propertyName) {
-		return "id".equals(propertyName) || "createTime".equals(propertyName) || "updateTime".equals(propertyName)
-				|| "delFlag".equals(propertyName);
+//		return "id".equals(propertyName) || "createTime".equals(propertyName) || "updateTime".equals(propertyName)
+//				|| "delFlag".equals(propertyName);
+		return "id".equals(propertyName);
 	}
 
 	/**
@@ -317,20 +325,24 @@ public class DbUtils {
 		} else if (columnType.equals("bit") || columnType.equals("int") || columnType.equals("tinyint")
 				|| columnType.equals("smallint")) // ||columnType.equals("bool")||columnType.equals("mediumint")
 		{
-			return "int";
-		} else if (columnType.equals("int unsigned")) {
-			return "int";
+			return "Integer";
+		} else if (columnType.equals("int unsigned")||columnType.equals("tinyint unsigned")) {
+			return "Integer";
 		} else if (columnType.equals("bigint unsigned") || columnType.equals("bigint")) {
 			packages.add("import java.math.BigInteger;");
 			return "BigInteger";
-		} else if (columnType.equals("float")) {
-			return "Float";
-		} else if (columnType.equals("double")) {
-			return "Double";
-		} else if (columnType.equals("decimal")) {
+		} else if (columnType.equals("float")||columnType.equals("float unsigned")) {
+			packages.add("import java.math.BigDecimal;");
+			return "BigDecimal";
+		} else if (columnType.equals("double")||columnType.equals("double unsigned")) {
+			packages.add("import java.math.BigDecimal;");
+			return "BigDecimal";
+		} else if (columnType.equals("decimal")||columnType.equals("double unsigned")) {
 			packages.add("import java.math.BigDecimal;");
 			return "BigDecimal";
 		}
+		logging.debug("error type is :"+columnType);
+		System.out.println("error type is :"+columnType);
 		return "ErrorType";
 	}
 

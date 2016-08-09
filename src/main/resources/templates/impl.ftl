@@ -2,56 +2,73 @@
 package ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.impl;
 <#assign beanName = table.beanName/>
 <#assign beanNameUncap_first = beanName?uncap_first/>
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import com.cnfwsy.core.model.common.impl.CommonServiceImpl;
-import com.cnfwsy.core.bean.BaseForm;
 import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${beanName};
-import ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.I${beanName}Service;
-import ${conf.base_package}.${conf.mapper_package}<#if prefixName??>.${prefixName}</#if>.${beanName}Mapper;
+import ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.${beanName}Service;
+import ${conf.base_package}.${conf.mapper_package}<#if prefixName??>.${prefixName}</#if>.${beanName}Dao;
 import java.util.List;
+import java.util.Map;
+
+import com.sojson.core.mybatis.BaseMybatisDao;
+import com.sojson.core.mybatis.page.Pagination;
+
 /**
 * 类说明:
-* Created by zhangjh on ${.now}
+* Created by noname on ${.now}
 */
-@Service("${beanNameUncap_first}ServiceImpl")
-public class ${beanName}ServiceImpl extends CommonServiceImpl<${beanName}> implements I${beanName}Service, InitializingBean {
-        @Resource(name = "${beanNameUncap_first}Mapper")
-        private ${beanName}Mapper ${beanNameUncap_first}Mapper;
+@Service("${beanNameUncap_first}Service")
+public class ${beanName}ServiceImpl extends BaseMybatisDao<${beanName}Dao> implements ${beanName}Service {
+	@Resource(name = "${beanNameUncap_first}Dao")
+    private ${beanName}Dao ${beanNameUncap_first}Dao;
 
-        @Override
-        public void afterPropertiesSet() {
-            commonMapper = ${beanNameUncap_first}Mapper;
-        }
+	@Override
+	public ${beanName} getById(int id){
+		return ${beanNameUncap_first}Dao.selectById(id);
+	}
+	
+	@Override
+	public int getCount(){
+		return ${beanNameUncap_first}Dao.selectCount();
+	}
+	
+	@Override
+	public int queryCount(${beanName} entity){
+		return ${beanNameUncap_first}Dao.selectCountByCondition(entity);
+	}
+	
+    @Override
+    public List<${beanName}> query(${beanName} entity) {
+        List<${beanName}> resut = null;
+        resut= ${beanNameUncap_first}Dao.selectByCondition(entity);
+        return resut;
+    }
+    
+    @Override
+    public int update(${beanName} entity) {
+        return ${beanNameUncap_first}Dao.updateById(entity);
+    }
 
-        @Override
-        public List<${beanName}> searchInfos(BaseForm info) {
-            List<${beanName}> resut = null;
-            resut= super.searchInfos(info);
-            return resut;
-        }
+    @Override
+    public int delete(int id) {
+        return ${beanNameUncap_first}Dao.deleteById(id);
+    }
 
+    @Override
+    public int add(${beanName} entity) {
+        return ${beanNameUncap_first}Dao.insert(entity);
+    }
 
-        @Override
-        public void add(${beanName} info) {
-            super.add(info);
-        }
+    @Override
+    public int addList(List<${beanName}> entityList) {
+        return ${beanNameUncap_first}Dao.insertList(entityList);
+    }
 
-        @Override
-        public void edit(${beanName} info) {
-            super.edit(info);
-        }
-
-        @Override
-        public ${beanName} queryInfoByNatrualKey(String natrualKey) {
-            return super.queryInfoByNatrualKey(natrualKey);
-        }
-
-        @Override
-        public void del(String natrualKey) {
-            super.del(natrualKey);
-        }
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public Pagination<${beanName}> findPage(Map<String,Object> resultMap, Integer pageNo,
+			Integer pageSize) {
+		return super.findPage(resultMap, pageNo, pageSize);
+	}
 }
