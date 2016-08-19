@@ -21,6 +21,8 @@ public class SimpleFactory {
             creator = ControllerClassCreator.getInstance(conf);
         } else if (module.equals("service")) {
             creator = ServiceClassCreator.getInstance(conf);
+        } else if (module.equals("serviceTest")) {
+            creator = ServiceTestClassCreator.getInstance(conf);
         } else if (module.equals("impl")) {
             creator = ServiceImplClassCreator.getInstance(conf);
         } else if (module.equals("mapper")) {
