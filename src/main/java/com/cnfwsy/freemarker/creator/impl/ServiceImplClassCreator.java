@@ -37,15 +37,15 @@ public class ServiceImplClassCreator extends AbstractFileCreator {
 	@Override
 	public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
 		String ftl = "impl.ftl";
-		String fileName = tableInfo.getBeanName() + "ServiceImpl.java";
-		String selfPath = conf.getServicePackage();
+		String fileName = tableInfo.getBeanName() + conf.getServiceName() + conf.getImplSuffix() + ".java";
+		String selfPath = conf.getServicePackage() + conf.getServiceImplPackage();
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put("table", tableInfo);
 		root.put("conf", conf);
 		Template temp = cfg.getTemplate(ftl);
 		String filePath = javaPath + selfPath;
 		if (conf.isPrefix()) {
-			filePath = filePath + separator + "impl" + separator + tableInfo.getPrefix();
+			filePath = filePath + separator + tableInfo.getPrefix();
 		}
 		fileName = filePath + separator + fileName;
 		createFile(fileName, root, temp);

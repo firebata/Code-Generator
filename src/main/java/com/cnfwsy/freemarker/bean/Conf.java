@@ -57,6 +57,13 @@ public class Conf {
 	
 	private String entitySuffix;
 	private String daoName;
+	private String implSuffix;
+	private String serviceImplPackage;
+	private String serviceName;
+	private String controllerName;
+	private String mapperXmlName;
+	private boolean serviceNeedI;
+	private String testSuffix;
 	
 	private String tables;
 	private String needModules;
@@ -147,6 +154,13 @@ public class Conf {
 		String entitySuffix = pro.getProperty("eneity_suffix");
 		String daoName = pro.getProperty("dao_name");
 		
+		String implSuffix = pro.getProperty("impl_suffix");
+		String serviceImplPackage = pro.getProperty("serviceimpl_package");
+		String serviceName = pro.getProperty("service_name");
+		String controllerName = pro.getProperty("controller_name");
+		String mapperXmlName = pro.getProperty("mapperxml_name");
+		String testSuffix = pro.getProperty("test_suffix");
+		
 		this.setBasePackage(basePackage);
 		this.setEntityPackage(entityPackage);
 		this.setDaoPackage(daoPackage);
@@ -156,11 +170,25 @@ public class Conf {
 		this.setControllerPackage(controllerPackage);
 		this.setTables(tables);
 		this.setNeedModules(needModules);
+		this.setEntitySuffix(entitySuffix);
+		this.setDaoName(daoName);
+		this.setImplSuffix(implSuffix);
+		this.setServiceImplPackage(serviceImplPackage);
+		this.setServiceName(serviceName);
+		this.setControllerName(controllerName);
+		this.setMapperXmlName(mapperXmlName);
+		this.setTestSuffix(testSuffix);
+		
+		String serviceNeedIStr = pro.getProperty("service_need_i");
+		
 		boolean force = false;
 		boolean prefix = true;
 		boolean underline2Camel = true;
-		this.setEntitySuffix(entitySuffix);
-		this.setDaoName(daoName);
+		boolean serviceNeedI = false;
+		
+		if (StringUtils.isNotBlank(serviceNeedIStr) && (serviceNeedIStr.equals("true") || serviceNeedIStr.equals("false"))) {
+			serviceNeedI = Boolean.parseBoolean(serviceNeedIStr);
+		}
 		if (StringUtils.isNotBlank(forceStr) && (forceStr.equals("true") || forceStr.equals("false"))) {
 			force = Boolean.parseBoolean(forceStr);
 		}
@@ -175,6 +203,7 @@ public class Conf {
 		this.setForce(force);
 		this.setPrefix(prefix);
 		this.setUnderline2Camel(underline2Camel);
+		this.setServiceNeedI(serviceNeedI);
 
 		return this;
 	}
@@ -262,5 +291,61 @@ public class Conf {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+	public String getImplSuffix() {
+		return implSuffix;
+	}
+
+	public void setImplSuffix(String implSuffix) {
+		this.implSuffix = implSuffix;
+	}
+
+	public String getServiceImplPackage() {
+		return serviceImplPackage;
+	}
+
+	public void setServiceImplPackage(String serviceImplPackage) {
+		this.serviceImplPackage = serviceImplPackage;
+	}
+
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
+	public String getControllerName() {
+		return controllerName;
+	}
+
+	public void setControllerName(String controllerName) {
+		this.controllerName = controllerName;
+	}
+
+	public String getMapperXmlName() {
+		return mapperXmlName;
+	}
+
+	public void setMapperXmlName(String mapperXmlName) {
+		this.mapperXmlName = mapperXmlName;
+	}
+
+	public boolean isServiceNeedI() {
+		return serviceNeedI;
+	}
+
+	public void setServiceNeedI(boolean serviceNeedI) {
+		this.serviceNeedI = serviceNeedI;
+	}
+
+	public String getTestSuffix() {
+		return testSuffix;
+	}
+
+	public void setTestSuffix(String testSuffix) {
+		this.testSuffix = testSuffix;
 	}
 }

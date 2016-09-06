@@ -16,40 +16,39 @@ import java.util.Map;
  * @author zhangjh
  */
 public class ControllerClassCreator extends AbstractFileCreator {
-    private static ControllerClassCreator creator;
+	private static ControllerClassCreator creator;
 
-    private ControllerClassCreator() {
-        super();
-    }
+	private ControllerClassCreator() {
+		super();
+	}
 
-    private ControllerClassCreator(Conf conf) {
-        super();
-        init(conf);
-    }
+	private ControllerClassCreator(Conf conf) {
+		super();
+		init(conf);
+	}
 
-    public static synchronized ControllerClassCreator getInstance(Conf conf) {
-        if (null == creator) {
-            creator = new ControllerClassCreator(conf);
-        }
-        return creator;
-    }
+	public static synchronized ControllerClassCreator getInstance(Conf conf) {
+		if (null == creator) {
+			creator = new ControllerClassCreator(conf);
+		}
+		return creator;
+	}
 
-    @Override
-    public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
-        String ftl = "controller.ftl";
-        String fileName = tableInfo.getBeanName() + "Controller.java";
-        String selfPath = conf.getControllerPackage();
-        Map<String, Object> root = new HashMap<String, Object>();
-        root.put("table", tableInfo);
-        root.put("conf", conf);
-        Template temp = cfg.getTemplate(ftl);
-        String filePath = javaPath + selfPath;
+	@Override
+	public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
+		String ftl = "controller.ftl";
+		String fileName = tableInfo.getBeanName() + conf.getControllerName() + ".java";
+		String selfPath = conf.getControllerPackage();
+		Map<String, Object> root = new HashMap<String, Object>();
+		root.put("table", tableInfo);
+		root.put("conf", conf);
+		Template temp = cfg.getTemplate(ftl);
+		String filePath = javaPath + selfPath;
 		if (conf.isPrefix()) {
 			filePath = filePath + separator + tableInfo.getPrefix();
 		}
 		fileName = filePath + separator + fileName;
-        createFile(fileName, root, temp);
-    }
-
+		createFile(fileName, root, temp);
+	}
 
 }

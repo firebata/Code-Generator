@@ -16,40 +16,40 @@ import java.util.Map;
  * @author zhangjh
  */
 public class ServiceClassCreator extends AbstractFileCreator {
-    private static ServiceClassCreator creator;
+	private static ServiceClassCreator creator;
 
-    private ServiceClassCreator() {
-        super();
-    }
+	private ServiceClassCreator() {
+		super();
+	}
 
-    private ServiceClassCreator(Conf conf) {
-        super();
-        init(conf);
-    }
+	private ServiceClassCreator(Conf conf) {
+		super();
+		init(conf);
+	}
 
-    public static synchronized ServiceClassCreator getInstance(Conf conf) {
-        if (null == creator) {
-            creator = new ServiceClassCreator(conf);
-        }
-        return creator;
-    }
+	public static synchronized ServiceClassCreator getInstance(Conf conf) {
+		if (null == creator) {
+			creator = new ServiceClassCreator(conf);
+		}
+		return creator;
+	}
 
-    @Override
-    public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
-        String ftl = "service.ftl";
-        //String fileName = "I" + tableInfo.getBeanName() + "Service.java";
-        String fileName = tableInfo.getBeanName() + "Service.java";
-        String selfPath = conf.getServicePackage();
-        Map<String, Object> root = new HashMap<String, Object>();
-        root.put("table", tableInfo);
-        root.put("conf", conf);
-        Template temp = cfg.getTemplate(ftl);
-        String filePath = javaPath + selfPath;
+	@Override
+	public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
+		String ftl = "service.ftl";
+		// String fileName = "I" + tableInfo.getBeanName() + "Service.java";
+		String fileName = tableInfo.getBeanName() + conf.getServiceName() + ".java";
+		String selfPath = conf.getServicePackage();
+		Map<String, Object> root = new HashMap<String, Object>();
+		root.put("table", tableInfo);
+		root.put("conf", conf);
+		Template temp = cfg.getTemplate(ftl);
+		String filePath = javaPath + selfPath;
 		if (conf.isPrefix()) {
 			filePath = filePath + separator + tableInfo.getPrefix();
 		}
 		fileName = filePath + separator + fileName;
-        createFile(fileName, root, temp);
-    }
+		createFile(fileName, root, temp);
+	}
 
 }

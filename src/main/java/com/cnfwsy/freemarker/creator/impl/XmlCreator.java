@@ -37,7 +37,7 @@ public class XmlCreator extends AbstractFileCreator {
     @Override
     public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
         String ftl = "xml.ftl";
-        String fileName = tableInfo.getBeanName() + "Mapper.xml";
+        String fileName = tableInfo.getBeanName() +conf.getMapperXmlName()+ ".xml";
         String selfPath = conf.getXmlPackage();
         Map<String, Object> root = new HashMap<String, Object>();
         root.put("table", tableInfo);

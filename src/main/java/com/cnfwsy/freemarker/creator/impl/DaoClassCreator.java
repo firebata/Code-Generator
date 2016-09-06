@@ -16,41 +16,40 @@ import java.util.Map;
  * @author zhangjh
  */
 public class DaoClassCreator extends AbstractFileCreator {
-    private static DaoClassCreator creator;
+	private static DaoClassCreator creator;
 
-    private DaoClassCreator() {
-        super();
-    }
+	private DaoClassCreator() {
+		super();
+	}
 
-    private DaoClassCreator(Conf conf) {
-        super();
-        init(conf);
-    }
+	private DaoClassCreator(Conf conf) {
+		super();
+		init(conf);
+	}
 
-    public static synchronized DaoClassCreator getInstance(Conf conf) {
-        if (null == creator) {
-            creator = new DaoClassCreator(conf);
-        }
-        return creator;
-    }
+	public static synchronized DaoClassCreator getInstance(Conf conf) {
+		if (null == creator) {
+			creator = new DaoClassCreator(conf);
+		}
+		return creator;
+	}
 
-    @Override
-    public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
+	@Override
+	public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
 
-        String ftl = "mapper.ftl";
-        String fileName = tableInfo.getBeanName() + "Dao.java";
-        String selfPath = conf.getDaoPackage();
-        Map<String, Object> root = new HashMap<String, Object>();
-        root.put("table", tableInfo);
-        root.put("conf", conf);
-        Template temp = cfg.getTemplate(ftl);
-        String filePath = javaPath + selfPath;
+		String ftl = "dao.ftl";
+		String fileName = tableInfo.getBeanName() + conf.getDaoName() + ".java";
+		String selfPath = conf.getDaoPackage();
+		Map<String, Object> root = new HashMap<String, Object>();
+		root.put("table", tableInfo);
+		root.put("conf", conf);
+		Template temp = cfg.getTemplate(ftl);
+		String filePath = javaPath + selfPath;
 		if (conf.isPrefix()) {
 			filePath = filePath + separator + tableInfo.getPrefix();
 		}
 		fileName = filePath + separator + fileName;
-        createFile(fileName, root, temp);
-    }
-
+		createFile(fileName, root, temp);
+	}
 
 }
