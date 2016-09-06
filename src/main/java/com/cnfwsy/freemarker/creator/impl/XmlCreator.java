@@ -15,21 +15,21 @@ import java.util.Map;
  *
  * @author zhangjh
  */
-public class MapperXmlCreator extends AbstractFileCreator {
-    private static MapperXmlCreator creator;
+public class XmlCreator extends AbstractFileCreator {
+    private static XmlCreator creator;
 
-    private MapperXmlCreator() {
+    private XmlCreator() {
         super();
     }
 
-    private MapperXmlCreator(Conf conf) {
+    private XmlCreator(Conf conf) {
         super();
         init(conf);
     }
 
-    public static synchronized MapperXmlCreator getInstance(Conf conf) {
+    public static synchronized XmlCreator getInstance(Conf conf) {
         if (null == creator) {
-            creator = new MapperXmlCreator(conf);
+            creator = new XmlCreator(conf);
         }
         return creator;
     }
@@ -38,16 +38,16 @@ public class MapperXmlCreator extends AbstractFileCreator {
     public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
         String ftl = "xml.ftl";
         String fileName = tableInfo.getBeanName() + "Mapper.xml";
-        String selfPath = conf.getMapperxml_package();
-        String prefixName = tableInfo.getBeanName().substring(0, 3).toLowerCase();
+        String selfPath = conf.getXmlPackage();
         Map<String, Object> root = new HashMap<String, Object>();
         root.put("table", tableInfo);
         root.put("conf", conf);
-        if (conf.isPrefix()) {//有表名类别
-            root.put("prefixName", prefixName);
-        }
         Template temp = cfg.getTemplate(ftl);
-        fileName = resourcesbasePath + selfPath + separator + prefixName + separator + fileName;
+        String filePath = resourcesbasePath + selfPath;
+		if (conf.isPrefix()) {
+			filePath = filePath + separator + tableInfo.getPrefix();
+		}
+		fileName = filePath + separator + fileName;
         createFile(fileName, root, temp);
     }
 

@@ -1,54 +1,58 @@
 package com.cnfwsy.freemarker.creator.impl;
 
-import com.cnfwsy.freemarker.bean.Conf;
-import com.cnfwsy.freemarker.bean.TableInfo;
-import com.cnfwsy.freemarker.creator.AbstractFileCreator;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cnfwsy.freemarker.bean.Conf;
+import com.cnfwsy.freemarker.bean.TableInfo;
+import com.cnfwsy.freemarker.creator.AbstractFileCreator;
+
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
 /**
- * 创建业务接口实例类
+ * 创建bean
  *
  * @author zhangjh
  */
-public class ServiceImplClassCreator extends AbstractFileCreator {
-	private static ServiceImplClassCreator creator;
+public class EntityClassCreator extends AbstractFileCreator {
+	
+	private static EntityClassCreator creator;
 
-	private ServiceImplClassCreator() {
+	private EntityClassCreator() {
 		super();
 	}
 
-	private ServiceImplClassCreator(Conf conf) {
+	private EntityClassCreator(Conf conf) {
 		super();
 		init(conf);
 	}
 
-	public static synchronized ServiceImplClassCreator getInstance(Conf conf) {
+	public static synchronized EntityClassCreator getInstance(Conf conf) {
 		if (null == creator) {
-			creator = new ServiceImplClassCreator(conf);
+			creator = new EntityClassCreator(conf);
 		}
 		return creator;
 	}
 
 	@Override
 	public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
-		String ftl = "impl.ftl";
-		String fileName = tableInfo.getBeanName() + "ServiceImpl.java";
-		String selfPath = conf.getServicePackage();
+		String ftl = "entity.ftl";
+		String fileName = tableInfo.getBeanName() + ".java";
+		String selfPath = conf.getEntityPackage();
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put("table", tableInfo);
 		root.put("conf", conf);
+
 		Template temp = cfg.getTemplate(ftl);
 		String filePath = javaPath + selfPath;
 		if (conf.isPrefix()) {
-			filePath = filePath + separator + "impl" + separator + tableInfo.getPrefix();
+			filePath = filePath + separator + tableInfo.getPrefix();
 		}
 		fileName = filePath + separator + fileName;
 		createFile(fileName, root, temp);
+
 	}
 
 }

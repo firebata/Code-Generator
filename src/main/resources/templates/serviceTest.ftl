@@ -1,13 +1,13 @@
 <#import "base/date.ftl" as dt>
-package ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.impl;
+package ${conf.basePackage}.${conf.servicePackage}.impl<#if table.prefix!="">.${table.prefix}</#if>;
 <#assign beanName = table.beanName/>
 <#assign beanNameUncap_first = beanName?uncap_first/>
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${beanName};
-import ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.${beanName}Service;
-import ${conf.base_package}.${conf.mapper_package}<#if prefixName??>.${prefixName}</#if>.${beanName}Dao;
+import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
+import ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
+import ${conf.basePackage}.${conf.daoPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Dao;
 import java.util.List;
 import java.util.Map;
 

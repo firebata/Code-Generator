@@ -7,12 +7,12 @@
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
 <#macro mapperEl2 value>${r"${"}${value}}</#macro>
 <#--<#macro batchMapperEl value>${r"#{"}${value}}</#batchMapperEl>-->
-<#if prefixName??>
-<#assign bean = conf.base_package+"."+conf.bean_package+"."+prefixName+"."+beanName/>
-<#assign mapper = conf.base_package+"."+conf.mapper_package+"."+prefixName+"."+beanName+"Dao"/>
+<#if table.prefix!="">
+<#assign bean = conf.basePackage+"."+conf.entityPackage+"."+table.prefix+"."+beanName/>
+<#assign mapper = conf.basePackage+"."+conf.daoPackage+"."+table.prefix+"."+beanName+"Dao"/>
 <#else>
-<#assign bean = conf.base_package+"."+conf.bean_package+"."+beanName/>
-<#assign mapper = conf.base_package+"."+conf.mapper_package+"."+beanName+"Dao"/>
+<#assign bean = conf.basePackage+"."+conf.entityPackage+"."+beanName/>
+<#assign mapper = conf.basePackage+"."+conf.daoPackage+"."+beanName+"Dao"/>
 </#if>
 <#assign propertiesAnColumns = table.propertiesAnColumns/>
 <#assign keys = propertiesAnColumns?keys/>
@@ -23,7 +23,6 @@
 <mapper namespace="${mapper}">
 
     <sql id="selectBasicSql">
-        `id` AS id,
         <#list keys as key>
         `${propertiesAnColumns["${key}"]}` AS  ${key}<#if key_has_next>,</#if>
         </#list>

@@ -1,4 +1,4 @@
-package ${conf.base_package}.${conf.controller_package}<#if prefixName??>.${prefixName}</#if>;
+package ${conf.basePackage}.${conf.controllerPackage}<#if table.prefix!="">.${table.prefix}</#if>;
 <#assign beanName = table.beanName/>
 <#assign beanNameuncap_first = beanName?uncap_first/>
 <#assign implName = beanNameuncap_first+"ServiceImpl"/>
@@ -10,8 +10,8 @@ import com.cnfwsy.core.bean.Response;
 -->
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${beanName};
-import ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>.${beanName}Service;
+import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
+import ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

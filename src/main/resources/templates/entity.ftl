@@ -1,10 +1,10 @@
 <#-- bean template -->
-package ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>;
+package ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>;
 import com.hpxs.base.BaseEntity;
 import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-<#list table.packages as package>
+<#list table.propTypePackages as package>
 ${package}
 </#list>
 /**
@@ -13,13 +13,14 @@ ${package}
 */
 public class ${table.beanName} extends BaseEntity implements Serializable {
     /**
-	 * 
+	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
 <#assign properties = table.properties/>
-<#assign properties2 = table.properties2/>
-<#assign keys = properties?keys/>
-<#list properties2 as bean>
+<#assign propInfoMap = table.propInfoMap/>
+<#assign allPropInfo = table.allPropInfo/>
+<#assign keys = propInfoMap?keys/>
+<#list allPropInfo as bean>
     /**
     *${bean.propertyDesc}
     */
@@ -28,14 +29,14 @@ public class ${table.beanName} extends BaseEntity implements Serializable {
 
 <#list keys as key>
     /**
-    *
+    *	获取${propInfoMap["${key}"].propertyDesc}
     */
     public  ${properties["${key}"]} get${key?cap_first}(){
         return this.${key};
     }
 
     /**
-    *
+    *	设置${propInfoMap["${key}"].propertyDesc}
     */
     public  void set${key?cap_first}(${properties["${key}"]} ${key}){
         this.${key} = ${key};

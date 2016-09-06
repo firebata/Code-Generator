@@ -39,16 +39,16 @@ public class ServiceClassCreator extends AbstractFileCreator {
         String ftl = "service.ftl";
         //String fileName = "I" + tableInfo.getBeanName() + "Service.java";
         String fileName = tableInfo.getBeanName() + "Service.java";
-        String selfPath = conf.getService_package();
-        String prefixName = tableInfo.getBeanName().substring(0, 3).toLowerCase();
+        String selfPath = conf.getServicePackage();
         Map<String, Object> root = new HashMap<String, Object>();
         root.put("table", tableInfo);
         root.put("conf", conf);
-        if (conf.isPrefix()) {//有表名类别
-            root.put("prefixName", prefixName);
-        }
         Template temp = cfg.getTemplate(ftl);
-        fileName = javaPath + selfPath + separator + prefixName + separator + fileName;
+        String filePath = javaPath + selfPath;
+		if (conf.isPrefix()) {
+			filePath = filePath + separator + tableInfo.getPrefix();
+		}
+		fileName = filePath + separator + fileName;
         createFile(fileName, root, temp);
     }
 

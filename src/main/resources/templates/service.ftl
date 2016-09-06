@@ -1,7 +1,7 @@
-package ${conf.base_package}.${conf.service_package}<#if prefixName??>.${prefixName}</#if>;
+package ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>;
 <#assign beanName = table.beanName/>
 import com.hpxs.base.BaseService;
-import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${beanName};
+import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
 
 /**
 * 类说明:

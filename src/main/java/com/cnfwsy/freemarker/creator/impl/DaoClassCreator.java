@@ -6,53 +6,50 @@ import com.cnfwsy.freemarker.creator.AbstractFileCreator;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 创建bean
+ * 创建mapperClass
  *
  * @author zhangjh
  */
-public class BeanClassCreator extends AbstractFileCreator {
-    private static BeanClassCreator creator;
+public class DaoClassCreator extends AbstractFileCreator {
+    private static DaoClassCreator creator;
 
-    private BeanClassCreator() {
+    private DaoClassCreator() {
         super();
     }
 
-    private BeanClassCreator(Conf conf) {
+    private DaoClassCreator(Conf conf) {
         super();
         init(conf);
     }
 
-    public static synchronized BeanClassCreator getInstance(Conf conf) {
+    public static synchronized DaoClassCreator getInstance(Conf conf) {
         if (null == creator) {
-            creator = new BeanClassCreator(conf);
+            creator = new DaoClassCreator(conf);
         }
         return creator;
     }
 
     @Override
     public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
-        String ftl = "bean.ftl";
-        String fileName = tableInfo.getBeanName() + ".java";
-        String selfPath = conf.getBean_package();
-        String prefixName = tableInfo.getBeanName().substring(0, 3).toLowerCase();
+
+        String ftl = "mapper.ftl";
+        String fileName = tableInfo.getBeanName() + "Dao.java";
+        String selfPath = conf.getDaoPackage();
         Map<String, Object> root = new HashMap<String, Object>();
         root.put("table", tableInfo);
         root.put("conf", conf);
-        if (conf.isPrefix()) {//有表名类别
-            root.put("prefixName", prefixName);
-        }
-
-
         Template temp = cfg.getTemplate(ftl);
-        fileName = javaPath + selfPath + separator + prefixName + separator + fileName;
+        String filePath = javaPath + selfPath;
+		if (conf.isPrefix()) {
+			filePath = filePath + separator + tableInfo.getPrefix();
+		}
+		fileName = filePath + separator + fileName;
         createFile(fileName, root, temp);
-
-
     }
 
 

@@ -1,9 +1,9 @@
-package ${conf.base_package}.${conf.mapper_package}<#if prefixName??>.${prefixName}</#if>;
+package ${conf.basePackage}.${conf.daoPackage}<#if table.prefix!="">.${table.prefix}</#if>;
 <#--
 import java.util.List;
 -->
 import com.hpxs.base.BaseDao;
-import ${conf.base_package}.${conf.bean_package}<#if prefixName??>.${prefixName}</#if>.${table.beanName};
+import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${table.beanName};
 
 
 /**

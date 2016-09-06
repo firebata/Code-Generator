@@ -41,7 +41,7 @@ public abstract class AbstractFileCreator implements FileCreator {
     protected void createFile(String filePath, Map<String, Object> root, Template temp) throws IOException, TemplateException {
         boolean force = conf.isForce();
 //        boolean prefix = conf.isPrefix();
-        String fileName = filePath.substring(filePath.lastIndexOf(separator) + 1);
+        //String fileName = filePath.substring(filePath.lastIndexOf(separator) + 1);
         String subPath;
 //        if (prefix) {
 //            String sub = filePath.substring(filePath.lastIndexOf(separator) + 1, filePath.lastIndexOf(separator) + 4).toLowerCase();//分模块存放
@@ -87,7 +87,7 @@ public abstract class AbstractFileCreator implements FileCreator {
     public static void init(Conf _conf) {
         if (conf == null) {
             conf = _conf;
-            javaPath = javabasePath + conf.getBase_package().replace(".", separator) + separator;
+            javaPath = javabasePath + conf.getBasePackage().replace(".", separator) + separator;
         }
     }
 }

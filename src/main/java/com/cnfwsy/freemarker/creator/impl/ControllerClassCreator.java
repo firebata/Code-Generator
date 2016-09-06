@@ -38,16 +38,16 @@ public class ControllerClassCreator extends AbstractFileCreator {
     public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
         String ftl = "controller.ftl";
         String fileName = tableInfo.getBeanName() + "Controller.java";
-        String selfPath = conf.getController_package();
-        String prefixName = tableInfo.getBeanName().substring(0, 3).toLowerCase();
+        String selfPath = conf.getControllerPackage();
         Map<String, Object> root = new HashMap<String, Object>();
         root.put("table", tableInfo);
         root.put("conf", conf);
-        if (conf.isPrefix()) {//有表名类别
-            root.put("prefixName", prefixName);
-        }
         Template temp = cfg.getTemplate(ftl);
-        fileName = javaPath + selfPath + separator + prefixName + separator + fileName;
+        String filePath = javaPath + selfPath;
+		if (conf.isPrefix()) {
+			filePath = filePath + separator + tableInfo.getPrefix();
+		}
+		fileName = filePath + separator + fileName;
         createFile(fileName, root, temp);
     }
 
