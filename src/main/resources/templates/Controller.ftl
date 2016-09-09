@@ -13,25 +13,24 @@ import org.springframework.ui.ModelMap;
 import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
 import ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
 import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 <#--
 import javax.validation.Valid;
 -->
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
 * 接口层
 * Created by noname on ${.now}
 */
+@Controller
 @RequestMapping("/${beanNameuncap_first}")
 public class ${beanName}Controller extends BaseController {
 
 	private static final String BASE_PATH = "${beanNameuncap_first}/";
 
-    @Resource(name = "${serviceName}")
+    @Autowired
     private ${beanName}Service ${serviceName};
 
 <#--

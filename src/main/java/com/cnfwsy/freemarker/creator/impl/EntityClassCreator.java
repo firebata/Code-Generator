@@ -1,15 +1,9 @@
 package com.cnfwsy.freemarker.creator.impl;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.cnfwsy.freemarker.bean.Conf;
+import com.cnfwsy.freemarker.bean.Constants;
 import com.cnfwsy.freemarker.bean.TableInfo;
 import com.cnfwsy.freemarker.creator.AbstractFileCreator;
-
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 /**
  * 创建bean
@@ -17,7 +11,7 @@ import freemarker.template.TemplateException;
  * @author zhangjh
  */
 public class EntityClassCreator extends AbstractFileCreator {
-	
+
 	private static EntityClassCreator creator;
 
 	private EntityClassCreator() {
@@ -37,22 +31,18 @@ public class EntityClassCreator extends AbstractFileCreator {
 	}
 
 	@Override
-	public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
-		String ftl = "entity.ftl";
-		String fileName = tableInfo.getBeanName() + ".java";
-		String selfPath = conf.getEntityPackage();
-		Map<String, Object> root = new HashMap<String, Object>();
-		root.put("table", tableInfo);
-		root.put("conf", conf);
+	public String getFileName(TableInfo tableInfo) {
+		return tableInfo.getBeanName() + Constants.JAVA_SUFFIX;
+	}
 
-		Template temp = cfg.getTemplate(ftl);
-		String filePath = javaPath + selfPath;
-		if (conf.isPrefix()) {
-			filePath = filePath + separator + tableInfo.getPrefix();
-		}
-		fileName = filePath + separator + fileName;
-		createFile(fileName, root, temp);
+	@Override
+	public String getTempletName() {
+		return ModuleEnum.Entity.name() + Constants.TEMPLET_SUFFIX;
+	}
 
+	@Override
+	public String getDirPath() {
+		return javaPath + conf.getEntityPackage();
 	}
 
 }

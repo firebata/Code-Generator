@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,6 +23,8 @@ import org.slf4j.LoggerFactory;
 
 import com.cnfwsy.freemarker.bean.BeanInfo;
 import com.cnfwsy.freemarker.bean.ColumnInfo;
+import com.cnfwsy.freemarker.bean.Conf;
+import com.cnfwsy.freemarker.bean.Constants;
 import com.cnfwsy.freemarker.bean.TableInfo;
 
 /**
@@ -40,14 +43,14 @@ public class DbUtils {
 		return dbUtils;
 	}
 
-	static Logger logging = LoggerFactory.getLogger(DbUtils.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DbUtils.class);
 
 	/**
 	 * 返回一个与特定数据库的连接
 	 *
 	 * @throws ClassNotFoundException
 	 */
-	public Connection getConnection() throws ClassNotFoundException {
+	private Connection getConnection() throws ClassNotFoundException {
 		Connection connection = null;
 		try {
 			// 加载属性文件，读取数据库连接配置信息
@@ -55,7 +58,8 @@ public class DbUtils {
 			try {
 				pro.load(DbUtils.class.getClassLoader().getResourceAsStream("jdbc.properties"));
 			} catch (IOException e) {
-				System.out.println("未找到配置文件！！！");
+				LOGGER.error("未找到数据源配置文件");
+				return null;
 			}
 			String driverClass = pro.getProperty("jdbc_driverClassName");
 			String url = pro.getProperty("jdbc_url");
@@ -71,7 +75,8 @@ public class DbUtils {
 																// remarks信息
 			connection = DriverManager.getConnection(url, props);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error("获取数据源连接错误");
+			return null;
 		}
 		return connection;
 	}
@@ -105,73 +110,66 @@ public class DbUtils {
 	 * @param entitySuffix
 	 * @return
 	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
-	public List<TableInfo> getAllTables(DatabaseMetaData metaData, List<String> tableNames, boolean underline2Camel,
-			String entitySuffix, boolean prefix) throws SQLException {
+	public List<TableInfo> getAllTables(Conf conf) throws SQLException, ClassNotFoundException {
+		Connection connection = getConnection();
+		DatabaseMetaData metaData = getMetaData(connection);
+		List<String> tableNames = Arrays.asList(conf.getTables().split(","));
+		String entitySuffix = conf.getEntitySuffix();
+		boolean prefix = conf.isPrefix();
+		boolean underline2Camel = conf.isUnderline2Camel();
 		List<TableInfo> tables = new ArrayList<TableInfo>();
 		ResultSet tableRet = getTableResultSet(metaData);
+
+		boolean isAllTable = "all".equals(conf.getTables());
 		while (tableRet.next()) {
 			TableInfo tableInfo = new TableInfo();
 			String tableName = tableRet.getString("TABLE_NAME");// 表明
 			String tableDesc = tableRet.getString("REMARKS");// 表注释
 			// String tableDesc = tableRet.getString("TABLE_COMMENT");// 表注释
-			System.out.println("===tableName:" + tableName + "-tableDesc:" + tableDesc);
+
 			for (String _tableName : tableNames) {
-				if (_tableName.equals("all") || tableName.trim().equals(_tableName)) {
-					// 字段处理
-					List<ColumnInfo> columns = getAllColumns(metaData, tableName);// 表的所有字段
-					Set<String> propTypePackages = new HashSet<String>();
-					columns2Properties(columns, propTypePackages, underline2Camel, tableInfo);
-					// Map<String, Object> pros = columns2Properties(columns,
-					// propTypePackages, underline2Camel, tableInfo);// 字段转属性
-					// Map<String, String> properties = (Map<String, String>)
-					// pros.get("properties");
-					// Map<String, BeanInfo> propInfoMap = (Map<String,
-					// BeanInfo>) pros.get("propInfoMap");
-					// List<BeanInfo> allPropInfo = (List<BeanInfo>)
-					// pros.get("allPropInfo");
-					// Map<String, String> propertiesAnColumns = (Map<String,
-					// String>) pros.get("propertiesAnColumns");
-					// Map<String, String> insertPropertiesAnColumns =
-					// (Map<String, String>) pros
-					// .get("insertPropertiesAnColumns");
-					// 主键处理(主键唯一)
-					String primaryKey = primaryKeyColumnName(metaData, tableName);
-
-					String primaryKeyProperty = primaryKey;
-					if (underline2Camel) {
-						primaryKeyProperty = Underline2CamelUtils.underline2Camel2(primaryKey);
-					}
-					Map<String, String> primaryKeyMap = new HashMap<String, String>();
-					primaryKeyMap.put(primaryKey, primaryKeyProperty);
-
-					// beanClass
-					String beanName = getClassName(tableName, underline2Camel);
-					if (StringUtils.isNoneBlank(entitySuffix)) {
-						beanName = beanName + entitySuffix;
-					}
-					tableInfo.setTableName(tableName);
-					tableInfo.setPrefix("");
-					if (prefix) {
-						tableInfo.setPrefix(getPrefixName(tableName));
-					}
-					tableInfo.setTableDesc(tableDesc);
-					tableInfo.setColumns(columns);
-					tableInfo.setBeanName(beanName);
-
-					// tableInfo.setPropInfoMap(propInfoMap);
-					// tableInfo.setAllPropInfo(allPropInfo);
-					tableInfo.setPrimaryKey(primaryKeyMap);
-					tableInfo.setPropTypePackages(propTypePackages);
-					// tableInfo.setPropertiesAnColumns(propertiesAnColumns);
-					// tableInfo.setInsertPropertiesAnColumns(insertPropertiesAnColumns);
-
-					tables.add(tableInfo);
+				if ((!isAllTable) && !StringUtils.equalsIgnoreCase(tableName.trim(), _tableName.trim())) {
+					LOGGER.debug("Ignore  tableName:{}, tableDesc:{}", tableName, tableDesc);
+					continue;
 				}
+				LOGGER.debug("Handle tableName:{}, tableDesc:{}", tableName, tableDesc);
+				// 字段处理
+				List<ColumnInfo> columns = getAllColumns(metaData, tableName);// 表的所有字段
+
+				columns2Properties(columns, underline2Camel, tableInfo);
+
+				// 主键处理(主键唯一)
+				String primaryKey = primaryKeyColumnName(metaData, tableName);
+
+				String primaryKeyProperty = primaryKey;
+				if (underline2Camel) {
+					primaryKeyProperty = Underline2CamelUtils.underline2Camel(primaryKey);
+				}
+				Map<String, String> primaryKeyMap = new HashMap<String, String>();
+				primaryKeyMap.put(primaryKey, primaryKeyProperty);
+
+				// beanClass
+				String beanName = getClassName(tableName, underline2Camel);
+				if (StringUtils.isNoneBlank(entitySuffix)) {
+					beanName = beanName + entitySuffix;
+				}
+
+				tableInfo.setTableName(tableName);
+				tableInfo.setPrefix("");
+				if (prefix) {
+					tableInfo.setPrefix(getPrefixName(tableName));
+				}
+				tableInfo.setTableDesc(tableDesc);
+				tableInfo.setColumns(columns);
+				tableInfo.setBeanName(beanName);
+
+				tableInfo.setPrimaryKey(primaryKeyMap);
+
+				tables.add(tableInfo);
 			}
-
 		}
-
 		return tables;
 	}
 
@@ -181,13 +179,13 @@ public class DbUtils {
 	 * @param columns
 	 * @return
 	 */
-	private void columns2Properties(List<ColumnInfo> columns, Set<String> propTypePackages, boolean underline2Camel,
-			TableInfo tableInfo) {
+	private void columns2Properties(List<ColumnInfo> columns, boolean underline2Camel, TableInfo tableInfo) {
 		Map<String, String> properties = new HashMap<String, String>();
 		Map<String, BeanInfo> propInfoMap = new HashMap<String, BeanInfo>();
 		List<BeanInfo> allPropInfo = new ArrayList<>();
 		Map<String, String> propertiesAnColumns = new HashMap<String, String>();
 		Map<String, String> insertPropertiesAnColumns = new HashMap<String, String>();
+		Set<String> propTypePackages = new HashSet<String>();
 
 		for (ColumnInfo entry : columns) {
 			String columnName = entry.getColumnName();// 字段名
@@ -195,7 +193,7 @@ public class DbUtils {
 			String columnRemarks = entry.getColumnRemarks();// 字段类型
 			String propertyName = columnName;
 			if (underline2Camel) {
-				propertyName = Underline2CamelUtils.underline2Camel2(columnName);
+				propertyName = Underline2CamelUtils.underline2Camel(columnName);
 			}
 			String propertyType = getFieldType(columnType, propTypePackages);
 			properties.put(propertyName, propertyType);
@@ -215,13 +213,8 @@ public class DbUtils {
 		tableInfo.setAllPropInfo(allPropInfo);
 		tableInfo.setPropertiesAnColumns(propertiesAnColumns);
 		tableInfo.setInsertPropertiesAnColumns(insertPropertiesAnColumns);
-		// Map<String, Object> pros = new HashMap<>();
-		// pros.put("properties", properties);
-		// pros.put("allPropInfo", allPropInfo);
-		// pros.put("propertiesAnColumns", propertiesAnColumns);
-		// pros.put("insertPropertiesAnColumns", insertPropertiesAnColumns);
+		tableInfo.setPropTypePackages(propTypePackages);
 
-		// return pros;
 	}
 
 	private boolean excludeInsertProperties(String propertyName) {
@@ -248,17 +241,17 @@ public class DbUtils {
 		while (colRet.next()) {
 			columnName = colRet.getString("COLUMN_NAME");
 			columnType = colRet.getString("TYPE_NAME");
-			int datasize = colRet.getInt("COLUMN_SIZE");
-			int digits = colRet.getInt("DECIMAL_DIGITS");
-			int nullable = colRet.getInt("NULLABLE");
+//			int datasize = colRet.getInt("COLUMN_SIZE");
+//			int digits = colRet.getInt("DECIMAL_DIGITS");
+//			int nullable = colRet.getInt("NULLABLE");
 			remarks = colRet.getString("remarks");
 			ColumnInfo info = new ColumnInfo();
 			info.setColumnName(columnName);
 			info.setColumnType(columnType);
 			info.setColumnRemarks(remarks);
 			columns.add(info);
-			System.out.println(
-					remarks + "-" + columnName + "-" + columnType + "-" + datasize + "-" + digits + "-" + nullable);
+//			LOGGER.debug(
+//					remarks + "-" + columnName + "-" + columnType + "-" + datasize + "-" + digits + "-" + nullable);
 		}
 		return columns;
 	}
@@ -297,7 +290,7 @@ public class DbUtils {
 	 * @return
 	 * @throws SQLException
 	 */
-	public DatabaseMetaData getMetaData(Connection connection) throws SQLException {
+	private DatabaseMetaData getMetaData(Connection connection) throws SQLException {
 		DatabaseMetaData metaData = connection.getMetaData();
 		return metaData;
 	}
@@ -311,16 +304,16 @@ public class DbUtils {
 	private static String getClassName(String tableName, boolean underline2Camel) {
 		String res = tableName;
 		// 去t_
-		if (res.startsWith("t_")) {
-			res = res.substring(2);
+		if (StringUtils.startsWithIgnoreCase(tableName, Constants.IGNORE_T)) {
+			res = StringUtils.substringAfter(tableName, Constants.IGNORE_T);
 		}
 
 		if (underline2Camel) {
 			// 变驼峰
-			res = Underline2CamelUtils.underline2Camel2(res);
+			res = Underline2CamelUtils.underline2Camel(res);
 		}
 		// 首字符大写
-		res = res.substring(0, 1).toUpperCase() + res.substring(1);
+		res = StringUtils.capitalize(res);
 		return res;
 	}
 
@@ -386,8 +379,7 @@ public class DbUtils {
 			packages.add("import java.math.BigDecimal;");
 			return "BigDecimal";
 		}
-		logging.debug("error type is :" + columnType);
-		System.out.println("error type is :" + columnType);
+		LOGGER.debug("error type is :" + columnType);
 		return "ErrorType";
 	}
 
@@ -397,19 +389,19 @@ public class DbUtils {
 	 * @param packages
 	 * @param className
 	 */
-	private static void getTitle(StringBuilder packages, String className) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-		packages.append("\r\n/**\r\n");
-		packages.append("*\r\n");
-		packages.append("* 标题: " + className + "<br/>\r\n");
-		packages.append("* 说明: <br/>\r\n");
-		packages.append("*\r\n");
-		packages.append("* 作成信息: DATE: " + format.format(new Date()) + " NAME: author\r\n");
-		packages.append("*\r\n");
-		packages.append("* 修改信息<br/>\r\n");
-		packages.append("* 修改日期 修改者 修改ID 修改内容<br/>\r\n");
-		packages.append("*\r\n");
-		packages.append("*/\r\n");
-	}
+//	private static void getTitle(StringBuilder packages, String className) {
+//		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+//		packages.append("\r\n/**\r\n");
+//		packages.append("*\r\n");
+//		packages.append("* 标题: " + className + "<br/>\r\n");
+//		packages.append("* 说明: <br/>\r\n");
+//		packages.append("*\r\n");
+//		packages.append("* 作成信息: DATE: " + format.format(new Date()) + " NAME: author\r\n");
+//		packages.append("*\r\n");
+//		packages.append("* 修改信息<br/>\r\n");
+//		packages.append("* 修改日期 修改者 修改ID 修改内容<br/>\r\n");
+//		packages.append("*\r\n");
+//		packages.append("*/\r\n");
+//	}
 
 }

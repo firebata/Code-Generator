@@ -1,14 +1,9 @@
 package com.cnfwsy.freemarker.creator.impl;
 
 import com.cnfwsy.freemarker.bean.Conf;
+import com.cnfwsy.freemarker.bean.Constants;
 import com.cnfwsy.freemarker.bean.TableInfo;
 import com.cnfwsy.freemarker.creator.AbstractFileCreator;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 创建xml映射文件
@@ -16,39 +11,37 @@ import java.util.Map;
  * @author zhangjh
  */
 public class XmlCreator extends AbstractFileCreator {
-    private static XmlCreator creator;
+	private static XmlCreator creator;
 
-    private XmlCreator() {
-        super();
-    }
+	private XmlCreator() {
+		super();
+	}
 
-    private XmlCreator(Conf conf) {
-        super();
-        init(conf);
-    }
+	private XmlCreator(Conf conf) {
+		super();
+		init(conf);
+	}
 
-    public static synchronized XmlCreator getInstance(Conf conf) {
-        if (null == creator) {
-            creator = new XmlCreator(conf);
-        }
-        return creator;
-    }
-
-    @Override
-    public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
-        String ftl = "xml.ftl";
-        String fileName = tableInfo.getBeanName() +conf.getMapperXmlName()+ ".xml";
-        String selfPath = conf.getXmlPackage();
-        Map<String, Object> root = new HashMap<String, Object>();
-        root.put("table", tableInfo);
-        root.put("conf", conf);
-        Template temp = cfg.getTemplate(ftl);
-        String filePath = resourcesbasePath + selfPath;
-		if (conf.isPrefix()) {
-			filePath = filePath + separator + tableInfo.getPrefix();
+	public static synchronized XmlCreator getInstance(Conf conf) {
+		if (null == creator) {
+			creator = new XmlCreator(conf);
 		}
-		fileName = filePath + separator + fileName;
-        createFile(fileName, root, temp);
-    }
+		return creator;
+	}
+
+	@Override
+	public String getFileName(TableInfo tableInfo) {
+		return tableInfo.getBeanName() + conf.getMapperXmlName() + Constants.XML_SUFFIX;
+	}
+
+	@Override
+	public String getTempletName() {
+		return ModuleEnum.MapperXML.name() + Constants.TEMPLET_SUFFIX;
+	}
+
+	@Override
+	public String getDirPath() {
+		return resourcesbasePath + conf.getXmlPackage();
+	}
 
 }

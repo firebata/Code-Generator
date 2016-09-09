@@ -1,93 +1,114 @@
 package com.cnfwsy.freemarker.creator;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cnfwsy.freemarker.bean.Conf;
+import com.cnfwsy.freemarker.bean.TableInfo;
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.*;
-import java.util.Map;
 
 /**
- * 说明:
- * Created by zhangjh on 2016-06-01.
+ * 说明: Created by zhangjh on 2016-06-01.
  */
 public abstract class AbstractFileCreator implements FileCreator {
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
-    protected static Configuration cfg; // 模版配置对象
-    protected static String javabasePath = new StringBuilder().append(System.getProperty("user.dir")).append(separator).append("src").append(separator).append("main").append(separator).append("java").append(separator).toString();
-    protected static String resourcesbasePath = new StringBuilder().append(System.getProperty("user.dir")).append(separator).append("src").append(separator).append("main").append(separator).append("resources").append(separator).toString();
-    protected static String javaPath;
-    protected static Conf conf = null;
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected static Configuration cfg; // 模版配置对象
+	protected static String javabasePath = new StringBuilder().append(System.getProperty("user.dir")).append(separator)
+			.append("src").append(separator).append("main").append(separator).append("java").append(separator)
+			.toString();
+	protected static String resourcesbasePath = new StringBuilder().append(System.getProperty("user.dir"))
+			.append(separator).append("src").append(separator).append("main").append(separator).append("resources")
+			.append(separator).toString();
+	protected static String javaPath;
+	protected static Conf conf = null;
 
-    static {
-        cfg = new Configuration(Configuration.VERSION_2_3_22);
-        cfg.setClassLoaderForTemplateLoading(AbstractFileCreator.class.getClassLoader(), "templates");
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+	static {
+		cfg = new Configuration(Configuration.VERSION_2_3_22);
+		cfg.setClassLoaderForTemplateLoading(AbstractFileCreator.class.getClassLoader(), "templates");
+		cfg.setDefaultEncoding("UTF-8");
+		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
-    }
+	}
 
-    /**
-     * @param filePath 文件路径
-     * @param root     data
-     * @param temp     模板
-     * @throws IOException
-     * @throws TemplateException
-     */
-    protected void createFile(String filePath, Map<String, Object> root, Template temp) throws IOException, TemplateException {
-        boolean force = conf.isForce();
-//        boolean prefix = conf.isPrefix();
-        //String fileName = filePath.substring(filePath.lastIndexOf(separator) + 1);
-        String subPath;
-//        if (prefix) {
-//            String sub = filePath.substring(filePath.lastIndexOf(separator) + 1, filePath.lastIndexOf(separator) + 4).toLowerCase();//分模块存放
-//            String directoryPath = filePath.substring(0, filePath.lastIndexOf(separator));
-//            subPath = directoryPath + separator + sub;
-//        } else {
-//            File file = new File(filePath);
-//            subPath = filePath.substring(0, filePath.lastIndexOf(separator));
-//            File directory = new File(subPath);
-//            if (!directory.exists()) {
-//                file.mkdirs();
-//            }
-//        }
+	/**
+	 * @param filePath
+	 *            文件路径
+	 * @param root
+	 *            data
+	 * @param temp
+	 *            模板
+	 * @param tableInfo2
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	protected void createFile(Template temp, TableInfo tableInfo) throws IOException, TemplateException {
+		boolean force = conf.isForce();
+		// String directoryStr = StringUtils.substringBeforeLast(filePath,
+		// separator);
+		// String directoryStr = FilenameUtils.getFullPath(filePath);
+		String directoryStr = getFilePath(tableInfo);
+		File directory = new File(directoryStr);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
 
+		String filePath = directoryStr + getFileName(tableInfo);
+		File file = new File(filePath);
+		logger.info(" file path =" + filePath);
+		boolean needCreatFile = false;
+		if (file.exists()) {
+			if (force) { //
+				file.delete();
+				file.createNewFile();
+				needCreatFile = true;
+			}
+		} else {
+			file.createNewFile();
+			needCreatFile = true;
+		}
+		if (needCreatFile) {
+			// OutputStream os = new FileOutputStream(file);
+			// Writer out = new OutputStreamWriter(os);
+			Map<String, Object> dataModel = new HashMap<String, Object>();
+			dataModel.put("table", tableInfo);
+			dataModel.put("conf", conf);
+			temp.process(dataModel, new FileWriter(file));
+		}
+	}
 
-        subPath = filePath.substring(0, filePath.lastIndexOf(separator));
-        File directory = new File(subPath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
+	private String getFilePath(TableInfo tableInfo) {
+		String dirPath = getDirPath();
+		dirPath = StringUtils.appendIfMissing(dirPath, separator, separator);
 
+		if (conf.isPrefix()) {
+			dirPath = dirPath + separator + tableInfo.getPrefix();
+		}
+		return dirPath;
+	}
 
-        File file = new File(filePath);
-        logger.info(" file path =" + filePath);
-        boolean needCreatFile = false;
-        if (!file.exists()) {
-            file.createNewFile();
-            needCreatFile = true;
-        } else {
-            if (force) { //
-                file.delete();
-                file.createNewFile();
-                needCreatFile = true;
-            }
-        }
-        if (needCreatFile) {
-            OutputStream os = new FileOutputStream(file);
-            Writer out = new OutputStreamWriter(os);
-            temp.process(root, out);
-        }
-    }
+	@Override
+	public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
+		String ftl = getTempletName();
+		//String fileName = getFilePath(tableInfo);
+		Template temp = cfg.getTemplate(ftl);
+		createFile(temp, tableInfo);
+	}
 
-    public static void init(Conf _conf) {
-        if (conf == null) {
-            conf = _conf;
-            javaPath = javabasePath + conf.getBasePackage().replace(".", separator) + separator;
-        }
-    }
+	public static void init(Conf _conf) {
+		if (conf == null) {
+			conf = _conf;
+			javaPath = javabasePath + conf.getBasePackage().replace(".", separator) + separator;
+		}
+	}
 }

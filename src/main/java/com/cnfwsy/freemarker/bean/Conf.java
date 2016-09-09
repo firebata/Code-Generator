@@ -12,6 +12,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cnfwsy.freemarker.creator.impl.ModuleEnum;
 import com.cnfwsy.freemarker.util.DbUtils;
 
 /**
@@ -19,33 +20,24 @@ import com.cnfwsy.freemarker.util.DbUtils;
  */
 public class Conf {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Conf.class);
-//	private static final List<String> allModules = Arrays.asList("bean", "controller", "controllerTest", "model",
-//			"modelTest", "service", "serviceTest", "impl", "mapper", "mapperTest", "xml");
+	// private static final List<String> allModules = Arrays.asList("bean",
+	// "controller", "controllerTest", "model",
+	// "modelTest", "service", "serviceTest", "impl", "mapper", "mapperTest",
+	// "xml");
 	private static final List<String> allModules = new ArrayList<String>();
-	private static final String ENTITY = "entity";
-	private static final String DAO = "dao";
-	private static final String DAOTEST = "daoTest";
-	private static final String MAPPERXML = "mapperXml";
-	private static final String MODEL = "model";
-	private static final String MODELTEST= "modelTest";
-	private static final String SERVICE = "service";
-	private static final String SERVICETEST = "serviceTest";
-	private static final String SERVICEIMPL = "serviceImpl";
-	private static final String CONTROLLER = "controller";
-	private static final String CONTROLLERTEST = "controllerTest";
-	
+
 	static {
-		allModules.add(ENTITY);
-		allModules.add(DAO);
-		allModules.add(MAPPERXML);
-//		allModules.add(DAOTEST);
-//		allModules.add(MODEL);
-//		allModules.add(MODELTEST);
-		allModules.add(SERVICE);
-//		allModules.add(SERVICETEST);
-		allModules.add(SERVICEIMPL);
-		allModules.add(CONTROLLER);
-//		allModules.add(CONTROLLERTEST);
+		allModules.add(ModuleEnum.Entity.name());
+		allModules.add(ModuleEnum.Dao.name());
+		allModules.add(ModuleEnum.MapperXML.name());
+		// allModules.add(ModuleEnum.DaoTest.name());
+		// allModules.add(ModuleEnum.Model.name());
+		// allModules.add(ModuleEnum.ModelTest.name());
+		allModules.add(ModuleEnum.Service.name());
+		// allModules.add(ModuleEnum.ServiceTest.name());
+		allModules.add(ModuleEnum.ServiceImpl.name());
+		allModules.add(ModuleEnum.Controller.name());
+		// allModules.add(ModuleEnum.ControllerTest.name());
 	}
 	private String basePackage;
 	private String entityPackage;
@@ -54,7 +46,7 @@ public class Conf {
 	private String xmlPackage;
 	private String servicePackage;
 	private String controllerPackage;
-	
+
 	private String entitySuffix;
 	private String daoName;
 	private String implSuffix;
@@ -64,10 +56,10 @@ public class Conf {
 	private String mapperXmlName;
 	private boolean serviceNeedI;
 	private String testSuffix;
-	
+
 	private String tables;
 	private String needModules;
-	private List<String> modules;
+//	private List<String> modules;
 	private boolean force;// 重新生成文件
 	private boolean prefix;// 表名前缀
 	private boolean underline2Camel;// 是否需要将表字段转成驼峰
@@ -123,9 +115,9 @@ public class Conf {
 		return modules;
 	}
 
-	public void setModules(List<String> modules) {
-		this.modules = modules;
-	}
+//	public void setModules(List<String> modules) {
+//		this.modules = modules;
+//	}
 
 	/**
 	 * @return
@@ -150,17 +142,17 @@ public class Conf {
 		String forceStr = pro.getProperty("force");
 		String prefixStr = pro.getProperty("prefix");
 		String underline2CamelStr = pro.getProperty("underline2Camel");
-		
+
 		String entitySuffix = pro.getProperty("eneity_suffix");
 		String daoName = pro.getProperty("dao_name");
-		
+
 		String implSuffix = pro.getProperty("impl_suffix");
 		String serviceImplPackage = pro.getProperty("serviceimpl_package");
 		String serviceName = pro.getProperty("service_name");
 		String controllerName = pro.getProperty("controller_name");
 		String mapperXmlName = pro.getProperty("mapperxml_name");
 		String testSuffix = pro.getProperty("test_suffix");
-		
+
 		this.setBasePackage(basePackage);
 		this.setEntityPackage(entityPackage);
 		this.setDaoPackage(daoPackage);
@@ -178,15 +170,16 @@ public class Conf {
 		this.setControllerName(controllerName);
 		this.setMapperXmlName(mapperXmlName);
 		this.setTestSuffix(testSuffix);
-		
+
 		String serviceNeedIStr = pro.getProperty("service_need_i");
-		
+
 		boolean force = false;
 		boolean prefix = true;
 		boolean underline2Camel = true;
 		boolean serviceNeedI = false;
-		
-		if (StringUtils.isNotBlank(serviceNeedIStr) && (serviceNeedIStr.equals("true") || serviceNeedIStr.equals("false"))) {
+
+		if (StringUtils.isNotBlank(serviceNeedIStr)
+				&& (serviceNeedIStr.equals("true") || serviceNeedIStr.equals("false"))) {
 			serviceNeedI = Boolean.parseBoolean(serviceNeedIStr);
 		}
 		if (StringUtils.isNotBlank(forceStr) && (forceStr.equals("true") || forceStr.equals("false"))) {
