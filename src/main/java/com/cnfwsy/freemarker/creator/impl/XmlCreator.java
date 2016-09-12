@@ -44,4 +44,8 @@ public class XmlCreator extends AbstractFileCreator {
 		return resourcesbasePath + conf.getXmlPackage();
 	}
 
+	@Override
+	public void setPackageName(TableInfo tableInfo) {
+	}
+
 }

@@ -44,4 +44,10 @@ public class ControllerClassCreator extends AbstractFileCreator {
 		return javaPath + conf.getControllerPackage();
 	}
 
+	@Override
+	public void setPackageName(TableInfo tableInfo) {
+		String controllerPackage = conf.getBasePackage() + Constants.PACKAGE_SEPARATOR + conf.getControllerPackage();
+		tableInfo.setControllerPackage(controllerPackage);
+	}
+
 }

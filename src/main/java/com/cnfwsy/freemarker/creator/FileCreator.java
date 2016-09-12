@@ -21,4 +21,5 @@ public interface FileCreator {
 	
 	String getDirPath();
 	
+	void setPackageName(TableInfo tableInfo);
 }

@@ -45,4 +45,10 @@ public class EntityClassCreator extends AbstractFileCreator {
 		return javaPath + conf.getEntityPackage();
 	}
 
+	@Override
+	public void setPackageName(TableInfo tableInfo) {
+		String entityPackage = conf.getBasePackage() + Constants.PACKAGE_SEPARATOR + conf.getEntityPackage();
+		tableInfo.setEntityPackage(entityPackage);
+	}
+
 }

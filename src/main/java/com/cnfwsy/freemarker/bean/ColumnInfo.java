@@ -1,12 +1,18 @@
 package com.cnfwsy.freemarker.bean;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 表的所有字段 Created by zhangjh on 16/6/12.
  */
-public class ColumnInfo {
+public class ColumnInfo implements Serializable {
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 字段名
 	 */

@@ -44,4 +44,11 @@ public class ServiceImplClassCreator extends AbstractFileCreator {
 		return javaPath + conf.getServicePackage() + conf.getServiceImplPackage();
 	}
 
+	@Override
+	public void setPackageName(TableInfo tableInfo) {
+		String serviceImplPackage = conf.getBasePackage() + Constants.PACKAGE_SEPARATOR + conf.getServicePackage()
+				+ Constants.PACKAGE_SEPARATOR + conf.getServiceImplPackage();
+		tableInfo.setServiceImplPackage(serviceImplPackage);
+	}
+
 }

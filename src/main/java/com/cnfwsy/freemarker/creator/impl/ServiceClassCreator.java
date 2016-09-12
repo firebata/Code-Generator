@@ -41,7 +41,13 @@ public class ServiceClassCreator extends AbstractFileCreator {
 
 	@Override
 	public String getDirPath() {
-		return javaPath +  conf.getServicePackage();
+		return javaPath + conf.getServicePackage();
+	}
+
+	@Override
+	public void setPackageName(TableInfo tableInfo) {
+		String servicePackage = conf.getBasePackage() + Constants.PACKAGE_SEPARATOR + conf.getServicePackage();
+		tableInfo.setServicePackage(servicePackage);
 	}
 
 }

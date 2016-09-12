@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cnfwsy.freemarker.bean.TempBeanInfo;
 import com.cnfwsy.freemarker.bean.Conf;
 import com.cnfwsy.freemarker.bean.TableInfo;
 
@@ -81,6 +82,7 @@ public abstract class AbstractFileCreator implements FileCreator {
 			// OutputStream os = new FileOutputStream(file);
 			// Writer out = new OutputStreamWriter(os);
 			Map<String, Object> dataModel = new HashMap<String, Object>();
+			//TempBeanInfo beanInfo = new TempBeanInfo(conf, tableInfo);
 			dataModel.put("table", tableInfo);
 			dataModel.put("conf", conf);
 			temp.process(dataModel, new FileWriter(file));
@@ -91,8 +93,8 @@ public abstract class AbstractFileCreator implements FileCreator {
 		String dirPath = getDirPath();
 		dirPath = StringUtils.appendIfMissing(dirPath, separator, separator);
 
-		if (conf.isPrefix()) {
-			dirPath = dirPath + separator + tableInfo.getPrefix();
+		if (StringUtils.isNoneBlank(tableInfo.getPrefix())) {
+			dirPath = dirPath + tableInfo.getPrefix() + separator;
 		}
 		return dirPath;
 	}
@@ -100,8 +102,9 @@ public abstract class AbstractFileCreator implements FileCreator {
 	@Override
 	public void createFile(TableInfo tableInfo) throws IOException, TemplateException {
 		String ftl = getTempletName();
-		//String fileName = getFilePath(tableInfo);
+		// String fileName = getFilePath(tableInfo);
 		Template temp = cfg.getTemplate(ftl);
+		setPackageName(tableInfo);
 		createFile(temp, tableInfo);
 	}
 

@@ -44,4 +44,10 @@ public class DaoClassCreator extends AbstractFileCreator {
 		return javaPath + conf.getDaoPackage();
 	}
 
+	@Override
+	public void setPackageName(TableInfo tableInfo) {
+		String daoPackage = conf.getBasePackage() + Constants.PACKAGE_SEPARATOR + conf.getDaoPackage();
+		tableInfo.setDaoPackage(daoPackage);
+	}
+
 }

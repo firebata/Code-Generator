@@ -44,4 +44,10 @@ public class ServiceTestClassCreator extends AbstractFileCreator {
 		return javaPath + conf.getServicePackage();
 	}
 
+	@Override
+	public void setPackageName(TableInfo tableInfo) {
+		String serviceTestPackage = conf.getBasePackage() + Constants.PACKAGE_SEPARATOR + conf.getServicePackage();
+		tableInfo.setServiceTestPackage(serviceTestPackage);
+	}
+
 }

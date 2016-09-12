@@ -1,12 +1,18 @@
 package com.cnfwsy.freemarker.bean;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 表对应的属性 Created by zhangjh on 16/6/12.
  */
-public class BeanInfo {
+public class PropertyInfo implements Serializable {
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 属性名
 	 */

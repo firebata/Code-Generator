@@ -6,10 +6,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cnfwsy.freemarker.bean.BeanInfo;
+import com.cnfwsy.freemarker.bean.PropertyInfo;
 import com.cnfwsy.freemarker.bean.ColumnInfo;
 import com.cnfwsy.freemarker.bean.Conf;
 import com.cnfwsy.freemarker.bean.Constants;
@@ -117,7 +115,6 @@ public class DbUtils {
 		DatabaseMetaData metaData = getMetaData(connection);
 		List<String> tableNames = Arrays.asList(conf.getTables().split(","));
 		String entitySuffix = conf.getEntitySuffix();
-		boolean prefix = conf.isPrefix();
 		boolean underline2Camel = conf.isUnderline2Camel();
 		List<TableInfo> tables = new ArrayList<TableInfo>();
 		ResultSet tableRet = getTableResultSet(metaData);
@@ -158,7 +155,7 @@ public class DbUtils {
 
 				tableInfo.setTableName(tableName);
 				tableInfo.setPrefix("");
-				if (prefix) {
+				if (conf.isPrefix()) {
 					tableInfo.setPrefix(getPrefixName(tableName));
 				}
 				tableInfo.setTableDesc(tableDesc);
@@ -181,8 +178,8 @@ public class DbUtils {
 	 */
 	private void columns2Properties(List<ColumnInfo> columns, boolean underline2Camel, TableInfo tableInfo) {
 		Map<String, String> properties = new HashMap<String, String>();
-		Map<String, BeanInfo> propInfoMap = new HashMap<String, BeanInfo>();
-		List<BeanInfo> allPropInfo = new ArrayList<>();
+		Map<String, PropertyInfo> propInfoMap = new HashMap<String, PropertyInfo>();
+		List<PropertyInfo> allPropInfo = new ArrayList<>();
 		Map<String, String> propertiesAnColumns = new HashMap<String, String>();
 		Map<String, String> insertPropertiesAnColumns = new HashMap<String, String>();
 		Set<String> propTypePackages = new HashSet<String>();
@@ -197,7 +194,7 @@ public class DbUtils {
 			}
 			String propertyType = getFieldType(columnType, propTypePackages);
 			properties.put(propertyName, propertyType);
-			BeanInfo beanInfo = new BeanInfo();
+			PropertyInfo beanInfo = new PropertyInfo();
 			beanInfo.setPropertyName(propertyName);
 			beanInfo.setPropertyType(propertyType);
 			beanInfo.setPropertyDesc(columnRemarks);
