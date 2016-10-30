@@ -1,17 +1,17 @@
 <#import "base/date.ftl" as dt>
-package ${conf.basePackage}.${conf.servicePackage}.impl<#if table.prefix!="">.${table.prefix}</#if>;
+package ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>;
+
 <#assign beanName = table.beanName/>
 <#assign beanNameUncap_first = beanName?uncap_first/>
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
 import ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
-import ${conf.basePackage}.${conf.daoPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Dao;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+import org.apache.commons.collections.CollectionUtils;
 
-import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
 
 import static org.junit.Assert.*;
@@ -21,28 +21,29 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hpxs.test.Junit4SpringTestBase;
 
 /**
-* 类说明:
-* Created by noname on ${.now}
-*/
+ * 类说明:
+ * Created by noname on ${.now}
+ */
 public class ${beanName}ServiceTest extends Junit4SpringTestBase {
 
-	@Resource(name = "${beanNameUncap_first}Service")
-    private ${beanName}Service ${beanNameUncap_first}Service;
-    
-    static ${beanName} ${beanNameUncap_first};
+	@Autowired
+	private ${beanName}Service ${beanNameUncap_first}Service;
+
+	static ${beanName} ${beanNameUncap_first};
 	
-	static Map<String, Object> paramMap = new LinkedHashMap<String, Object>();
-	static int pageSize = 10;
+	static Map<String, Object> params = new HashMap<String, Object>();
+	static int pageSize = 5;
 	static int pageNo =1;
-    
+	private static int DEFAULT_ID=1;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		${beanNameUncap_first} = new ${beanName};
-		
+		${beanNameUncap_first} = new ${beanName}();
 	}
 
 	@AfterClass
@@ -58,58 +59,63 @@ public class ${beanName}ServiceTest extends Junit4SpringTestBase {
 	}
 
 	@Test
-	public final void test() {
-		fail("Not yet implemented"); // TODO
+	public void testGetById(){
+		${beanName} result = ${beanNameUncap_first}Service.getById(DEFAULT_ID);
+		assertNotNull(result); 
 	}
 
 	@Test
-	public ${beanName} getById(int id){
-		${beanName}  ${beanNameUncap_first} =  ${beanNameUncap_first}Service.selectById(id);
-		return 
+	public void testGetCount(){
+		int count = ${beanNameUncap_first}Service.getCount();
+		assertTrue(count>=0);
 	}
-	
-	@Override
-	public int getCount(){
-		return ${beanNameUncap_first}Dao.selectCount();
+
+	@Test
+	public void testQueryCount(){
+		${beanName} entity = new ${beanName}();
+		int count = ${beanNameUncap_first}Service.queryCount(entity);
+		assertTrue(count>=0);
 	}
-	
-	@Override
-	public int queryCount(${beanName} entity){
-		return ${beanNameUncap_first}Dao.selectCountByCondition(entity);
+
+	@Test
+	public void testQuery() {
+		${beanName} entity = new ${beanName}();
+		List<${beanName}> resut = ${beanNameUncap_first}Service.query(entity);
+		assertTrue(CollectionUtils.isNotEmpty(resut));
 	}
-	
-    @Override
-    public List<${beanName}> query(${beanName} entity) {
-        List<${beanName}> resut = null;
-        resut= ${beanNameUncap_first}Dao.selectByCondition(entity);
-        return resut;
-    }
-    
-    @Override
-    public int update(${beanName} entity) {
-        return ${beanNameUncap_first}Dao.updateById(entity);
-    }
 
-    @Override
-    public int delete(int id) {
-        return ${beanNameUncap_first}Dao.deleteById(id);
-    }
+	@Test
+	public void testUpdate() {
+		${beanName} entity = new ${beanName}();
+		int rowId = ${beanNameUncap_first}Service.update(entity);
+		assertTrue(rowId==1);
+	}
 
-    @Override
-    public int add(${beanName} entity) {
-        ${beanName}  ${beanNameUncap_first} =  ${beanNameUncap_first}Service.add(${beanNameUncap_first});
-		return 
-    }
+	@Test
+	public void testDelete() {
+		int rowId = ${beanNameUncap_first}Service.delete(DEFAULT_ID);
+		assertTrue(rowId==1);
+	}
 
-    @Override
-    public int addList(List<${beanName}> entityList) {
-        return ${beanNameUncap_first}Dao.insertList(entityList);
-    }
+	@Test
+	public void testAdd() {
+		int rowId = ${beanNameUncap_first}Service.add(${beanNameUncap_first});
+		assertTrue(rowId==1);
+		assertTrue(${beanNameUncap_first}.getId().compareTo(0)>0);
+	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Pagination<${beanName}> findPage(Map<String,Object> resultMap, Integer pageNo,
-			Integer pageSize) {
-		return super.findPage(resultMap, pageNo, pageSize);
+	@Test
+	public void testAddList() {
+		List<${beanName}> list = new ArrayList<${beanName}>();
+		${beanName} entity = new ${beanName}();
+		list.add(entity);
+		int row = ${beanNameUncap_first}Service.addList(list);
+		assertTrue(row >= 0);
+	}
+
+	@Test
+	public void testFindPage() {
+		Pagination<${beanName}> result = ${beanNameUncap_first}Service.findPage(params, pageNo, pageSize);
+		assertNotNull(result);
 	}
 }

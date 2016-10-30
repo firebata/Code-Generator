@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <#assign beanName = table.beanName/>
 <#assign tableName = table.tableName/>
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
@@ -22,124 +22,152 @@
 <#assign keys3 = insertPropertiesAnColumns?keys/>
 <mapper namespace="${mapper}">
 
-    <sql id="selectBasicSql">
-        <#list keys as key>
-        `${propertiesAnColumns["${key}"]}` AS  ${key}<#if key_has_next>,</#if>
-        </#list>
-    </sql>
+	<sql id="selectBasicSql">
+		<#list keys as key>
+		`${propertiesAnColumns["${key}"]}` AS `${key}`<#if key_has_next>,</#if>
+		</#list>
+	</sql>
 
+	<select id="getById" resultType="${bean}">
+		SELECT
+		<include refid="selectBasicSql"/>
+		FROM `${tableName}` a
+		<where>
+		<#list keys2 as key>
+			`${key}` = <@mapperEl primaryKey["${key}"]/>
+		</#list>
+		</where>
+		LIMIT 1;
+	</select>
 
-    <select id="selectById" resultType="${bean}">
-        select
-        <include refid="selectBasicSql"/>
-        FROM    ${tableName} a
-        WHERE
-        <#list keys2 as key>
-            `${key}` = <@mapperEl primaryKey["${key}"]/>
-        </#list>
-        limit 1
-    </select>
+	<select id="getListCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM `${tableName}` a
+		<where>
+		<#list keys as key>
+			<if test="${key} !=null and ${key} != ''">
+				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
+			</if>
+		</#list>
+		</where>
+		;
+	</select>
+	
+	<select id="getList" resultType="${bean}">
+		SELECT
+		<include refid="selectBasicSql"/>
+		FROM `${tableName}` a
+		<where>
+		<#list keys as key>
+			<if test="${key} !=null and ${key} != ''">
+				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
+			</if>
+		</#list>
+		</where>
+		;
+	</select>
 
-    <select id="selectCount" resultType="Integer">
-        SELECT COUNT(*)
-        FROM  ${tableName} a
-    </select>
+	<select id="getListByMapCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM `${tableName}`
+		<where> 
+		<#list keys as key>
+			<if test="${key} !=null and ${key} != ''">
+			AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
+			</if>
+		</#list>
+		</where>
+		;
+	</select>
 
-    <select id="selectCountByCondition" resultType="Integer">
-        SELECT COUNT(*)
-        FROM  ${tableName}
-        where 1=1 
-        <#list keys as key>
-         <if test="${key} !=null and ${key} != ''">
-            and  `${propertiesAnColumns["${key}"]}`  =<@mapperEl key/>
-         </if>
-         </#list>
-    </select>
+	<select id="getListByMap" resultType="${bean}">
+		SELECT
+		<include refid="selectBasicSql"/>
+		FROM `${tableName}` a
+		<where>
+		<#list keys as key>
+			<if test="${key} !=null and ${key} != ''">
+				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
+			</if>
+		</#list>
+		</where>
+		;
+	</select>
 
-    <select id="selectByCondition" resultType="${bean}">
-        SELECT
-        <include refid="selectBasicSql"/>
-        FROM  ${tableName} a
-        WHERE 1=1
-        <#list keys as key>
-        <if test="${key} !=null and ${key} != ''">
-            and  `${propertiesAnColumns["${key}"]}`  =<@mapperEl key/>
-        </if>
-        </#list>
-        limit <@mapperEl "start"/>,<@mapperEl "pageSize"/>
-    </select>
+	<update id="update">
+		UPDATE `${tableName}` a
+		<set>
+			<#list keys3 as key>
+			<#if key !="delFlag" && key !="createTime" && key !="id">
+			<if test="${key} !=null and ${key} != ''">
+				`${propertiesAnColumns["${key}"]}` = <@mapperEl key/>,
+			</if>
+			</#if>
+			</#list>
+		</set>
+		<where>
+		<#list keys2 as key>
+			`${key}` = <@mapperEl primaryKey["${key}"]/>
+		</#list>
+		</where>
+	</update>
 
-    <update id="updateById">
-        update
-            ${tableName}  a
-        <set>
-            <#list keys3 as key>
-            <#if key !="delFlag" && key !="createTime" && key !="id">
-            <if test="${key} !=null and ${key} != ''">
-                `${propertiesAnColumns["${key}"]}`  = <@mapperEl key/>,
-            </if>
-            </#if>
-            </#list>
-        </set>
-        WHERE
-        <#list keys2 as key>
-            `${key}` = <@mapperEl primaryKey["${key}"]/>
-        </#list>
-    </update>
+	<update id="deleteById">
+		UPDATE `${tableName}` a
+		SET `isDeleted`=1
+		<where>
+		<#list keys2 as key>
+			`${key}` = <@mapperEl primaryKey["${key}"]/>
+		</#list>
+		</where>
+	</update>
 
-    <update id="deleteById">
-        update  ${tableName} a
-        set  `isDeleted`=1
-        where
-        <#list keys2 as key>
-            `${key}` = <@mapperEl primaryKey["${key}"]/>
-        </#list>
-    </update>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO 
+		`${tableName}`
+		(<#list keys3 as key>`${insertPropertiesAnColumns["${key}"]}`<#if key_has_next>,</#if></#list>)
+		VALUES 
+		(<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
+	</insert>
+	
+	<insert id="insertList">
+		INSERT INTO
+		`${tableName}`
+		(<#list keys3 as key>`${insertPropertiesAnColumns["${key}"]}`<#if key_has_next>,</#if></#list>)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+		(<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
+		</foreach>
+	</insert>
 
-
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into
-        ${tableName}(<#list keys3 as key>`${insertPropertiesAnColumns["${key}"]}`<#if key_has_next>,</#if></#list>)
-        values (<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
-    </insert>
-
-<#--
-
--->
-    <insert id="insertList" useGeneratedKeys="true" keyProperty="id">
-    	insert into
-        ${tableName}
-        (<#list keys3 as key>`${insertPropertiesAnColumns["${key}"]}`<#if key_has_next>,</#if></#list>)
-        values
-        <foreach collection="list" item="item" index="index" separator="," >
-            (<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
-        </foreach>
-    </insert>
-
-
+	<#-- pageSql 前面能随便加点字符串的话就能正常换行，TODO -->
 	<sql id="limitsSql">
 		<if test="pageSql != null and pageSql != ''">
-            <@mapperEl2 "pageSql"/>
+			<@mapperEl2 'pageSql' />
 		</if>
 	</sql>
+	
 	<sql id="whereAll">
 		<where>
 			<if test="findContent != null and findContent !='' " >
-			and (
+			AND (
 				LOWER(`name`) like CONCAT("%",<@mapperEl "findContent"/>,"%")
 			)
 			</if>
 		</where>
 	</sql>
+	
 	<select id="findAll" resultType="${bean}" >
-		select 
+		SELECT
 			<include refid="selectBasicSql" />
-		from ${tableName} 
-			<include refid="whereAll"/>
+		FROM `${tableName}` 
+			<include refid="whereAll" />
 			<include refid="limitsSql" />
 	</select>
+	
 	<select id="findCount" >
-		select count(id) from  ${tableName}
+		SELECT COUNT(`id`) FROM `${tableName}`
 		<include refid="whereAll" />
 	</select>
+	
 </mapper>
