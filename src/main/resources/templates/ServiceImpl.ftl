@@ -27,51 +27,67 @@ public class ${beanName}ServiceImpl extends BaseMybatisDao<${beanName}Dao> imple
 	private ${beanName}Dao ${beanNameUncap_first}Dao;
 
 	@Override
-	public ${beanName} getById(int id){
-		return ${beanNameUncap_first}Dao.selectById(id);
+	public ${beanName} getById(int id) {
+		return ${beanNameUncap_first}Dao.getById(id);
 	}
 
 	@Override
-	public int getCount(){
-		return ${beanNameUncap_first}Dao.selectCount();
+	public int getListCount(${beanName} entity) {
+		return ${beanNameUncap_first}Dao.getListCount(entity);
 	}
 
 	@Override
-	public int queryCount(${beanName} entity){
-		return ${beanNameUncap_first}Dao.selectCountByCondition(entity);
-	}
-
-	@Override
-	public List<${beanName}> query(${beanName} entity) {
+	public List<${beanName}> getList(${beanName} entity) {
 		List<${beanName}> resut = null;
-		resut= ${beanNameUncap_first}Dao.selectByCondition(entity);
+		resut = ${beanNameUncap_first}Dao.getList(entity);
+		return resut;
+	}
+
+	@Override
+	public int getListByMapCount(Map<String, Object> paramMap) {
+		return ${beanNameUncap_first}Dao.getListByMapCount(paramMap);
+	}
+
+	@Override
+	public List<${beanName}> getListByMap(Map<String, Object> paramMap) {
+		List<${beanName}> resut = null;
+		resut = ${beanNameUncap_first}Dao.getListByMap(paramMap);
 		return resut;
 	}
 
 	@Override
 	public int update(${beanName} entity) {
-		return ${beanNameUncap_first}Dao.updateById(entity);
+		return ${beanNameUncap_first}Dao.update(entity);
 	}
 
 	@Override
-	public int delete(int id) {
+	public int deleteById(int id) {
 		return ${beanNameUncap_first}Dao.deleteById(id);
 	}
 
 	@Override
 	public int add(${beanName} entity) {
-		return ${beanNameUncap_first}Dao.insert(entity);
+		return ${beanNameUncap_first}Dao.add(entity);
 	}
 
 	@Override
 	public int addList(List<${beanName}> entityList) {
-		return ${beanNameUncap_first}Dao.insertList(entityList);
+		return ${beanNameUncap_first}Dao.addList(entityList);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Pagination<${beanName}> findPage(Map<String,Object> modelMap, Integer pageNo,
+	public Pagination<${beanName}> findPage(Map<String,Object> paramMap, Integer pageNo,
 			Integer pageSize) {
-		return super.findPage(modelMap, pageNo, pageSize);
+		return super.findPage(paramMap, pageNo, pageSize);
+	}
+
+	@Override
+	public List<${beanName}> getActivedList() {
+		List<${beanName}> resut = null;
+		${beanName} entity = new ${beanName}();
+		entity.setIsDeleted(0);
+		resut = ${beanNameUncap_first}Dao.getList(entity);
+		return resut;
 	}
 }

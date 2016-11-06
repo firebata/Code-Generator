@@ -22,15 +22,35 @@
 <#assign keys3 = insertPropertiesAnColumns?keys/>
 <mapper namespace="${mapper}">
 
-	<sql id="selectBasicSql">
+	<sql id="basicSelectSql">
 		<#list keys as key>
 		`${propertiesAnColumns["${key}"]}` AS `${key}`<#if key_has_next>,</#if>
 		</#list>
 	</sql>
+	
+	<sql id="basicWhereEntitySql">
+		<where>
+		<#list keys as key>
+			<if test="${key} !=null and ${key} != ''">
+				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
+			</if>
+		</#list>
+		</where>
+	</sql>
+	
+	<sql id="basicWhereMapSql">
+		<where>
+		<#list keys as key>
+			<if test="${key} !=null and ${key} != ''">
+				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
+			</if>
+		</#list>
+		</where>
+	</sql>
 
 	<select id="getById" resultType="${bean}">
 		SELECT
-		<include refid="selectBasicSql"/>
+		<include refid="basicSelectSql"/>
 		FROM `${tableName}` a
 		<where>
 		<#list keys2 as key>
@@ -43,54 +63,30 @@
 	<select id="getListCount" resultType="Integer">
 		SELECT COUNT(*)
 		FROM `${tableName}` a
-		<where>
-		<#list keys as key>
-			<if test="${key} !=null and ${key} != ''">
-				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
-			</if>
-		</#list>
-		</where>
+		<include refid="basicWhereEntitySql"/>
 		;
 	</select>
-	
+
 	<select id="getList" resultType="${bean}">
 		SELECT
-		<include refid="selectBasicSql"/>
+		<include refid="basicSelectSql"/>
 		FROM `${tableName}` a
-		<where>
-		<#list keys as key>
-			<if test="${key} !=null and ${key} != ''">
-				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
-			</if>
-		</#list>
-		</where>
+		<include refid="basicWhereEntitySql"/>
 		;
 	</select>
 
 	<select id="getListByMapCount" resultType="Integer">
 		SELECT COUNT(*)
 		FROM `${tableName}`
-		<where> 
-		<#list keys as key>
-			<if test="${key} !=null and ${key} != ''">
-			AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
-			</if>
-		</#list>
-		</where>
+		<include refid="basicWhereMapSql"/>
 		;
 	</select>
 
 	<select id="getListByMap" resultType="${bean}">
 		SELECT
-		<include refid="selectBasicSql"/>
+		<include refid="basicSelectSql"/>
 		FROM `${tableName}` a
-		<where>
-		<#list keys as key>
-			<if test="${key} !=null and ${key} != ''">
-				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
-			</if>
-		</#list>
-		</where>
+		<include refid="basicWhereMapSql"/>
 		;
 	</select>
 
@@ -122,21 +118,21 @@
 		</where>
 	</update>
 
-	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO 
 		`${tableName}`
 		(<#list keys3 as key>`${insertPropertiesAnColumns["${key}"]}`<#if key_has_next>,</#if></#list>)
 		VALUES 
 		(<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
 	</insert>
-	
-	<insert id="insertList">
+
+	<insert id="addList">
 		INSERT INTO
 		`${tableName}`
 		(<#list keys3 as key>`${insertPropertiesAnColumns["${key}"]}`<#if key_has_next>,</#if></#list>)
 		VALUES
 		<foreach collection="list" item="item" index="index" separator="," >
-		(<#list keys3 as key><@mapperEl key/><#if key_has_next>,</#if></#list>)
+		(<#list keys3 as key><@mapperEl "item."+key/><#if key_has_next>,</#if></#list>)
 		</foreach>
 	</insert>
 
@@ -146,7 +142,7 @@
 			<@mapperEl2 'pageSql' />
 		</if>
 	</sql>
-	
+
 	<sql id="whereAll">
 		<where>
 			<if test="findContent != null and findContent !='' " >
@@ -156,18 +152,18 @@
 			</if>
 		</where>
 	</sql>
-	
+
 	<select id="findAll" resultType="${bean}" >
 		SELECT
-			<include refid="selectBasicSql" />
-		FROM `${tableName}` 
+			<include refid="basicSelectSql" />
+		FROM `${tableName}`
 			<include refid="whereAll" />
 			<include refid="limitsSql" />
 	</select>
-	
+
 	<select id="findCount" >
 		SELECT COUNT(`id`) FROM `${tableName}`
 		<include refid="whereAll" />
 	</select>
-	
+
 </mapper>
