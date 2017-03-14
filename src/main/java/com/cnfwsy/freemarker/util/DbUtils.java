@@ -372,7 +372,7 @@ public class DbUtils {
 		} else if (columnType.equals("double") || columnType.equals("double unsigned")) {
 			packages.add("import java.math.BigDecimal;");
 			return "BigDecimal";
-		} else if (columnType.equals("decimal") || columnType.equals("double unsigned")) {
+		} else if (columnType.equals("decimal") || columnType.equals("decimal unsigned")) {
 			packages.add("import java.math.BigDecimal;");
 			return "BigDecimal";
 		}

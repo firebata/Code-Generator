@@ -5,7 +5,12 @@
 <#assign beanName = table.beanName/>
 <#assign tableName = table.tableName/>
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
-<#macro mapperEl2 value>${r"${"}${value}}</#macro>
+<#macro orderInfo value>
+		${r"${"}${value}}
+</#macro>
+<#macro pageInfo value>
+		${r"${"}${value}}
+</#macro>
 <#--<#macro batchMapperEl value>${r"#{"}${value}}</#batchMapperEl>-->
 <#if table.prefix!="">
 <#assign bean = conf.basePackage+"."+conf.entityPackage+"."+table.prefix+"."+beanName/>
@@ -31,7 +36,7 @@
 	<sql id="basicWhereEntitySql">
 		<where>
 		<#list keys as key>
-			<if test="${key} !=null and ${key} != ''">
+			<if test="${key} != null and ${key} != ''">
 				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
 			</if>
 		</#list>
@@ -41,7 +46,7 @@
 	<sql id="basicWhereMapSql">
 		<where>
 		<#list keys as key>
-			<if test="${key} !=null and ${key} != ''">
+			<if test="${key} != null and ${key} != ''">
 				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
 			</if>
 		</#list>
@@ -51,7 +56,7 @@
 	<select id="getById" resultType="${bean}">
 		SELECT
 		<include refid="basicSelectSql"/>
-		FROM `${tableName}` a
+		FROM `${tableName}`
 		<where>
 		<#list keys2 as key>
 			`${key}` = <@mapperEl primaryKey["${key}"]/>
@@ -62,7 +67,7 @@
 
 	<select id="getListCount" resultType="Integer">
 		SELECT COUNT(*)
-		FROM `${tableName}` a
+		FROM `${tableName}`
 		<include refid="basicWhereEntitySql"/>
 		;
 	</select>
@@ -70,7 +75,7 @@
 	<select id="getList" resultType="${bean}">
 		SELECT
 		<include refid="basicSelectSql"/>
-		FROM `${tableName}` a
+		FROM `${tableName}`
 		<include refid="basicWhereEntitySql"/>
 		;
 	</select>
@@ -85,13 +90,13 @@
 	<select id="getListByMap" resultType="${bean}">
 		SELECT
 		<include refid="basicSelectSql"/>
-		FROM `${tableName}` a
+		FROM `${tableName}`
 		<include refid="basicWhereMapSql"/>
 		;
 	</select>
 
 	<update id="update">
-		UPDATE `${tableName}` a
+		UPDATE `${tableName}`
 		<set>
 			<#list keys3 as key>
 			<#if key !="delFlag" && key !="createTime" && key !="id">
@@ -109,7 +114,7 @@
 	</update>
 
 	<update id="deleteById">
-		UPDATE `${tableName}` a
+		UPDATE `${tableName}`
 		SET `isDeleted`=1
 		<where>
 		<#list keys2 as key>
@@ -136,13 +141,19 @@
 		</foreach>
 	</insert>
 
-	<#-- pageSql 前面能随便加点字符串的话就能正常换行，TODO -->
-	<sql id="limitsSql">
-		<if test="pageSql != null and pageSql != ''">
-			<@mapperEl2 'pageSql' />
+	<sql id="orderSql">
+		<if test="orderSql != null and orderSql != ''">
+			<@orderInfo "orderSql" />
 		</if>
 	</sql>
 
+	<#-- pageSql 前面能随便加点字符串的话就能正常换行，TODO -->
+	<sql id="pageSql">
+		<if test="pageSql != null and pageSql != ''">
+			<@pageInfo "pageSql" />
+		</if>
+	</sql>
+	<#--
 	<sql id="whereAll">
 		<where>
 			<if test="findContent != null and findContent !='' " >
@@ -152,18 +163,22 @@
 			</if>
 		</where>
 	</sql>
+	-->
 
-	<select id="findAll" resultType="${bean}" >
+	<select id="findByPage" resultType="${bean}" >
 		SELECT
 			<include refid="basicSelectSql" />
 		FROM `${tableName}`
-			<include refid="whereAll" />
-			<include refid="limitsSql" />
+			<include refid="basicWhereMapSql"/>
+			<include refid="orderSql" />
+			<include refid="pageSql" />
 	</select>
 
-	<select id="findCount" >
-		SELECT COUNT(`id`) FROM `${tableName}`
-		<include refid="whereAll" />
+	<select id="findByPageCount" >
+		SELECT COUNT(`id`)
+		FROM `${tableName}`
+		<include refid="basicWhereMapSql"/>
+		<include refid="orderSql" />
 	</select>
 
 </mapper>
