@@ -11,8 +11,10 @@ ${package}
 
 /**
  * 实体bean
- *
- * Created by noname on ${.now}
+ * <p>
+ * 表名：${table.tableName}
+ * <p>
+ * 描述：${table.tableDesc}
  */
 public class ${table.beanName} extends BaseEntity implements Serializable {
 	/**

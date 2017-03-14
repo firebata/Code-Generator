@@ -36,7 +36,7 @@
 	<sql id="basicWhereEntitySql">
 		<where>
 		<#list keys as key>
-			<if test="${key} != null and ${key} != ''">
+			<if test="${key} != null">
 				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
 			</if>
 		</#list>
@@ -46,7 +46,7 @@
 	<sql id="basicWhereMapSql">
 		<where>
 		<#list keys as key>
-			<if test="${key} != null and ${key} != ''">
+			<if test="${key} != null">
 				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
 			</if>
 		</#list>
@@ -99,8 +99,8 @@
 		UPDATE `${tableName}`
 		<set>
 			<#list keys3 as key>
-			<#if key !="delFlag" && key !="createTime" && key !="id">
-			<if test="${key} !=null and ${key} != ''">
+			<#if key != "isDeleted" && key != "addTime" && key != "id">
+			<if test="${key} != null">
 				`${propertiesAnColumns["${key}"]}` = <@mapperEl key/>,
 			</if>
 			</#if>
