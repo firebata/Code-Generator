@@ -25,13 +25,30 @@ public class ${table.beanName} extends BaseEntity implements Serializable {
 <#assign propInfoMap = table.propInfoMap/>
 <#assign allPropInfo = table.allPropInfo/>
 <#assign keys = propInfoMap?keys/>
-<#list allPropInfo as bean>
+<#list allPropInfo as prop>
 	/**
-	 * ${bean.propertyDesc}
+	 * ${prop.propertyDesc}
 	 */
-	private ${bean.propertyType} ${bean.propertyName};
+	private ${prop.propertyType} ${prop.propertyName};
 </#list>
 
+<#list allPropInfo as prop>
+	/**
+	 * 获取${prop.propertyDesc}
+	 */
+	public ${prop.propertyType} get${prop.propertyName?cap_first}() {
+		return this.${prop.propertyName};
+	}
+
+	/**
+	 * 设置${prop.propertyDesc}
+	 */
+	public void set${prop.propertyName?cap_first}(${prop.propertyType} ${prop.propertyName}) {
+		this.${prop.propertyName} = ${prop.propertyName};
+	}
+
+</#list>
+<#--
 <#list keys as key>
 	/**
 	 * 获取${propInfoMap["${key}"].propertyDesc}
@@ -48,6 +65,7 @@ public class ${table.beanName} extends BaseEntity implements Serializable {
 	}
 
 </#list>
+-->
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
