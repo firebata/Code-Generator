@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -177,11 +178,11 @@ public class DbUtils {
 	 * @return
 	 */
 	private void columns2Properties(List<ColumnInfo> columns, boolean underline2Camel, TableInfo tableInfo) {
-		Map<String, String> properties = new HashMap<String, String>();
-		Map<String, PropertyInfo> propInfoMap = new HashMap<String, PropertyInfo>();
+		Map<String, String> properties = new LinkedHashMap<String, String>();
+		Map<String, PropertyInfo> propInfoMap = new LinkedHashMap<String, PropertyInfo>();
 		List<PropertyInfo> allPropInfo = new ArrayList<>();
-		Map<String, String> propertiesAnColumns = new HashMap<String, String>();
-		Map<String, String> insertPropertiesAnColumns = new HashMap<String, String>();
+		Map<String, String> propertiesAnColumns = new LinkedHashMap<String, String>();
+		Map<String, String> insertPropertiesAnColumns = new LinkedHashMap<String, String>();
 		Set<String> propTypePackages = new HashSet<String>();
 
 		for (ColumnInfo entry : columns) {

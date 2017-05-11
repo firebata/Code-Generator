@@ -11,6 +11,9 @@
 <#macro pageInfo value>
 		${r"${"}${value}}
 </#macro>
+<#macro findInfo value>
+			${r"${"}${value}}
+</#macro>
 <#--<#macro batchMapperEl value>${r"#{"}${value}}</#batchMapperEl>-->
 <#if table.prefix!="">
 <#assign bean = conf.basePackage+"."+conf.entityPackage+"."+table.prefix+"."+beanName/>
@@ -33,23 +36,23 @@
 		</#list>
 	</sql>
 	
-	<sql id="basicWhereEntitySql">
-		<where>
+	<sql id="basicWhereColumn">
 		<#list keys as key>
 			<if test="${key} != null">
 				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
 			</if>
 		</#list>
+	</sql>
+	
+	<sql id="basicWhereEntitySql">
+		<where>
+		<include refid="basicWhereColumn"/>
 		</where>
 	</sql>
 	
 	<sql id="basicWhereMapSql">
 		<where>
-		<#list keys as key>
-			<if test="${key} != null">
-				AND `${propertiesAnColumns["${key}"]}` = <@mapperEl key/>
-			</if>
-		</#list>
+		<include refid="basicWhereColumn"/>
 		</where>
 	</sql>
 
@@ -154,22 +157,32 @@
 		</if>
 	</sql>
 	<#--
-	<sql id="whereAll">
+	<sql id="whereContentAll">
 		<where>
-			<if test="findContent != null and findContent !='' " >
-			AND (
-				LOWER(`name`) like CONCAT("%",<@mapperEl "findContent"/>,"%")
-			)
+		<include refid="basicWhereColumn"/>
+			<if test="findContent != null and findContentColumn != null" >
+				AND (
+					LOWER(`<@mapperEl "findContentColumn"/>`) LIKE CONCAT("%",<@mapperEl "findContent"/>,"%")
+				)
 			</if>
 		</where>
 	</sql>
 	-->
+	
+	<sql id="whereContentAll">
+		<where>
+		<include refid="basicWhereColumn"/>
+			<if test="findSql != null" >
+				<@findInfo "findSql" />
+			</if>
+		</where>
+	</sql>
 
 	<select id="findByPage" resultType="${bean}" >
 		SELECT
 			<include refid="basicSelectSql" />
 		FROM `${tableName}`
-			<include refid="basicWhereMapSql"/>
+			<include refid="whereContentAll"/>
 			<include refid="orderSql" />
 			<include refid="pageSql" />
 	</select>
@@ -177,7 +190,7 @@
 	<select id="findByPageCount" >
 		SELECT COUNT(`id`)
 		FROM `${tableName}`
-		<include refid="basicWhereMapSql"/>
+		<include refid="whereContentAll"/>
 		<include refid="orderSql" />
 	</select>
 

@@ -21,10 +21,12 @@ public class ${table.beanName} extends BaseEntity implements Serializable {
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
+<#--
 <#assign properties = table.properties/>
 <#assign propInfoMap = table.propInfoMap/>
-<#assign allPropInfo = table.allPropInfo/>
 <#assign keys = propInfoMap?keys/>
+-->
+<#assign allPropInfo = table.allPropInfo/>
 <#list allPropInfo as prop>
 	/**
 	 * ${prop.propertyDesc}
