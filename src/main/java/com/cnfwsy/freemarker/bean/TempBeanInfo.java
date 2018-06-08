@@ -1,8 +1,6 @@
 package com.cnfwsy.freemarker.bean;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.Serializable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -13,7 +11,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author zhangjh
  */
-public class TableInfo {
+public class TempBeanInfo implements Serializable {
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 表名
 	 */
@@ -29,51 +32,17 @@ public class TableInfo {
 	 */
 	private String beanName;
 
-	/**
-	 * 表名
-	 */
-	private String tableDesc;
+	private String entityName;
 
-	/**
-	 * 主键映射
-	 */
-	private Map<String, String> primaryKey;
-	/**
-	 * 字段类型映射
-	 */
-	private List<ColumnInfo> columns;
-
-	/**
-	 * 属性,属性类型
-	 */
-	@Deprecated
-	private Map<String, String> properties;
-
-	/**
-	 * 属性,属性类型
-	 */
-	private Map<String, PropertyInfo> propInfoMap;
-
-	/**
-	 * 属性,属性类型,属性描述
-	 */
-	private List<PropertyInfo> allPropInfo;
-	/**
-	 * 属性,属性类型
-	 */
-	private Map<String, String> propertiesAnColumns;
-
-	/**
-	 * 属性,属性类型
-	 */
-	private Map<String, String> insertPropertiesAnColumns;
-
-	/**
-	 * bean类导入的包,如java.util.Date，java.math.BigDecimal;等
-	 */
-	private Set<String> propTypePackages;
+	private String entityObj;
 
 	private String entityPackage;
+
+	private String entityDir;
+
+	private String entityFileName;
+
+	private String entityFilePath;
 
 	private String daoPackage;
 
@@ -84,6 +53,15 @@ public class TableInfo {
 	private String controllerPackage;
 
 	private String serviceTestPackage;
+
+	private Conf conf;
+
+	private TableInfo tableInfo;
+
+	public TempBeanInfo(Conf conf, TableInfo tableInfo) {
+		this.conf = conf;
+		this.tableInfo = tableInfo;
+	}
 
 	public String getTableName() {
 		return tableName;
@@ -101,83 +79,9 @@ public class TableInfo {
 		this.beanName = beanName;
 	}
 
-	public String getTableDesc() {
-		return tableDesc;
-	}
-
-	public void setTableDesc(String tableDesc) {
-		this.tableDesc = tableDesc;
-	}
-
-	public Map<String, String> getPrimaryKey() {
-		return primaryKey;
-	}
-
-	public void setPrimaryKey(Map<String, String> primaryKey) {
-		this.primaryKey = primaryKey;
-	}
-
-	public List<ColumnInfo> getColumns() {
-		return columns;
-	}
-
-	public void setColumns(List<ColumnInfo> columns) {
-		this.columns = columns;
-	}
-
-	@Deprecated
-	public Map<String, String> getProperties() {
-		return properties;
-	}
-
-	@Deprecated
-	public void setProperties(Map<String, String> properties) {
-		this.properties = properties;
-	}
-
-	public Map<String, String> getPropertiesAnColumns() {
-		return propertiesAnColumns;
-	}
-
-	public void setPropertiesAnColumns(Map<String, String> propertiesAnColumns) {
-		this.propertiesAnColumns = propertiesAnColumns;
-	}
-
-	public Map<String, String> getInsertPropertiesAnColumns() {
-		return insertPropertiesAnColumns;
-	}
-
-	public void setInsertPropertiesAnColumns(Map<String, String> insertPropertiesAnColumns) {
-		this.insertPropertiesAnColumns = insertPropertiesAnColumns;
-	}
-
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-
-	public Set<String> getPropTypePackages() {
-		return propTypePackages;
-	}
-
-	public void setPropTypePackages(Set<String> propTypePackages) {
-		this.propTypePackages = propTypePackages;
-	}
-
-	public List<PropertyInfo> getAllPropInfo() {
-		return allPropInfo;
-	}
-
-	public void setAllPropInfo(List<PropertyInfo> allPropInfo) {
-		this.allPropInfo = allPropInfo;
-	}
-
-	public Map<String, PropertyInfo> getPropInfoMap() {
-		return propInfoMap;
-	}
-
-	public void setPropInfoMap(Map<String, PropertyInfo> propInfoMap) {
-		this.propInfoMap = propInfoMap;
 	}
 
 	public String getPrefix() {
@@ -252,5 +156,45 @@ public class TableInfo {
 
 	public void setServiceTestPackage(String serviceTestPackage) {
 		this.serviceTestPackage = serviceTestPackage;
+	}
+
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+
+	public String getEntityObj() {
+		return entityObj;
+	}
+
+	public void setEntityObj(String entityObj) {
+		this.entityObj = entityObj;
+	}
+
+	public String getEntityDir() {
+		return entityDir;
+	}
+
+	public void setEntityDir(String entityDir) {
+		this.entityDir = entityDir;
+	}
+
+	public String getEntityFileName() {
+		return entityFileName;
+	}
+
+	public void setEntityFileName(String entityFileName) {
+		this.entityFileName = entityFileName;
+	}
+
+	public String getEntityFilePath() {
+		return entityFilePath;
+	}
+
+	public void setEntityFilePath(String entityFilePath) {
+		this.entityFilePath = entityFilePath;
 	}
 }

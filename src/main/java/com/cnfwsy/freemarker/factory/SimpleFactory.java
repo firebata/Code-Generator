@@ -1,6 +1,7 @@
 package com.cnfwsy.freemarker.factory;
 
 import com.cnfwsy.freemarker.bean.Conf;
+import com.cnfwsy.freemarker.bean.TableInfo;
 import com.cnfwsy.freemarker.creator.FileCreator;
 import com.cnfwsy.freemarker.creator.impl.*;
 
@@ -8,27 +9,29 @@ import com.cnfwsy.freemarker.creator.impl.*;
  * 生成代码
  */
 public class SimpleFactory {
-    private SimpleFactory() {
-        super();
-    }
+	private SimpleFactory() {
+		super();
+	}
 
-    public static FileCreator create(String module, Conf conf) {
+	public static FileCreator create(String module, Conf conf, TableInfo tableInfo) {
 
-        FileCreator creator = null;
-        if (module.equals("bean")) {
-            creator = BeanClassCreator.getInstance(conf);
-        } else if (module.equals("controller")) {
-            creator = ControllerClassCreator.getInstance(conf);
-        } else if (module.equals("service")) {
-            creator = ServiceClassCreator.getInstance(conf);
-        } else if (module.equals("impl")) {
-            creator = ServiceImplClassCreator.getInstance(conf);
-        } else if (module.equals("mapper")) {
-            creator = MapperClassCreator.getInstance(conf);
-        } else if (module.equals("xml")) {
-            creator = MapperXmlCreator.getInstance(conf);
-        }
-        return creator;
+		FileCreator creator = null;
+		if (module.equals(ModuleEnum.Entity.name())) {
+			creator = EntityClassCreator.getInstance(conf);
+		} else if (module.equals(ModuleEnum.Controller.name())) {
+			creator = ControllerClassCreator.getInstance(conf);
+		} else if (module.equals(ModuleEnum.Service.name())) {
+			creator = ServiceClassCreator.getInstance(conf);
+		} else if (module.equals(ModuleEnum.ServiceTest.name())) {
+			creator = ServiceTestClassCreator.getInstance(conf);
+		} else if (module.equals(ModuleEnum.ServiceImpl.name())) {
+			creator = ServiceImplClassCreator.getInstance(conf);
+		} else if (module.equals(ModuleEnum.Dao.name())) {
+			creator = DaoClassCreator.getInstance(conf);
+		} else if (module.equals(ModuleEnum.MapperXML.name())) {
+			creator = XmlCreator.getInstance(conf);
+		}
+		return creator;
 
-    }
+	}
 }

@@ -30,8 +30,8 @@
 	<properties>
 		<mysql.version>5.1.18</mysql.version>
 		<project.build.sourceEncoding>utf8</project.build.sourceEncoding>
-		<javaLanguage.version>1.8</javaLanguage.version>
-		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+		<javaLanguage.version>1.7</javaLanguage.version>
+		<maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -46,6 +46,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.21</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+			<version>1.16</version>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
@@ -85,6 +90,18 @@
 					<!--<encoding>${project.build.sourceEncoding}</encoding> -->
 					<source>${javaLanguage.version}</source>
 					<target>${javaLanguage.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.15.v20160210</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<war>${project.basedir}/target/code.war</war>
+					<webApp>
+						<contextPath>/code</contextPath>
+					</webApp>
 				</configuration>
 			</plugin>
 		</plugins>
