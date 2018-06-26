@@ -1,4 +1,4 @@
-package com.cnfwsy.freemarker.creator;
+package com.zlinks.freemarker.creator;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zlinks.freemarker.bean.Conf;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cnfwsy.freemarker.bean.TempBeanInfo;
-import com.cnfwsy.freemarker.bean.Conf;
-import com.cnfwsy.freemarker.bean.TableInfo;
+import com.zlinks.freemarker.bean.TableInfo;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

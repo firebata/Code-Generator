@@ -1,4 +1,4 @@
-package com.cnfwsy.freemarker.util;
+package com.zlinks.freemarker.util;
 
 import org.apache.commons.lang3.StringUtils;
 

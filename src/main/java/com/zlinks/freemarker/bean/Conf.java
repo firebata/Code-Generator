@@ -1,4 +1,4 @@
-package com.cnfwsy.freemarker.bean;
+package com.zlinks.freemarker.bean;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,14 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import com.zlinks.freemarker.creator.impl.ModuleEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cnfwsy.freemarker.creator.impl.ModuleEnum;
-import com.cnfwsy.freemarker.util.DbUtils;
+import com.zlinks.freemarker.util.DbUtils;
 
 /**
  * @author zhangjh

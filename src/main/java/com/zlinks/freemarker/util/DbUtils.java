@@ -1,4 +1,4 @@
-package com.cnfwsy.freemarker.util;
+package com.zlinks.freemarker.util;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,15 +16,15 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import com.zlinks.freemarker.bean.ColumnInfo;
+import com.zlinks.freemarker.bean.Conf;
+import com.zlinks.freemarker.bean.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cnfwsy.freemarker.bean.PropertyInfo;
-import com.cnfwsy.freemarker.bean.ColumnInfo;
-import com.cnfwsy.freemarker.bean.Conf;
-import com.cnfwsy.freemarker.bean.Constants;
-import com.cnfwsy.freemarker.bean.TableInfo;
+import com.zlinks.freemarker.bean.PropertyInfo;
+import com.zlinks.freemarker.bean.TableInfo;
 
 /**
  * 支持单主键的表，建议主键设置在

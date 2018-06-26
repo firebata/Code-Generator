@@ -1,9 +1,9 @@
-package com.cnfwsy.freemarker.creator;
+package com.zlinks.freemarker.creator;
 
 import java.io.File;
 import java.io.IOException;
 
-import com.cnfwsy.freemarker.bean.TableInfo;
+import com.zlinks.freemarker.bean.TableInfo;
 
 import freemarker.template.TemplateException;
 

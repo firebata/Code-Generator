@@ -1,9 +1,9 @@
-package com.cnfwsy.freemarker.creator.impl;
+package com.zlinks.freemarker.creator.impl;
 
-import com.cnfwsy.freemarker.bean.Conf;
-import com.cnfwsy.freemarker.bean.Constants;
-import com.cnfwsy.freemarker.bean.TableInfo;
-import com.cnfwsy.freemarker.creator.AbstractFileCreator;
+import com.zlinks.freemarker.bean.Conf;
+import com.zlinks.freemarker.bean.Constants;
+import com.zlinks.freemarker.bean.TableInfo;
+import com.zlinks.freemarker.creator.AbstractFileCreator;
 
 /**
  * 创建mapperClass

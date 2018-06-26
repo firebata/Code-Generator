@@ -1,9 +1,10 @@
-package com.cnfwsy.freemarker.factory;
+package com.zlinks.freemarker.factory;
 
-import com.cnfwsy.freemarker.bean.Conf;
-import com.cnfwsy.freemarker.bean.TableInfo;
-import com.cnfwsy.freemarker.creator.FileCreator;
+import com.zlinks.freemarker.bean.Conf;
+import com.zlinks.freemarker.bean.TableInfo;
+import com.zlinks.freemarker.creator.FileCreator;
 import com.cnfwsy.freemarker.creator.impl.*;
+import com.zlinks.freemarker.creator.impl.*;
 
 /**
  * 生成代码

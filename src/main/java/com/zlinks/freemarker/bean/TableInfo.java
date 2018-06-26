@@ -1,4 +1,4 @@
-package com.cnfwsy.freemarker.bean;
+package com.zlinks.freemarker.bean;
 
 import java.util.List;
 import java.util.Map;

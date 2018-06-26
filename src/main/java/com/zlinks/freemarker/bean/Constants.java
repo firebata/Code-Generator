@@ -1,4 +1,4 @@
-package com.cnfwsy.freemarker.bean;
+package com.zlinks.freemarker.bean;
 
 public final class Constants {
 	public static final String TEMPLET_SUFFIX = ".ftl";

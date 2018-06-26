@@ -1,17 +1,17 @@
-package com.cnfwsy.freemarker;
+package com.zlinks.freemarker;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.zlinks.freemarker.bean.Conf;
+import com.zlinks.freemarker.creator.FileCreator;
+import com.zlinks.freemarker.util.DbUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cnfwsy.freemarker.bean.Conf;
-import com.cnfwsy.freemarker.bean.TableInfo;
-import com.cnfwsy.freemarker.creator.FileCreator;
-import com.cnfwsy.freemarker.factory.SimpleFactory;
-import com.cnfwsy.freemarker.util.DbUtils;
+import com.zlinks.freemarker.bean.TableInfo;
+import com.zlinks.freemarker.factory.SimpleFactory;
 
 import freemarker.template.TemplateException;
 
