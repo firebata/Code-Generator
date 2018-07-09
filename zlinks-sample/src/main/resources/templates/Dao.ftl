@@ -1,17 +1,20 @@
-package ${conf.basePackage}.${conf.daoPackage}<#if table.prefix!="">.${table.prefix}</#if>;
+package ${conf.daoPackage}<#if table.prefix!="">.${table.prefix}</#if>;
 
 <#--
 import java.util.List;
 -->
-import com.hpxs.base.BaseDao;
-import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${table.beanName};
+import ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${table.beanName};
+import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 类说明:
- *
- * Created by noname on ${.now}
+ * Copyright (C), 2017-2018, BBG
+ * FileName: AccountMapper
+ * Author:   zhangjh
+ * Date:     ${.now}
+ * Description: 账号
  */
-public interface ${table.beanName}Dao extends BaseDao<${table.beanName}> {
+@Mapper
+public interface ${table.beanName}Mapper{
 
 <#--
 

@@ -1,13 +1,10 @@
-package ${conf.basePackage}.${conf.controllerPackage}<#if table.prefix!="">.${table.prefix}</#if>;
+package ${conf.controllerPackage}<#if table.prefix!="">.${table.prefix}</#if>;
 <#assign beanName = table.beanName/>
 <#assign beanNameuncap_first = beanName?uncap_first/>
 <#assign implName = beanNameuncap_first+"ServiceImpl"/>
 <#assign serviceName = beanNameuncap_first+"Service"/>
-<#--
-import com.zlinks.core.bean.Response;
--->
-import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
-import ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
+import ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
+import ${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
 import com.zlinks.common.web.BaseController;
 import com.zlinks.common.web.JsonResult;
 import com.zlinks.common.web.PageResult;
@@ -73,7 +70,7 @@ public class ${beanName}Controller extends BaseController {
 	public JsonResult deleteJson(@PathVariable("id") int id) {
 		RestDoing doing = jsonResult -> {
 
-            int counts = ${implName}.delete(${beanNameuncap_first});
+            int counts = ${serviceName}.delete(${beanNameuncap_first});
             jsonResult.data = counts;
         };
         return doing.go(request, logger);
@@ -110,7 +107,7 @@ public class ${beanName}Controller extends BaseController {
 
 		RestDoing doing = jsonResult -> {
 
-			${beanName} entity  = ${implName}.queryInfoById(id);
+			${beanName} entity  = ${serviceName}.queryInfoById(id);
             jsonResult.data = entity;
         };
         return doing.go(request, logger);
@@ -182,7 +179,7 @@ public class ${beanName}Controller extends BaseController {
 
   		RestDoing doing = jsonResult -> {
 
-            int counts = ${implName}.add(${beanNameuncap_first});
+            int counts = ${serviceName}.add(${beanNameuncap_first});
             jsonResult.data = counts;
         };
         return doing.go(request, logger);
@@ -219,7 +216,7 @@ public class ${beanName}Controller extends BaseController {
 
   		RestDoing doing = jsonResult -> {
 
-            int counts = ${implName}.add(${beanNameuncap_first});
+            int counts = ${serviceName}.add(${beanNameuncap_first});
             jsonResult.data = counts;
         };
         return doing.go(request, logger);

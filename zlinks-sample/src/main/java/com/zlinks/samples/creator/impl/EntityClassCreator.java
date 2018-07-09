@@ -1,5 +1,6 @@
 package com.zlinks.samples.creator.impl;
 
+import com.zlinks.samples.ModuleEnum;
 import com.zlinks.samples.bean.Conf;
 import com.zlinks.samples.bean.Constants;
 import com.zlinks.samples.bean.TableInfo;
@@ -42,7 +43,7 @@ public class EntityClassCreator extends AbstractFileCreator {
 
 	@Override
 	public String getDirPath() {
-		return javaPath + conf.getEntityPackage();
+		return javaPath + conf.getDao_dir();
 	}
 
 	@Override

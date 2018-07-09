@@ -1,5 +1,6 @@
 package com.zlinks.samples.factory;
 
+import com.zlinks.samples.ModuleEnum;
 import com.zlinks.samples.bean.Conf;
 import com.zlinks.samples.bean.TableInfo;
 import com.zlinks.samples.creator.FileCreator;

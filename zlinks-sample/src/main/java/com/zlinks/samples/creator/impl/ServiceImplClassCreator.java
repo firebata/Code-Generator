@@ -1,5 +1,6 @@
 package com.zlinks.samples.creator.impl;
 
+import com.zlinks.samples.ModuleEnum;
 import com.zlinks.samples.bean.Conf;
 import com.zlinks.samples.bean.Constants;
 import com.zlinks.samples.bean.TableInfo;
@@ -31,7 +32,7 @@ public class ServiceImplClassCreator extends AbstractFileCreator {
 
 	@Override
 	public String getFileName(TableInfo tableInfo) {
-		return tableInfo.getBeanName() + conf.getServiceName() + conf.getImplSuffix() + Constants.JAVA_SUFFIX;
+		return conf.getServiceName() + conf.getImplSuffix() + Constants.JAVA_SUFFIX;
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class ServiceImplClassCreator extends AbstractFileCreator {
 
 	@Override
 	public String getDirPath() {
-		return javaPath + conf.getServicePackage() + conf.getServiceImplPackage();
+		return javaPath + conf.getServicePackage() + conf.getServiceimpl_dir();
 	}
 
 	@Override

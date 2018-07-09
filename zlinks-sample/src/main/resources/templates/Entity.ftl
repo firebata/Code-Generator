@@ -1,5 +1,5 @@
 <#-- bean template -->
-package ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>;
+package ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>;
 
 import com.hpxs.base.BaseEntity;
 import java.io.Serializable;

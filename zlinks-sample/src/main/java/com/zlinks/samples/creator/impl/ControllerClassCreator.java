@@ -1,5 +1,6 @@
 package com.zlinks.samples.creator.impl;
 
+import com.zlinks.samples.ModuleEnum;
 import com.zlinks.samples.bean.Conf;
 import com.zlinks.samples.bean.Constants;
 import com.zlinks.samples.bean.TableInfo;
@@ -41,7 +42,7 @@ public class ControllerClassCreator extends AbstractFileCreator {
 
 	@Override
 	public String getDirPath() {
-		return javaPath + conf.getControllerPackage();
+		return javaPath + conf.getController_dir();
 	}
 
 	@Override

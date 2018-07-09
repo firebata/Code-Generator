@@ -16,11 +16,11 @@
 </#macro>
 <#--<#macro batchMapperEl value>${r"#{"}${value}}</#batchMapperEl>-->
 <#if table.prefix!="">
-<#assign bean = conf.basePackage+"."+conf.entityPackage+"."+table.prefix+"."+beanName/>
-<#assign mapper = conf.basePackage+"."+conf.daoPackage+"."+table.prefix+"."+beanName+"Dao"/>
+<#assign bean = conf.entityPackage+"."+table.prefix+"."+beanName/>
+<#assign mapper = conf.daoPackage+"."+table.prefix+"."+beanName+"Dao"/>
 <#else>
-<#assign bean = conf.basePackage+"."+conf.entityPackage+"."+beanName/>
-<#assign mapper = conf.basePackage+"."+conf.daoPackage+"."+beanName+"Dao"/>
+<#assign bean = conf.entityPackage+"."+beanName/>
+<#assign mapper = conf.daoPackage+"."+beanName+"Dao"/>
 </#if>
 <#assign propertiesAnColumns = table.propertiesAnColumns/>
 <#assign keys = propertiesAnColumns?keys/>

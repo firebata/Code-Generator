@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import com.zlinks.samples.creator.impl.ModuleEnum;
+import com.zlinks.samples.ModuleEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -66,10 +66,15 @@ public class Conf {
     private String controller_modulename;
 
 
+    private String serviceImplPackage;
+    private String serviceimpl_dir;
+    private String serviceimpl_modulename;
+
     private String entitySuffix;
     private String daoName;
     private String implSuffix;
-    private String serviceImplPackage;
+
+
     private String serviceName;
     private String controllerName;
     private String mapperXmlName;
@@ -171,6 +176,14 @@ public class Conf {
         String service_dir = pro.getProperty("service_dir");
         String service_modulename = pro.getProperty("service_modulename");
 
+
+        String serviceImplPackage = pro.getProperty("serviceimpl_package");
+        String serviceimpl_dir = pro.getProperty("serviceimpl_dir");
+        String serviceimpl_modulename = pro.getProperty("service_modulename");
+
+
+
+
         String controllerPackage = pro.getProperty("controller_package");
         String controller_dir = pro.getProperty("controller_dir");
         String controller_modulename = pro.getProperty("controller_modulename");
@@ -181,11 +194,11 @@ public class Conf {
         String prefixStr = pro.getProperty("prefix");
         String underline2CamelStr = pro.getProperty("underline2Camel");
 
+
         String entitySuffix = pro.getProperty("eneity_suffix");
         String daoName = pro.getProperty("dao_name");
 
         String implSuffix = pro.getProperty("impl_suffix");
-        String serviceImplPackage = pro.getProperty("serviceimpl_package");
         String serviceName = pro.getProperty("service_name");
         String controllerName = pro.getProperty("controller_name");
         String mapperXmlName = pro.getProperty("mapperxml_name");
@@ -213,6 +226,10 @@ public class Conf {
         this.setService_dir(service_dir);
         this.setService_modulename(service_modulename);
 
+        this.setServiceImplPackage(serviceImplPackage);
+        this.setServiceimpl_dir(serviceimpl_dir);
+        this.setServiceimpl_modulename(service_modulename);
+
         this.setControllerPackage(controllerPackage);
         this.setController_dir(controller_dir);
         this.setController_modulename(controller_modulename);
@@ -222,7 +239,8 @@ public class Conf {
         this.setEntitySuffix(entitySuffix);
         this.setDaoName(daoName);
         this.setImplSuffix(implSuffix);
-        this.setServiceImplPackage(serviceImplPackage);
+
+
         this.setServiceName(serviceName);
         this.setControllerName(controllerName);
         this.setMapperXmlName(mapperXmlName);
@@ -498,5 +516,21 @@ public class Conf {
 
     public void setController_modulename(String controller_modulename) {
         this.controller_modulename = controller_modulename;
+    }
+
+    public String getServiceimpl_dir() {
+        return serviceimpl_dir;
+    }
+
+    public void setServiceimpl_dir(String serviceimpl_dir) {
+        this.serviceimpl_dir = serviceimpl_dir;
+    }
+
+    public String getServiceimpl_modulename() {
+        return serviceimpl_modulename;
+    }
+
+    public void setServiceimpl_modulename(String serviceimpl_modulename) {
+        this.serviceimpl_modulename = serviceimpl_modulename;
     }
 }
