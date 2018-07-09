@@ -1,5 +1,8 @@
 package com.zlinks.samples.bean;
 
+/**
+ * 常量
+ */
 public final class Constants {
 	public static final String TEMPLET_SUFFIX = ".ftl";
 

@@ -38,9 +38,6 @@ import java.util.Map;
 @RequestMapping(value = Routes.API_VERSION)
 public class ${beanName}Controller extends BaseController {
 
-	/**
-	 * logger 日志
-	 */
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
@@ -84,13 +81,32 @@ public class ${beanName}Controller extends BaseController {
 
 
 	/**
-	 * 详情页
-	 *
-	 * @param id 主键id
-	 * @return String 详情页url
-	 */
+     * @api {post} /${beanNameuncap_first}s/save 02. ${beanName}详细信息
+     * @apiPermission Login in Users
+     * @apiGroup  ${beanName}
+     * @apiVersion 1.0.1
+	<#assign allPropInfo = table.allPropInfo/>
+	<#list allPropInfo as prop>
+	 * @apiParam {${prop.propertyType}} prop.propertyName <code>必须参数</code> ${beanName}的prop.propertyName
+	</#list>
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code": 0,
+     *     "data": 1
+     *     "desc": "Success",
+     *     "timestamp": "${.now}:082"
+     * }
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code": 110002,
+     *     "desc": "Param is null or error",
+     *     "timestamp": "${.now}:479"
+     * }
+     */
 	@RequestMapping(value = "/${beanNameuncap_first}s/info/{id}")
-	public String info(@PathVariable("id") Long id) {
+	public JsonResult info(@PathVariable("id") Long id) {
 
 		RestDoing doing = jsonResult -> {
 
@@ -101,13 +117,29 @@ public class ${beanName}Controller extends BaseController {
 	}
 
 	/**
-	 * 列表页面
-	 * 
-	 * @param findContent 搜索内容
-	 * @param pageNo 页数
-	 * @return Pagination 集合列表
-	 */
-	@RequestMapping(value = "list")
+     * @api {post} /${beanNameuncap_first}s/list 03. ${beanName}列表查询
+     * @apiPermission Login in Users
+     * @apiGroup  ${beanName}
+     * @apiVersion 1.0.1
+	 * @apiParam {Number} pageNo <code>必须参数</code> 页码，从1开始
+	 * @apiParam {Number} pageSize <code>必须参数</code> 页码，每页显示的记录数量
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code": 0,
+     *     "data": 1
+     *     "desc": "Success",
+     *     "timestamp": "${.now}:082"
+     * }
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code": 110002,
+     *     "desc": "Param is null or error",
+     *     "timestamp": "${.now}:479"
+     * }
+     */
+	@RequestMapping(value = "/${beanNameuncap_first}s/list")
 	public String list(String findContent, ModelMap modelMap, Integer pageNo) {
 		try {
 			Pagination<${beanName}> data = ${serviceName}.findPage(modelMap, pageNo, pageSize);
@@ -121,7 +153,7 @@ public class ${beanName}Controller extends BaseController {
 
 
 	/**
-     * @api {post} /${beanNameuncap_first}s/save 01. ${beanName}新增
+     * @api {post} /${beanNameuncap_first}s/save 03. ${beanName}新增
      * @apiPermission Login in Users
      * @apiGroup  ${beanName}
      * @apiVersion 1.0.1
@@ -158,26 +190,39 @@ public class ${beanName}Controller extends BaseController {
 
 
 	/**
-	 * 列表数据
-	 * 
-	 * @param findContent 搜索内容
-	 * @param pageNo 页数
-	 * @return Pagination 集合列表
-	 */
-	@RequestMapping(value = "jsonList")
-	@ResponseBody
-	public JsonResult<Pagination<${beanName}>> jsonList(String findContent, ModelMap modelMap, Integer pageNo) {
-		JsonResult<Pagination<${beanName}>> result = new JsonResult<Pagination<${beanName}>>();
-		try {
-			Pagination<${beanName}> data = ${serviceName}.findPage(modelMap, pageNo, pageSize);
-			result.setData(data);
-		} catch (Exception e) {
-			logger.error(HPXSConstants.ERROR_STRING, e);
-			result.setCode(HPXSConstants.STATUS_ERROR);
-			result.setMessage(e.getMessage());
-			result.setSuccess(Boolean.FALSE);
-		}
-		return result;
+     * @api {post} /${beanNameuncap_first}s/update/{id} 03. ${beanName}修改
+     * @apiPermission Login in Users
+     * @apiGroup  ${beanName}
+     * @apiVersion 1.0.1
+     <#assign allPropInfo = table.allPropInfo/>
+     <#list allPropInfo as prop>
+	 * @apiParam {${prop.propertyType}} prop.propertyName <code>必须参数</code> ${beanName}的prop.propertyName
+	 </#list>
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code": 0,
+     *     "data": 1
+     *     "desc": "Success",
+     *     "timestamp": "${.now}:082"
+     * }
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code": 110002,
+     *     "desc": "Param is null or error",
+     *     "timestamp": "${.now}:479"
+     * }
+     */
+	@RequestMapping(value = "/${beanNameuncap_first}s/save", method = RequestMethod.PUT)
+	public JsonResult add(@RequestBody ${beanName} ${beanNameuncap_first}) {
+
+  		RestDoing doing = jsonResult -> {
+
+            int counts = ${implName}.add(${beanNameuncap_first});
+            jsonResult.data = counts;
+        };
+        return doing.go(request, logger);
 	}
 
 }

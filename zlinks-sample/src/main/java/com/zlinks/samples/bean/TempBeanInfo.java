@@ -12,189 +12,233 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author zhangjh
  */
 public class TempBeanInfo implements Serializable {
-	/**
-	 * serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 表名
-	 */
-	private String tableName;
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 前缀
-	 */
-	private String prefix;
+    /**
+     * 表名
+     */
+    private String tableName;
 
-	/**
-	 * bean
-	 */
-	private String beanName;
+    /**
+     * 前缀
+     */
+    private String prefix;
 
-	private String entityName;
+    /**
+     * bean
+     */
+    private String beanName;
 
-	private String entityObj;
+    /**
+     *
+     */
+    private String entityName;
 
-	private String entityPackage;
+    /**
+     *
+     */
+    private String entityObj;
 
-	private String entityDir;
+    /**
+     *
+     */
+    private String entityPackage;
 
-	private String entityFileName;
+    /**
+     *
+     */
+    private String entityDir;
 
-	private String entityFilePath;
 
-	private String daoPackage;
+    /**
+     *
+     */
+    private String entityFileName;
 
-	private String servicePackage;
+    /**
+     *
+     */
+    private String entityFilePath;
 
-	private String serviceImplPackage;
+    /**
+     *
+     */
+    private String daoPackage;
 
-	private String controllerPackage;
 
-	private String serviceTestPackage;
+    /**
+     *
+     */
+    private String servicePackage;
 
-	private Conf conf;
 
-	private TableInfo tableInfo;
+    /**
+     *
+     */
+    private String serviceImplPackage;
 
-	public TempBeanInfo(Conf conf, TableInfo tableInfo) {
-		this.conf = conf;
-		this.tableInfo = tableInfo;
-	}
+    /**
+     *
+     */
+    private String controllerPackage;
 
-	public String getTableName() {
-		return tableName;
-	}
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
+    /**
+     *
+     */
+    private String serviceTestPackage;
 
-	public String getBeanName() {
-		return beanName;
-	}
+    /**
+     *
+     */
+    private Conf conf;
 
-	public void setBeanName(String beanName) {
-		this.beanName = beanName;
-	}
+    /**
+     *
+     */
+    private TableInfo tableInfo;
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-	}
+    public TempBeanInfo(Conf conf, TableInfo tableInfo) {
+        this.conf = conf;
+        this.tableInfo = tableInfo;
+    }
 
-	public String getPrefix() {
-		return prefix;
-	}
+    public String getTableName() {
+        return tableName;
+    }
 
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-	public String getEntityPackage() {
-		if (StringUtils.isNoneBlank(getPrefix())) {
-			return entityPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
-		}
-		return entityPackage;
-	}
+    public String getBeanName() {
+        return beanName;
+    }
 
-	public void setEntityPackage(String entityPackage) {
-		this.entityPackage = entityPackage;
-	}
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
+    }
 
-	public String getDaoPackage() {
-		if (StringUtils.isNoneBlank(getPrefix())) {
-			return daoPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
-		}
-		return daoPackage;
-	}
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
 
-	public void setDaoPackage(String daoPackage) {
-		this.daoPackage = daoPackage;
-	}
+    public String getPrefix() {
+        return prefix;
+    }
 
-	public String getServicePackage() {
-		if (StringUtils.isNoneBlank(getPrefix())) {
-			return servicePackage + Constants.PACKAGE_SEPARATOR + getPrefix();
-		}
-		return servicePackage;
-	}
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
-	public void setServicePackage(String servicePackage) {
-		this.servicePackage = servicePackage;
-	}
+    public String getEntityPackage() {
+        if (StringUtils.isNoneBlank(getPrefix())) {
+            return entityPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
+        }
+        return entityPackage;
+    }
 
-	public String getControllerPackage() {
-		if (StringUtils.isNoneBlank(getPrefix())) {
-			return controllerPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
-		}
-		return controllerPackage;
-	}
+    public void setEntityPackage(String entityPackage) {
+        this.entityPackage = entityPackage;
+    }
 
-	public void setControllerPackage(String controllerPackage) {
-		this.controllerPackage = controllerPackage;
-	}
+    public String getDaoPackage() {
+        if (StringUtils.isNoneBlank(getPrefix())) {
+            return daoPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
+        }
+        return daoPackage;
+    }
 
-	public String getServiceImplPackage() {
-		if (StringUtils.isNoneBlank(getPrefix())) {
-			return serviceImplPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
-		}
-		return serviceImplPackage;
-	}
+    public void setDaoPackage(String daoPackage) {
+        this.daoPackage = daoPackage;
+    }
 
-	public void setServiceImplPackage(String serviceImplPackage) {
-		this.serviceImplPackage = serviceImplPackage;
-	}
+    public String getServicePackage() {
+        if (StringUtils.isNoneBlank(getPrefix())) {
+            return servicePackage + Constants.PACKAGE_SEPARATOR + getPrefix();
+        }
+        return servicePackage;
+    }
 
-	public String getServiceTestPackage() {
-		if (StringUtils.isNoneBlank(getPrefix())) {
-			return serviceTestPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
-		}
-		return serviceTestPackage;
-	}
+    public void setServicePackage(String servicePackage) {
+        this.servicePackage = servicePackage;
+    }
 
-	public void setServiceTestPackage(String serviceTestPackage) {
-		this.serviceTestPackage = serviceTestPackage;
-	}
+    public String getControllerPackage() {
+        if (StringUtils.isNoneBlank(getPrefix())) {
+            return controllerPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
+        }
+        return controllerPackage;
+    }
 
-	public String getEntityName() {
-		return entityName;
-	}
+    public void setControllerPackage(String controllerPackage) {
+        this.controllerPackage = controllerPackage;
+    }
 
-	public void setEntityName(String entityName) {
-		this.entityName = entityName;
-	}
+    public String getServiceImplPackage() {
+        if (StringUtils.isNoneBlank(getPrefix())) {
+            return serviceImplPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
+        }
+        return serviceImplPackage;
+    }
 
-	public String getEntityObj() {
-		return entityObj;
-	}
+    public void setServiceImplPackage(String serviceImplPackage) {
+        this.serviceImplPackage = serviceImplPackage;
+    }
 
-	public void setEntityObj(String entityObj) {
-		this.entityObj = entityObj;
-	}
+    public String getServiceTestPackage() {
+        if (StringUtils.isNoneBlank(getPrefix())) {
+            return serviceTestPackage + Constants.PACKAGE_SEPARATOR + getPrefix();
+        }
+        return serviceTestPackage;
+    }
 
-	public String getEntityDir() {
-		return entityDir;
-	}
+    public void setServiceTestPackage(String serviceTestPackage) {
+        this.serviceTestPackage = serviceTestPackage;
+    }
 
-	public void setEntityDir(String entityDir) {
-		this.entityDir = entityDir;
-	}
+    public String getEntityName() {
+        return entityName;
+    }
 
-	public String getEntityFileName() {
-		return entityFileName;
-	}
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
 
-	public void setEntityFileName(String entityFileName) {
-		this.entityFileName = entityFileName;
-	}
+    public String getEntityObj() {
+        return entityObj;
+    }
 
-	public String getEntityFilePath() {
-		return entityFilePath;
-	}
+    public void setEntityObj(String entityObj) {
+        this.entityObj = entityObj;
+    }
 
-	public void setEntityFilePath(String entityFilePath) {
-		this.entityFilePath = entityFilePath;
-	}
+    public String getEntityDir() {
+        return entityDir;
+    }
+
+    public void setEntityDir(String entityDir) {
+        this.entityDir = entityDir;
+    }
+
+    public String getEntityFileName() {
+        return entityFileName;
+    }
+
+    public void setEntityFileName(String entityFileName) {
+        this.entityFileName = entityFileName;
+    }
+
+    public String getEntityFilePath() {
+        return entityFilePath;
+    }
+
+    public void setEntityFilePath(String entityFilePath) {
+        this.entityFilePath = entityFilePath;
+    }
 }
