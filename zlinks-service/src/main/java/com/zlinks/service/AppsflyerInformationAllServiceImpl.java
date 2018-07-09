@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description:业务
  */
 @Service("appsflyerInformationAllService")
 public class AppsflyerInformationAllServiceImpl extends BaseMybatisDao<AppsflyerInformationAllDao> implements AppsflyerInformationAllService {
@@ -53,21 +55,25 @@ public class AppsflyerInformationAllServiceImpl extends BaseMybatisDao<Appsflyer
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(AppsflyerInformationAll entity) {
 		return appsflyerInformationAllDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return appsflyerInformationAllDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(AppsflyerInformationAll entity) {
 		return appsflyerInformationAllDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<AppsflyerInformationAll> entityList) {
 		return appsflyerInformationAllDao.addList(entityList);
 	}

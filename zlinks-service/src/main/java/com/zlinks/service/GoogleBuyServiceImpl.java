@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description:业务
  */
 @Service("googleBuyService")
 public class GoogleBuyServiceImpl extends BaseMybatisDao<GoogleBuyDao> implements GoogleBuyService {
@@ -53,21 +55,25 @@ public class GoogleBuyServiceImpl extends BaseMybatisDao<GoogleBuyDao> implement
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(GoogleBuy entity) {
 		return googleBuyDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return googleBuyDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(GoogleBuy entity) {
 		return googleBuyDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<GoogleBuy> entityList) {
 		return googleBuyDao.addList(entityList);
 	}

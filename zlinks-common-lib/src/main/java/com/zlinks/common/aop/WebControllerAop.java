@@ -2,6 +2,8 @@ package com.zlinks.common.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.zlinks.common.constants.BaseResultCodeConstant;
+import com.zlinks.common.dto.AccountDto;
+import com.zlinks.common.enums.UserOpenType;
 import com.zlinks.common.utils.IpUtils;
 import com.zlinks.common.web.JsonResult;
 import org.apache.catalina.session.StandardSessionFacade;
@@ -81,6 +83,7 @@ public class WebControllerAop {
         String ip = "";
         String adId = "";
         String account = "";
+        UserOpenType openType = null;
         int index = 0;
         for (Object arg : args) {
 
@@ -111,6 +114,13 @@ public class WebControllerAop {
                 } else {
                     if (!(arg instanceof StandardSessionFacade)) {
                         allParams.add(JSON.toJSONString(arg));
+                        if (arg instanceof AccountDto) {
+                            AccountDto userDto = (AccountDto) arg;
+                            account = userDto.getAccount();
+                            if(userDto.getOpenType() != null){
+                                openType = userDto.getOpenType();
+                            }
+                        }
                     }
                 }
 

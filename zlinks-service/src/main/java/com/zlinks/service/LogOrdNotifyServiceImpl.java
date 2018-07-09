@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:01
+ * Description:业务
  */
 @Service("logOrdNotifyService")
 public class LogOrdNotifyServiceImpl extends BaseMybatisDao<LogOrdNotifyDao> implements LogOrdNotifyService {
@@ -53,21 +55,25 @@ public class LogOrdNotifyServiceImpl extends BaseMybatisDao<LogOrdNotifyDao> imp
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(LogOrdNotify entity) {
 		return logOrdNotifyDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return logOrdNotifyDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(LogOrdNotify entity) {
 		return logOrdNotifyDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<LogOrdNotify> entityList) {
 		return logOrdNotifyDao.addList(entityList);
 	}

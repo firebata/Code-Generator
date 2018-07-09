@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description:业务
  */
 @Service("cusAppPackageReportService")
 public class CusAppPackageReportServiceImpl extends BaseMybatisDao<CusAppPackageReportDao> implements CusAppPackageReportService {
@@ -53,21 +55,25 @@ public class CusAppPackageReportServiceImpl extends BaseMybatisDao<CusAppPackage
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(CusAppPackageReport entity) {
 		return cusAppPackageReportDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return cusAppPackageReportDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(CusAppPackageReport entity) {
 		return cusAppPackageReportDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<CusAppPackageReport> entityList) {
 		return cusAppPackageReportDao.addList(entityList);
 	}

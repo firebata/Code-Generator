@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description:业务
  */
 @Service("cltComplaintReplyService")
 public class CltComplaintReplyServiceImpl extends BaseMybatisDao<CltComplaintReplyDao> implements CltComplaintReplyService {
@@ -53,21 +55,25 @@ public class CltComplaintReplyServiceImpl extends BaseMybatisDao<CltComplaintRep
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(CltComplaintReply entity) {
 		return cltComplaintReplyDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return cltComplaintReplyDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(CltComplaintReply entity) {
 		return cltComplaintReplyDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<CltComplaintReply> entityList) {
 		return cltComplaintReplyDao.addList(entityList);
 	}

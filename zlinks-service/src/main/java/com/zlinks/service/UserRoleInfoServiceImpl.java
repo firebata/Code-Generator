@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:59
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:01
+ * Description:业务
  */
 @Service("userRoleInfoService")
 public class UserRoleInfoServiceImpl extends BaseMybatisDao<UserRoleInfoDao> implements UserRoleInfoService {
@@ -53,21 +55,25 @@ public class UserRoleInfoServiceImpl extends BaseMybatisDao<UserRoleInfoDao> imp
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(UserRoleInfo entity) {
 		return userRoleInfoDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return userRoleInfoDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(UserRoleInfo entity) {
 		return userRoleInfoDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<UserRoleInfo> entityList) {
 		return userRoleInfoDao.addList(entityList);
 	}

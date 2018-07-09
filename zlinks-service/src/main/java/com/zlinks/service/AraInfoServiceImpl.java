@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description:业务
  */
 @Service("araInfoService")
 public class AraInfoServiceImpl extends BaseMybatisDao<AraInfoDao> implements AraInfoService {
@@ -53,21 +55,25 @@ public class AraInfoServiceImpl extends BaseMybatisDao<AraInfoDao> implements Ar
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(AraInfo entity) {
 		return araInfoDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return araInfoDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(AraInfo entity) {
 		return araInfoDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<AraInfo> entityList) {
 		return araInfoDao.addList(entityList);
 	}

@@ -1,79 +1,90 @@
 package com.zlinks.zlinks-controller/src/main/java/com/zlinks/controller/;
-import com.zlinks.common.controller.BaseController;
-import com.zlinks.core.mybatis.page.Pagination;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import com.zlinks.zlinks-repository/src/main/java/com/zlinks/domain/.KeyBbgame;
 import com.zlinks.zlinks-service/src/main/java/com/zlinks/service/.KeyBbgameService;
-import com.hpxs.util.HPXSConstants;
-import com.hpxs.util.HttpResult;
-import org.springframework.web.bind.annotation.*;
+import com.zlinks.common.web.BaseController;
+import com.zlinks.common.web.JsonResult;
+import com.zlinks.common.web.PageResult;
+import com.zlinks.common.web.RestDoing;
+import com.zlinks.Routes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import javax.servlet.http.HttpServletRequest;
 /**
-* 接口层
-* Created by noname on 2018-7-7 15:34:58
-*/
-@Controller
-@RequestMapping("/keyBbgame")
+ * Copyright (C), 2017-2020, BBG
+ * FileName: KeyBbgameController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description: 控制层
+ */
+@RestController
+@RequestMapping(value = Routes.API_VERSION)
 public class KeyBbgameController extends BaseController {
 
 	/**
 	 * logger 日志
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(KeyBbgameController.class);
-	
-	private static final String BASE_PATH = "keyBbgame/";
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
 	@Autowired
 	private KeyBbgameService keyBbgameService;
+
+
+	/**
+     * @api {post} /keyBbgames/save 01. KeyBbgame新增
+     * @apiPermission Login in Users
+     * @apiGroup  KeyBbgame
+     * @apiVersion 1.0.1
+     * @apiParam {Number} userId <code>必须参数</code>用户id
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code": 0,
+     *     "data": 1
+     *     "desc": "Success",
+     *     "timestamp": "2018-7-9 16:02:00:082"
+     * }
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "code": 110002,
+     *     "desc": "Param is null or error",
+     *     "timestamp": "2018-7-9 16:02:00:479"
+     * }
+     */
+	@RequestMapping(value = "/keyBbgames/save", method = RequestMethod.POST)
+	public JsonResult add(@RequestBody KeyBbgame keyBbgame) {
+
+  		RestDoing doing = jsonResult -> {
+
+            int counts = keyBbgameServiceImpl.add(keyBbgame);
+            jsonResult.data = counts;
+        };
+        return doing.go(request, logger);
+	}
 
 	/**
 	 * 删除，返回json
 	 * 
 	 * @param id 主键id
-	 * @return HttpResult json对象
+	 * @return JsonResult json对象
 	 */
-	@RequestMapping(value = "deleteJson/{id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public HttpResult<Integer> deleteJson(@PathVariable("id") int id) {
-		HttpResult<Integer> result = new HttpResult<Integer>();
-		try {
-			int row = keyBbgameService.delete(id);
-			result.setSuccess(row == 1);
-			result.setData(id);
-		} catch (Exception e) {
-			logger.error(HPXSConstants.ERROR_STRING, e);
-			result.setCode(HPXSConstants.STATUS_ERROR);
-			result.setMessage(e.getMessage());
-			result.setSuccess(Boolean.FALSE);
-		}
-		return result;
+	@RequestMapping(value = "/keyBbgames/delete/{id}", method = RequestMethod.DELETE)
+	public JsonResult deleteJson(@PathVariable("id") int id) {
+		RestDoing doing = jsonResult -> {
+
+            int counts = keyBbgameServiceImpl.delete(keyBbgame);
+            jsonResult.data = counts;
+        };
+        return doing.go(request, logger);
 	}
-	
-	/**
-	 * 删除，返回至具体页面
-	 * 
-	 * @param id 主键id
-	 * @return String 页面url
-	 */
-	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public String delete(@PathVariable("id") int id) {
-		try {
-			int row = keyBbgameService.delete(id);
-			if (row == 1) {
-				return BASE_PATH + "list";
-			} else {
-				redirect404();
-			}
-		} catch (Exception e) {
-			logger.error(HPXSConstants.ERROR_STRING, e);
-			redirect404();
-		}
-		return BASE_PATH + "list";
-	}
+
 
 	/**
 	 * 详情页
@@ -81,16 +92,15 @@ public class KeyBbgameController extends BaseController {
 	 * @param id 主键id
 	 * @return String 详情页url
 	 */
-	@RequestMapping(value = "view/{id}")
-	public String view(@PathVariable("id") int id, ModelMap modelMap) {
-		try {
-			KeyBbgame entity = keyBbgameService.getById(id);
-			modelMap.addAttribute("entity", entity);
-		} catch (Exception e) {
-			logger.error(HPXSConstants.ERROR_STRING, e);
-			redirect404();
-		}
-		return BASE_PATH + "view";
+	@RequestMapping(value = "/keyBbgames/info/{id}")
+	public String info(@PathVariable("id") Long id) {
+
+		RestDoing doing = jsonResult -> {
+
+			KeyBbgame entity  = keyBbgameServiceImpl.queryInfoById(id);
+            jsonResult.data = entity;
+        };
+        return doing.go(request, logger);
 	}
 
 	/**
@@ -121,8 +131,8 @@ public class KeyBbgameController extends BaseController {
 	 */
 	@RequestMapping(value = "jsonList")
 	@ResponseBody
-	public HttpResult<Pagination<KeyBbgame>> jsonList(String findContent, ModelMap modelMap, Integer pageNo) {
-		HttpResult<Pagination<KeyBbgame>> result = new HttpResult<Pagination<KeyBbgame>>();
+	public JsonResult<Pagination<KeyBbgame>> jsonList(String findContent, ModelMap modelMap, Integer pageNo) {
+		JsonResult<Pagination<KeyBbgame>> result = new JsonResult<Pagination<KeyBbgame>>();
 		try {
 			Pagination<KeyBbgame> data = keyBbgameService.findPage(modelMap, pageNo, pageSize);
 			result.setData(data);

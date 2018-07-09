@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description:业务
  */
 @Service("keyBbgameService")
 public class KeyBbgameServiceImpl extends BaseMybatisDao<KeyBbgameDao> implements KeyBbgameService {
@@ -53,21 +55,25 @@ public class KeyBbgameServiceImpl extends BaseMybatisDao<KeyBbgameDao> implement
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(KeyBbgame entity) {
 		return keyBbgameDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return keyBbgameDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(KeyBbgame entity) {
 		return keyBbgameDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<KeyBbgame> entityList) {
 		return keyBbgameDao.addList(entityList);
 	}

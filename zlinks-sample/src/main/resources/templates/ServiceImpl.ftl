@@ -16,9 +16,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on ${.now}
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     ${.now}
+ * Description:业务
  */
 @Service("${beanNameUncap_first}Service")
 public class ${beanName}ServiceImpl extends BaseMybatisDao<${beanName}Dao> implements ${beanName}Service {
@@ -56,21 +58,25 @@ public class ${beanName}ServiceImpl extends BaseMybatisDao<${beanName}Dao> imple
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(${beanName} entity) {
 		return ${beanNameUncap_first}Dao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return ${beanNameUncap_first}Dao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(${beanName} entity) {
 		return ${beanNameUncap_first}Dao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<${beanName}> entityList) {
 		return ${beanNameUncap_first}Dao.addList(entityList);
 	}

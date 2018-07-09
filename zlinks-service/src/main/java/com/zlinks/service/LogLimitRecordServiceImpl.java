@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:01
+ * Description:业务
  */
 @Service("logLimitRecordService")
 public class LogLimitRecordServiceImpl extends BaseMybatisDao<LogLimitRecordDao> implements LogLimitRecordService {
@@ -53,21 +55,25 @@ public class LogLimitRecordServiceImpl extends BaseMybatisDao<LogLimitRecordDao>
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(LogLimitRecord entity) {
 		return logLimitRecordDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return logLimitRecordDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(LogLimitRecord entity) {
 		return logLimitRecordDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<LogLimitRecord> entityList) {
 		return logLimitRecordDao.addList(entityList);
 	}

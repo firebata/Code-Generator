@@ -40,8 +40,26 @@ public class SysConfigKeyConstant {
 
     public final static String SMS_REGION_HK = "HK";
 
-    public final static String SMS_SIGNNAME = "zlinks";
+    public final static String SMS_SIGNNAME = "BBGAME";
 
+    //
+    public final static String DEVICE_KEY = "device";
 
+    //
+    public final static String ADID_KEY = "adid";
+
+    //
+    public final static String MOBILE_KEY = "mobile";
+
+    public final static String LIMIT_ACTION_LOGIN_IP = "lmt:act:lgn:ip:";
+    public final static String LIMIT_ACTION_LOGIN_DEVICE = "lmt:act:lgn:dev:";
+    public final static String LIMIT_ACTION_LOGIN_ADID = "lmt:act:lgn:ad:";
+    public final static String LIMIT_ACTION_REGISTER_IP = "lmt:act:reg:ip:";
+    public final static String LIMIT_ACTION_REGISTER_DEVICE = "lmt:act:reg:dev:";
+    public final static String LIMIT_ACTION_REGISTER_ADID = "lmt:act:reg:ad:";
+    public final static String LIMIT_ACTION_MOBILE_VERFICODE_IP = "lmt:act:mblvrcd:ip:";
+    public final static String LIMIT_ACTION_MOBILE_VERFICODE_DEVICE = "lmt:act:mblvrcd:dev:";
+    public final static String LIMIT_ACTION_MOBILE_VERFICODE_ADID = "lmt:act:mblvrcd:ad:";
+    public final static String GOOGLE_CREDENTIAL = "google_credential";
 
 }

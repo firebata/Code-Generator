@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:59
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:01
+ * Description:业务
  */
 @Service("usrGameAccountService")
 public class UsrGameAccountServiceImpl extends BaseMybatisDao<UsrGameAccountDao> implements UsrGameAccountService {
@@ -53,21 +55,25 @@ public class UsrGameAccountServiceImpl extends BaseMybatisDao<UsrGameAccountDao>
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(UsrGameAccount entity) {
 		return usrGameAccountDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return usrGameAccountDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(UsrGameAccount entity) {
 		return usrGameAccountDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<UsrGameAccount> entityList) {
 		return usrGameAccountDao.addList(entityList);
 	}

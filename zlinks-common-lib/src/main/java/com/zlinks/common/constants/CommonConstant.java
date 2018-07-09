@@ -34,7 +34,7 @@ public enum CommonConstant {
     ACCOUNT_DEFAULT_PASSWORD("F59BD65F7EDAFB087A81D4DCA06C4910"),
     EQUALS("="),
     KEY_EXPPACKAGES("key:exppackages"),
-    SESSION_FLAG("zlinks:session:login:"),
+    SESSION_FLAG("bbgame:session:login:"),
 
 
 

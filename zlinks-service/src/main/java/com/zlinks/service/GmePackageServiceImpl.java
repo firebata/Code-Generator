@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description:业务
  */
 @Service("gmePackageService")
 public class GmePackageServiceImpl extends BaseMybatisDao<GmePackageDao> implements GmePackageService {
@@ -53,21 +55,25 @@ public class GmePackageServiceImpl extends BaseMybatisDao<GmePackageDao> impleme
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(GmePackage entity) {
 		return gmePackageDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return gmePackageDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(GmePackage entity) {
 		return gmePackageDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<GmePackage> entityList) {
 		return gmePackageDao.addList(entityList);
 	}

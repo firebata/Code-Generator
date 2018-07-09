@@ -5,9 +5,11 @@ import com.hpxs.base.BaseService;
 import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
 
 /**
- * 类说明:
- *
- * Created by noname on ${.now}
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     ${.now}
+ * Description:
  */
 public interface ${beanName}Service extends BaseService<${table.beanName}> {
 

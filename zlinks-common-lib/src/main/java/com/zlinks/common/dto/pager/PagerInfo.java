@@ -1,8 +1,8 @@
 package com.zlinks.common.dto.pager;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zlinks.common.domain.BaseDomain;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -47,9 +47,12 @@ public class PagerInfo extends BaseDomain {
 
     private Integer pageSize;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date endTime;
+
 
     public PagerInfo() {
     }

@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:59
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:01
+ * Description:业务
  */
 @Service("ordRefundService")
 public class OrdRefundServiceImpl extends BaseMybatisDao<OrdRefundDao> implements OrdRefundService {
@@ -53,21 +55,25 @@ public class OrdRefundServiceImpl extends BaseMybatisDao<OrdRefundDao> implement
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(OrdRefund entity) {
 		return ordRefundDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return ordRefundDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(OrdRefund entity) {
 		return ordRefundDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<OrdRefund> entityList) {
 		return ordRefundDao.addList(entityList);
 	}

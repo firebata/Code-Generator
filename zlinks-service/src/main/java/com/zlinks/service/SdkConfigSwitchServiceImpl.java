@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:59
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:01
+ * Description:业务
  */
 @Service("sdkConfigSwitchService")
 public class SdkConfigSwitchServiceImpl extends BaseMybatisDao<SdkConfigSwitchDao> implements SdkConfigSwitchService {
@@ -53,21 +55,25 @@ public class SdkConfigSwitchServiceImpl extends BaseMybatisDao<SdkConfigSwitchDa
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(SdkConfigSwitch entity) {
 		return sdkConfigSwitchDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return sdkConfigSwitchDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(SdkConfigSwitch entity) {
 		return sdkConfigSwitchDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<SdkConfigSwitch> entityList) {
 		return sdkConfigSwitchDao.addList(entityList);
 	}

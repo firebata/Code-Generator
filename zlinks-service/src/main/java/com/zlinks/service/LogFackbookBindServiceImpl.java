@@ -13,9 +13,11 @@ import com.hpxs.base.BaseMybatisDao;
 import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * 类说明:
- *
- * Created by noname on 2018-7-7 15:34:58
+ * Copyright (C), 2017-2020, BBG
+ * FileName: AccountController
+ * Author:   zhangjh
+ * Date:     2018-7-9 16:02:00
+ * Description:业务
  */
 @Service("logFackbookBindService")
 public class LogFackbookBindServiceImpl extends BaseMybatisDao<LogFackbookBindDao> implements LogFackbookBindService {
@@ -53,21 +55,25 @@ public class LogFackbookBindServiceImpl extends BaseMybatisDao<LogFackbookBindDa
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int update(LogFackbookBind entity) {
 		return logFackbookBindDao.update(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int deleteById(int id) {
 		return logFackbookBindDao.deleteById(id);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int add(LogFackbookBind entity) {
 		return logFackbookBindDao.add(entity);
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public int addList(List<LogFackbookBind> entityList) {
 		return logFackbookBindDao.addList(entityList);
 	}
