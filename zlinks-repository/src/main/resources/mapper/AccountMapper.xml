@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlinks.repository.mapper.AccountMapper">
+
+
+    <resultMap id="accountMap" type="Account">
+        <id property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="account" column="account"/>
+        <result property="password" column="password"/>
+        <result property="birth" column="birth"/>
+        <result property="sex" column="sex"/>
+        <result property="mobile" column="mobile"/>
+        <result property="email" column="email"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="adminFlag" column="admin_flag"/>
+        <result property="uid" column="uid"/>
+        <collection property="roles" column="user_id"
+                    select="com.zlinks.repository.mapper.AuthMapper.selectRolesByRoleId">
+        </collection>
+    </resultMap>
+
+
+    <select id="selectAccountById" resultType="Account">
+        select * from user_info where id = #{id}
+    </select>
+
+    <select id="findByAccountAndPassword" resultType="Account">
+        select * from user_info where account = #{account} and password=#{password} and delete_flag=#{deleteFlag}
+    </select>
+
+    <insert id="saveUser">
+        insert into user_info (user_id,account) value(#{userId},#{account})
+    </insert>
+
+
+    <select id="selectAllRolesByUserId" resultMap="accountMap">
+        select ui.user_id as user_id,ui.account as account ,ui.admin_flag as  admin_flag,ui.uid as uid,ri1.role_id as role_id,ri1.role_name as role_name
+        from user_info ui
+        left outer  join role_user ru on ui.user_id = ru.user_id
+        left outer  join role_info ri1 on ru.role_id = ri1.role_id
+        where ui.user_id = #{userId}
+    </select>
+
+    <select id="selectAllRolesByUserId2" resultMap="accountMap">
+        select * from user_info ui where ui.user_id = #{userId}
+    </select>
+
+    <select id="selectAllAuthsByUserId" resultMap="accountMap">
+        select * from user_info ui where ui.user_id = #{userId}
+    </select>
+
+
+</mapper>

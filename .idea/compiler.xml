@@ -6,11 +6,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="code" />
+        <module name="zlinks-common-lib" />
+        <module name="zlinks-controller" />
+        <module name="zlinks-repository" />
+        <module name="zlinks-sample" />
+        <module name="zlinks-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="code" target="1.7" />
+      <module name="Code-Generator" target="1.8" />
+      <module name="docments" target="1.8" />
+      <module name="zlinks-common-lib" target="1.8" />
+      <module name="zlinks-controller" target="1.8" />
+      <module name="zlinks-repository" target="1.8" />
+      <module name="zlinks-sample" target="1.8" />
+      <module name="zlinks-samples" target="1.8" />
+      <module name="zlinks-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

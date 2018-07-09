@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlinks.repository.mapper.AuthMapper">
+
+
+    <resultMap id="authMap" type="AuthInfo">
+        <result column="auth_id" property="authId"/>
+        <result column="parent_auth_id" property="parentAuthId"/>
+        <result column="auth_type" property="authType"/>
+    </resultMap>
+
+
+    <select id="selectAuthsByRoleId" resultMap="authMap">
+        select *
+        from role_auth ru
+        left outer  join auth_info ri on ru.auth_id = ri.auth_id
+        where ru.role_id = #{role_id}
+    </select>
+
+
+    <insert id="saveAuth">
+        insert into user_info (user_id,account) value(#{userId},#{account})
+    </insert>
+
+    <resultMap id="userAuthsMap" type="com.zlinks.repository.dao.AccountAuthDO">
+        <result column="user_id" property="userId"/>
+        <result column="password" property="password"/>
+        <result column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="auth_id" property="authId"/>
+        <result column="auth_type" property="authType"/>
+        <result column="parent_auth_id" property="parentAuthId"/>
+    </resultMap>
+
+    <select id="selectUserAuths" resultMap="userAuthsMap">
+      select ui.user_id,ui.password,ri.role_id,ri.role_name,ai.auth_id,ai.auth_type,ai.parent_auth_id
+      from user_info ui
+      left join role_user ul on ui.user_id = ul.user_id
+      left join role_info ri on ul.role_id = ul.role_id
+      left join role_auth ra on ri.role_id = ra.role_id
+      left join auth_info ai on ra.auth_id = ai.auth_id
+      limit #{start},#{limit}
+    </select>
+
+
+    <select id="countUserAuths" resultType="Integer">
+      select count(*)
+      from user_info ui
+      left join role_user ul on ui.user_id = ul.user_id
+      left join role_info ri on ul.role_id = ul.role_id
+      left join role_auth ra on ri.role_id = ra.role_id
+      left join auth_info ai on ra.auth_id = ai.auth_id
+    </select>
+
+
+</mapper>

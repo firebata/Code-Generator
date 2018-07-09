@@ -1,109 +1,130 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.cnfwsy</groupId>
-	<artifactId>code</artifactId>
-	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>code Maven Webapp</name>
-	<repositories>
-		<repository>
-			<id>central</id>
-			<name>Maven Repository Switchboard</name>
-			<layout>default</layout>
-			<url>http://repo1.maven.org/maven2/</url>
-		</repository>
-		<repository>
-			<id>Sonatype</id>
-			<name>Sonatype Repository</name>
-			<url>http://repository.sonatype.org/content/groups/public/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<properties>
-		<mysql.version>5.1.18</mysql.version>
-		<project.build.sourceEncoding>utf8</project.build.sourceEncoding>
-		<javaLanguage.version>1.7</javaLanguage.version>
-		<maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
-	</properties>
-
-	<dependencies>
-		<!-- <dependency> <groupId>org.apache.velocity</groupId> <artifactId>velocity</artifactId> 
-			<version>1.7</version> </dependency> -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.21</version>
-		</dependency>
-		<dependency>
-			<groupId>org.bgee.log4jdbc-log4j2</groupId>
-			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
-			<version>1.16</version>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.23</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
-		</dependency>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.zlinks</groupId>
+    <artifactId>code-generator</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>code-generator</name>
+    <description>代码自动生成</description>
 
 
+    <developers>
+        <developer>
+            <name>张建华</name>
+            <url>https://github.com/fireata/</url>
+            <email>firebata@gmail.com</email>
+        </developer>
+    </developers>
 
-		<!-- http://mvnrepository.com/artifact/commons-io/commons-io -->
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
-		</dependency>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.rseporting.outputEncoding>UTF-8</project.rseporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring.boot.version>2.0.2.RELEASE</spring.boot.version>
+        <zlinks.version>1.0</zlinks.version>
+        <mysql.version>5.1.46</mysql.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <druid.version>1.1.9</druid.version>
+        <redis.version>2.9.0</redis.version>
+        <aliyun-java-sdk-core.version>3.5.0</aliyun-java-sdk-core.version>
+        <aliyun-java-sdk-sts.version>3.0.0</aliyun-java-sdk-sts.version>
+        <aliyun-java-sdk-dysmsapi.version>1.1.0</aliyun-java-sdk-dysmsapi.version>
+        <aliyun-sdk-oss.version>3.1.0</aliyun-sdk-oss.version>
+        <httpclient.version>4.5.5</httpclient.version>
+        <commons-codec.version>1.11</commons-codec.version>
+        <retrofit.version>2.4.0</retrofit.version>
+        <java.mail.version>1.4.7</java.mail.version>
+        <async-http-client.version>1.9.40</async-http-client.version>
+        <com.google.apis.version>v2-rev63-1.23.0</com.google.apis.version>
+        <com.google.guava.version>24.1-jre</com.google.guava.version>
+        <org.scala-lang.version>2.12.5</org.scala-lang.version>
+        <okhttp.version>3.10.0</okhttp.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-lang3.version>3.7</commons-lang3.version>
+        <yunpian-java-sdk.version>1.2.7</yunpian-java-sdk.version>
+        <jackson-databind.version>2.9.5</jackson-databind.version>
+        <log4j.version>1.2.17</log4j.version>
+        <mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
+        <mybatis.version>3.4.6</mybatis.version>
+        <twitter4j-core.version>4.0.6</twitter4j-core.version>
+    </properties>
 
 
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
-		</dependency>
-	</dependencies>
-	<build>
-		<finalName>code</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
-				<configuration>
-					<!--<encoding>${project.build.sourceEncoding}</encoding> -->
-					<source>${javaLanguage.version}</source>
-					<target>${javaLanguage.version}</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.2.15.v20160210</version>
-				<configuration>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<war>${project.basedir}/target/code.war</war>
-					<webApp>
-						<contextPath>/code</contextPath>
-					</webApp>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.1.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <organization>
+        <name>zlinks Group</name>
+    </organization>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-properties-migrator</artifactId>-->
+        <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <modules>
+        <module>zlinks-common-lib</module>
+        <module>zlinks-repository</module>
+        <module>zlinks-service</module>
+        <module>zlinks-sample</module>
+        <module>zlinks-controller</module>
+    </modules>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

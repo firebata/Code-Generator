@@ -2,6 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zlinks-common-lib" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zlinks-controller" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zlinks-repository" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zlinks-sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zlinks-service" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

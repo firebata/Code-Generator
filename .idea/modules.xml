@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/code.iml" filepath="$PROJECT_DIR$/code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Code-Generator.iml" filepath="$PROJECT_DIR$/Code-Generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zlinks-common-lib/zlinks-common-lib.iml" filepath="$PROJECT_DIR$/zlinks-common-lib/zlinks-common-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zlinks-controller/zlinks-controller.iml" filepath="$PROJECT_DIR$/zlinks-controller/zlinks-controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zlinks-repository/zlinks-repository.iml" filepath="$PROJECT_DIR$/zlinks-repository/zlinks-repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zlinks-sample/zlinks-sample.iml" filepath="$PROJECT_DIR$/zlinks-sample/zlinks-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zlinks-service/zlinks-service.iml" filepath="$PROJECT_DIR$/zlinks-service/zlinks-service.iml" />
     </modules>
   </component>
 </project>

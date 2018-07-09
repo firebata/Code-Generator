@@ -157,7 +157,7 @@ public class SysCity extends BaseForm{
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cnfwsy.interfaces.mapper.SysCityMapper">
+<mapper namespace="com.zlinks.interfaces.mapper.SysCityMapper">
     <sql id="searchInfoSql">
         id AS id,
         city_name,
@@ -166,7 +166,7 @@ public class SysCity extends BaseForm{
         city_id,
         province_id
     </sql>
-    <select id="queryInfo" resultType="com.cnfwsy.interfaces.bean.SysCity">
+    <select id="queryInfo" resultType="com.zlinks.interfaces.bean.SysCity">
         select
         <include refid="searchInfoSql"/>
         FROM    t_sys_city a
@@ -199,7 +199,7 @@ public class SysCity extends BaseForm{
             and  province_id  =#{provinceId}
          </if>
     </select>
-    <select id="searchInfos" resultType="com.cnfwsy.interfaces.bean.SysCity">
+    <select id="searchInfos" resultType="com.zlinks.interfaces.bean.SysCity">
         SELECT
         <include refid="searchInfoSql"/>
         FROM  t_sys_city a

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlinks.repository.mapper.AuthMapper">
+
+
+    <select id="selectRolesByRoleId" resultMap="roleMap">
+        select ri2.role_id as role_id,ri2.role_name as role_name
+        from role_user ru
+        left outer  join role_info ri2 on ru.role_id = ri2.role_id
+        where ru.user_id = #{user_id}
+    </select>
+
+
+    <resultMap id="roleMap" type="RoleInfo">
+        <result column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <collection property="auths" column="role_id" select="com.zlinks.repository.mapper.AuthMapper.selectAuthsByRoleId">
+        </collection>
+    </resultMap>
+
+
+    <insert id="saveRole">
+        insert into user_info (user_id,account) value(#{userId},#{account})
+    </insert>
+
+</mapper>

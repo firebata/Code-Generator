@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlinks.repository.mapper.RegisterMapper">
+
+    <resultMap id="registerByDateMap" type="com.zlinks.repository.dao.game.user.RegisterDO">
+        <result column="game_id" property="gameId"/>
+        <result column="register_date" property="registerDate"/>
+        <result column="register_count" property="registerCount"/>
+        <result column="dev_count" property="devCount"/>
+        <result column="ad_count" property="adCount"/>
+    </resultMap>
+
+    <resultMap id="registerByCountryMap" type="com.zlinks.repository.dao.game.user.RegisterDO">
+        <result column="country" property="country"/>
+        <result column="register_count" property="registerCount"/>
+    </resultMap>
+
+    <resultMap id="registerByModelMap" type="com.zlinks.repository.dao.game.user.RegisterDO">
+        <result column="mobile_model" property="mobileModel"/>
+        <result column="register_count" property="registerCount"/>
+    </resultMap>
+
+    <resultMap id="registerByHourMap" type="com.zlinks.repository.dao.game.user.RegisterDO">
+        <result column="game_id" property="gameId"/>
+        <result column="register_date" property="registerDate"/>
+        <result column="register_hour" property="registerHour"/>
+        <result column="register_count" property="registerCount"/>
+        <result column="dev_count" property="devCount"/>
+        <result column="ad_count" property="adCount"/>
+    </resultMap>
+
+    <sql id="registerFilter">
+        delete_flag = 'NO'
+        <choose>
+            <when test="startTime == null and endTime == null">
+                <![CDATA[
+			 		AND HOUR ( timediff( now( ), created_time ) ) < 148
+				]]>
+            </when>
+            <otherwise>
+                <if test="startTime != null">
+                    <![CDATA[
+				 		AND date( created_time ) >= #{startTime}
+					]]>
+                </if>
+                <if test="endTime != null">
+                    <![CDATA[
+				 		AND date( created_time ) <= #{endTime}
+					]]>
+                </if>
+            </otherwise>
+        </choose>
+        <if test="gameId != null">
+            AND game_id = #{gameId}
+        </if>
+        <if test="os != null">
+            AND os = #{os}
+        </if>
+    </sql>
+
+	<select id="selectRegisterGroupByGameAndDate" resultMap="registerByDateMap">
+		SELECT
+			game_id AS game_id,
+			date( created_time ) AS register_date,
+			count( user_id ) AS register_count,
+			count( DISTINCT dev_unique_id ) AS dev_count,
+			count( DISTINCT ad_id ) AS ad_count
+		FROM
+			log_user_register
+		WHERE
+			<include refid="registerFilter"/>
+		GROUP BY
+			game_id,
+			date( created_time )
+	</select>
+
+    <select id="countRegister" resultType="Integer">
+        SELECT
+        	count( user_id )
+        FROM
+        	log_user_register
+        WHERE
+            <include refid="registerFilter"/>
+    </select>
+
+    <select id="selectRegisterGroupByCountry" resultMap="registerByCountryMap">
+        SELECT
+          CASE
+	      country_code
+	      WHEN 'TW' THEN '台湾'
+	      WHEN 'HK' THEN '香港'
+	      WHEN 'CN' THEN '中国'
+	      WHEN 'MY' THEN '马来西亚'
+	      WHEN 'SG' THEN '新加坡'
+	      WHEN 'US' THEN '美国'
+	      END AS country,
+	      count( user_id ) AS register_count
+        FROM
+	      log_user_register
+        WHERE
+        	country_code IN ( 'TW', 'HK', 'CN', 'MY', 'SG', 'US' )
+            AND <include refid="registerFilter"/>
+        GROUP BY
+        	country_code UNION
+        SELECT
+        	'其他' AS country,
+        	count( user_id ) AS register_count
+        FROM
+        	log_user_register
+        WHERE
+        	country_code NOT IN ( 'TW', 'HK', 'CN', 'MY', 'SG', 'US' )
+            AND <include refid="registerFilter"/>
+    </select>
+
+
+    <select id="selectRegisterGroupByModel" resultMap="registerByModelMap">
+        SELECT
+        	model AS mobile_model,
+        	count( user_id ) AS register_count
+        FROM
+        	log_user_register
+        WHERE
+            <include refid="registerFilter"/>
+        GROUP BY
+        	model
+        ORDER BY
+        	counts DESC
+        	LIMIT 5;
+    </select>
+
+    <select id="selectRegisterGroupByGameAndDateAndHour" resultMap="registerByHourMap">
+        SELECT
+            game_id AS game_id,
+            date( created_time ) AS register_date,
+            concat( HOUR ( created_time ), ':00 - ', HOUR ( usr.created_time ) + 1, ':00' ) AS register_hour,
+            count( user_id ) AS register_count,
+            count( DISTINCT dev_unique_id ) AS dev_count,
+            count( DISTINCT ad_id ) AS ad_count
+        FROM
+            log_user_register
+        WHERE
+            <include refid="registerFilter"/>
+        GROUP BY
+            game_id,
+            date( created_time ),
+            HOUR ( created_time )
+    </select>
+</mapper>
