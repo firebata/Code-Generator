@@ -6,7 +6,7 @@ import com.zlinks.common.dto.pager.PagerInfo;
 * Copyright (C), 2017-2020, cn.zlinks
 * FileName: RoleAuth
 * Author:   zhangjh
-* Date:     2018-7-10 19:31:43
+* Date:     2018-7-10 19:53:10
 * Description: 表名：role_auth,描述：
 */
 public class RoleAuth extends PagerInfo  {

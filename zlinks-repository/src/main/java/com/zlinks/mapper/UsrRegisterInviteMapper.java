@@ -8,7 +8,7 @@ import java.util.List;
  * Copyright (C), 2017-2018, cn.zlinks
  * FileName: AccountMapper
  * Author:   zhangjh
- * Date:     2018-7-10 19:31:43
+ * Date:     2018-7-10 19:53:10
  * Description: UsrRegisterInviteMapper
  */
 @Mapper

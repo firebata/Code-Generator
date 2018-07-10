@@ -6,7 +6,8 @@
 3.  有问题，email我：firebata@gmail.com
 
 ### 你可以获得
-1.  从此告别创建xml,bean,controller,service
+1.  2秒内生成代码，启动，postman直接调用接口
+2.  从此告别创建xml,bean,controller,service
 2.  节省70%的时间，用来做更意义的事情
 3.  开除所有初级程序员 
 
@@ -33,6 +34,14 @@
 ### 最后的补充
 1.  IDE建议用IntelliJ IDEA
 2.  zlinks-sample的有建表sql脚本：create.sql
+
+
+### 生成的目录结构
+
+![目录结构](https://upload-images.jianshu.io/upload_images/2477601-edfc46865d033790.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
 
 ### 代码举例
 #### controller

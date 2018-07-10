@@ -10,7 +10,7 @@ import com.zlinks.domain.Element;
  * Copyright (C), 2017-2020, cn.zlinks
  * FileName: ElementService
  * Author:   zhangjh
- * Date:     2018-7-10 19:31:43
+ * Date:     2018-7-10 19:53:10
  * Description:ElementService接口
  */
 public interface ElementService {

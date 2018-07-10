@@ -34,8 +34,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="15">
-                <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+              <first_editor relative-caret-position="88">
+                <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
                 <folding>
                   <element signature="imports" expanded="true" />
                   <element signature="imports" expanded="true" />
@@ -74,18 +74,6 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="RoleInfoController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlinks-controller/src/main/java/com/zlinks/controller/RoleInfoController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="204" column="78" selection-start-line="204" selection-start-column="70" selection-end-line="204" selection-end-column="78" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="RoleInfo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zlinks-repository/src/main/java/com/zlinks/domain/RoleInfo.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -102,7 +90,7 @@
         <entry file="file://$PROJECT_DIR$/zlinks-mapper/src/main/resources/mapper/RoleInfoMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
-              <caret line="13" column="34" lean-forward="true" selection-end-line="145" selection-end-column="9" />
+              <caret line="13" column="34" selection-end-line="145" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -111,7 +99,16 @@
         <entry file="file://$PROJECT_DIR$/zlinks-sample/src/main/resources/jdbc.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+              <caret line="1" column="43" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zlinks-sample/src/main/java/com/zlinks/samples/util/DbUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="159">
+              <caret line="291" selection-start-line="291" selection-end-line="291" />
             </state>
           </provider>
         </entry>
@@ -804,12 +801,12 @@
       <workItem from="1530867038290" duration="357000" />
       <workItem from="1530945037461" duration="6256000" />
       <workItem from="1530952521300" duration="19778000" />
-      <workItem from="1531206120078" duration="15481000" />
+      <workItem from="1531206120078" duration="16030000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85219000" />
+    <option name="totallyTimeSpent" value="85768000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1260,13 +1257,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlinks-sample/src/main/java/com/zlinks/samples/util/DbUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="289" column="7" lean-forward="true" selection-start-line="289" selection-start-column="7" selection-end-line="289" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlinks-service/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1294,7 +1284,7 @@
     <entry file="file://$PROJECT_DIR$/zlinks-mapper/src/main/resources/mapper/RoleInfoMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
-          <caret line="13" column="34" lean-forward="true" selection-end-line="145" selection-end-column="9" />
+          <caret line="13" column="34" selection-end-line="145" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1305,11 +1295,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/zlinks-controller/src/main/java/com/zlinks/controller/RoleInfoController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="204" column="78" selection-start-line="204" selection-start-column="70" selection-end-line="204" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlinks-sample/src/main/java/com/zlinks/samples/util/DbUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="291" selection-start-line="291" selection-end-line="291" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="15">
-            <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <first_editor relative-caret-position="88">
+            <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
             <folding>
               <element signature="imports" expanded="true" />
               <element signature="imports" expanded="true" />
@@ -1333,23 +1340,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlinks-controller/src/main/java/com/zlinks/controller/RoleInfoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="204" column="78" selection-start-line="204" selection-start-column="70" selection-end-line="204" selection-end-column="78" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlinks-sample/src/main/resources/conf.properties">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/zlinks-sample/src/main/resources/jdbc.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <caret line="1" column="43" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
         </state>
       </provider>
     </entry>

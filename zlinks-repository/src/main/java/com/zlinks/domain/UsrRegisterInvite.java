@@ -7,7 +7,7 @@ import java.util.Date;
 * Copyright (C), 2017-2020, cn.zlinks
 * FileName: UsrRegisterInvite
 * Author:   zhangjh
-* Date:     2018-7-10 19:31:43
+* Date:     2018-7-10 19:53:10
 * Description: 表名：usr_register_invite,描述：
 */
 public class UsrRegisterInvite extends PagerInfo  {
