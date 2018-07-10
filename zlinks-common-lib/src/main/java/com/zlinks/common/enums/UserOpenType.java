@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSON;
  */
 public enum UserOpenType {
 
-    ALL("ALL"), GUEST("GUEST"), TWITTER("TWITTER"), FACEBOOK("FACEBOOK"), GOOGLE("GOOGLE"), APPLE("APPLE"), BBGAME("BBGAME"), DEVICE("DEVICE"), OTHERS("OTHERS");
+    ALL("ALL"), GUEST("GUEST"), TWITTER("TWITTER"), FACEBOOK("FACEBOOK"), GOOGLE("GOOGLE"), APPLE("APPLE"), zlinks("zlinks"), DEVICE("DEVICE"), OTHERS("OTHERS");
 
     UserOpenType(String value) {
         this.value = value;

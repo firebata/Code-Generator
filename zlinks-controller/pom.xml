@@ -38,6 +38,11 @@
             <version>${zlinks.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.zlinks.mapper</groupId>
+            <artifactId>zlinks-mapper</artifactId>
+            <version>${zlinks.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.zlinks.service</groupId>
             <artifactId>zlinks-service</artifactId>
             <version>${zlinks.version}</version>

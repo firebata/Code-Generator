@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="zlinks-common-lib" />
         <module name="zlinks-controller" />
+        <module name="zlinks-mapper" />
         <module name="zlinks-repository" />
         <module name="zlinks-sample" />
         <module name="zlinks-service" />
@@ -18,6 +19,7 @@
       <module name="docments" target="1.8" />
       <module name="zlinks-common-lib" target="1.8" />
       <module name="zlinks-controller" target="1.8" />
+      <module name="zlinks-mapper" target="1.8" />
       <module name="zlinks-repository" target="1.8" />
       <module name="zlinks-sample" target="1.8" />
       <module name="zlinks-samples" target="1.8" />

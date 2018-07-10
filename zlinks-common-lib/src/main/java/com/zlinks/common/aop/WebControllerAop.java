@@ -114,13 +114,13 @@ public class WebControllerAop {
                 } else {
                     if (!(arg instanceof StandardSessionFacade)) {
                         allParams.add(JSON.toJSONString(arg));
-                        if (arg instanceof AccountDto) {
-                            AccountDto userDto = (AccountDto) arg;
-                            account = userDto.getAccount();
-                            if(userDto.getOpenType() != null){
-                                openType = userDto.getOpenType();
-                            }
-                        }
+//                        if (arg instanceof AccountDto) {
+//                            AccountDto userDto = (AccountDto) arg;
+//                            account = userDto.getAccount();
+//                            if(userDto.getOpenType() != null){
+//                                openType = userDto.getOpenType();
+//                            }
+//                        }
                     }
                 }
 

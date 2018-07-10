@@ -1,4 +1,5 @@
 package com.zlinks.controller;
+import com.zlinks.Routes;
 import com.zlinks.domain.AuthInfo;
 import com.zlinks.service.AuthInfoService;
 import com.zlinks.common.web.BaseController;
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * Copyright (C), 2017-2020, BBG
+ * Copyright (C), 2017-2020, cn.zlinks
  * FileName: AuthInfoController
  * Author:   zhangjh
- * Date:     2018-7-9 19:08:15
+ * Date:     2018-7-10 19:31:43
  * Description: 控制层
  */
 @RestController
@@ -46,21 +50,21 @@ public class AuthInfoController extends BaseController {
      *     "code": 0,
      *     "data": 1
      *     "desc": "Success",
-     *     "timestamp": "2018-7-9 19:08:15:082"
+     *     "timestamp": "2018-7-10 19:31:43:082"
      * }
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 200 OK
      * {
      *     "code": 110002,
      *     "desc": "Param is null or error",
-     *     "timestamp": "2018-7-9 19:08:15:479"
+     *     "timestamp": "2018-7-10 19:31:43:479"
      * }
      */
 	@RequestMapping(value = "/authInfos/delete/{id}", method = RequestMethod.DELETE)
-	public JsonResult deleteJson(@PathVariable("id") int id) {
+	public JsonResult deleteJson(HttpServletRequest request, @PathVariable("id") int id) {
 		RestDoing doing = jsonResult -> {
 
-            int counts = authInfoService.delete(authInfo);
+            int counts = authInfoService.deleteById(id);
             jsonResult.data = counts;
         };
         return doing.go(request, logger);
@@ -72,9 +76,9 @@ public class AuthInfoController extends BaseController {
      * @apiPermission Login in Users
      * @apiGroup  AuthInfo
      * @apiVersion 1.0.1
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
 	 * @apiParam {String} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
@@ -82,18 +86,18 @@ public class AuthInfoController extends BaseController {
      *     "code": 0,
      *     "data": 1
      *     "desc": "Success",
-     *     "timestamp": "2018-7-9 19:08:15:082"
+     *     "timestamp": "2018-7-10 19:31:43:082"
      * }
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 200 OK
      * {
      *     "code": 110002,
      *     "desc": "Param is null or error",
-     *     "timestamp": "2018-7-9 19:08:15:479"
+     *     "timestamp": "2018-7-10 19:31:43:479"
      * }
      */
 	@RequestMapping(value = "/authInfos/info/{id}")
-	public JsonResult info(@PathVariable("id") Long id) {
+	public JsonResult info(HttpServletRequest request, @PathVariable("id") Long id) {
 
 		RestDoing doing = jsonResult -> {
 
@@ -116,26 +120,25 @@ public class AuthInfoController extends BaseController {
      *     "code": 0,
      *     "data": 1
      *     "desc": "Success",
-     *     "timestamp": "2018-7-9 19:08:15:082"
+     *     "timestamp": "2018-7-10 19:31:43:082"
      * }
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 200 OK
      * {
      *     "code": 110002,
      *     "desc": "Param is null or error",
-     *     "timestamp": "2018-7-9 19:08:15:479"
+     *     "timestamp": "2018-7-10 19:31:43:479"
      * }
      */
 	@RequestMapping(value = "/authInfos/list")
-	public String list(String findContent, ModelMap modelMap, Integer pageNo) {
-		try {
-			Pagination<AuthInfo> data = authInfoService.findPage(modelMap, pageNo, pageSize);
-			modelMap.addAttribute("data", data);
-		} catch (Exception e) {
-			logger.error(HPXSConstants.ERROR_STRING, e);
-			redirect404();
-		}
-		return BASE_PATH + "list";
+	public JsonResult page(HttpServletRequest request, AuthInfo authInfo) {
+
+        RestDoing doing = jsonResult -> {
+            AuthInfo pageInfo = getPage(authInfo, AuthInfo.class);
+            PageResult<AuthInfo> pageResult = authInfoService.findPage(authInfo);
+            jsonResult.data = pageResult;
+        };
+        return doing.go(request, logger);
 	}
 
 
@@ -144,9 +147,9 @@ public class AuthInfoController extends BaseController {
      * @apiPermission Login in Users
      * @apiGroup  AuthInfo
      * @apiVersion 1.0.1
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
 	 * @apiParam {String} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
@@ -154,18 +157,18 @@ public class AuthInfoController extends BaseController {
      *     "code": 0,
      *     "data": 1
      *     "desc": "Success",
-     *     "timestamp": "2018-7-9 19:08:15:082"
+     *     "timestamp": "2018-7-10 19:31:43:082"
      * }
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 200 OK
      * {
      *     "code": 110002,
      *     "desc": "Param is null or error",
-     *     "timestamp": "2018-7-9 19:08:15:479"
+     *     "timestamp": "2018-7-10 19:31:43:479"
      * }
      */
 	@RequestMapping(value = "/authInfos/save", method = RequestMethod.POST)
-	public JsonResult add(@RequestBody AuthInfo authInfo) {
+	public JsonResult add(HttpServletRequest request, @RequestBody AuthInfo authInfo) {
 
   		RestDoing doing = jsonResult -> {
 
@@ -181,9 +184,9 @@ public class AuthInfoController extends BaseController {
      * @apiPermission Login in Users
      * @apiGroup  AuthInfo
      * @apiVersion 1.0.1
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
-	 * @apiParam {Integer} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
+	 * @apiParam {Long} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
 	 * @apiParam {String} prop.propertyName <code>必须参数</code> AuthInfo的prop.propertyName
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
@@ -191,22 +194,22 @@ public class AuthInfoController extends BaseController {
      *     "code": 0,
      *     "data": 1
      *     "desc": "Success",
-     *     "timestamp": "2018-7-9 19:08:15:082"
+     *     "timestamp": "2018-7-10 19:31:43:082"
      * }
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 200 OK
      * {
      *     "code": 110002,
      *     "desc": "Param is null or error",
-     *     "timestamp": "2018-7-9 19:08:15:479"
+     *     "timestamp": "2018-7-10 19:31:43:479"
      * }
      */
 	@RequestMapping(value = "/authInfos/save", method = RequestMethod.PUT)
-	public JsonResult add(@RequestBody AuthInfo authInfo) {
+	public JsonResult update(HttpServletRequest request, @RequestBody AuthInfo authInfo) {
 
   		RestDoing doing = jsonResult -> {
 
-            int counts = authInfoService.add(authInfo);
+            int counts = authInfoService.update(authInfo);
             jsonResult.data = counts;
         };
         return doing.go(request, logger);

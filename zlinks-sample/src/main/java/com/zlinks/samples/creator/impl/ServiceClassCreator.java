@@ -32,7 +32,7 @@ public class ServiceClassCreator extends AbstractFileCreator {
 
 	@Override
 	public String getFileName(TableInfo tableInfo) {
-		return  conf.getServiceName() + Constants.JAVA_SUFFIX;
+		return  tableInfo.getBeanName() + conf.getServiceName() + Constants.JAVA_SUFFIX;
 	}
 
 	@Override

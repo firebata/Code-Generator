@@ -1,11 +1,11 @@
 <#import "base/date.ftl" as dt>
-package ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>;
+package ${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>;
 
 <#assign beanName = table.beanName/>
 <#assign beanNameUncap_first = beanName?uncap_first/>
 
-import ${conf.basePackage}.${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
-import ${conf.basePackage}.${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
+import ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
+import ${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -23,7 +23,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hpxs.test.Junit4SpringTestBase;
 
 /**
  * 类说明:
@@ -59,8 +58,8 @@ public class ${beanName}ServiceTest extends Junit4SpringTestBase {
 	}
 
 	@Test
-	public void testGetById(){
-		${beanName} result = ${beanNameUncap_first}Service.getById(DEFAULT_ID);
+	public void testqueryInfoById(){
+		${beanName} result = ${beanNameUncap_first}Service.queryInfoById(DEFAULT_ID);
 		assertNotNull(result); 
 	}
 

@@ -3,64 +3,67 @@ package ${conf.servicePackage}.impl<#if table.prefix!="">.${table.prefix}</#if>;
 
 <#assign beanName = table.beanName/>
 <#assign beanNameUncap_first = beanName?uncap_first/>
+import com.zlinks.common.db.SqlPageDoing;
+import com.zlinks.common.enums.Whether;
+import com.zlinks.common.web.PageResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
 import ${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
-import ${conf.daoPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Dao;
+import ${conf.daoPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Mapper;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Map;
 
-import com.hpxs.base.BaseMybatisDao;
-import com.zlinks.core.mybatis.page.Pagination;
 
 /**
- * Copyright (C), 2017-2020, BBG
- * FileName: AccountController
+ * Copyright (C), 2017-2020, cn.zlinks
+ * FileName: ${beanName}ServiceImpl
  * Author:   zhangjh
  * Date:     ${.now}
- * Description:业务
+ * Description:${beanName}Service接口
  */
 @Service
 public class ${beanName}ServiceImpl implements ${beanName}Service {
+
+	private static Logger logger = LoggerFactory.getLogger(${beanName}ServiceImpl.class);
+
 
 	@Autowired
 	private ${beanName}Mapper ${beanNameUncap_first}Mapper;
 
 	@Override
-	public ${beanName} getById(int id) {
-		return ${beanNameUncap_first}Mapper.getById(id);
+	public ${beanName} queryInfoById(Long id) {
+		return ${beanNameUncap_first}Mapper.queryInfoById(id);
 	}
 
 	@Override
 	public int getListCount(${beanName} entity) {
-		return ${beanNameUncap_first}Mapper.getListCount(entity);
+		return ${beanNameUncap_first}Mapper.selectCountByCondition(entity);
 	}
 
 	@Override
-	public List<${beanName}> getList(${beanName} entity) {
+	public List<${beanName}> selectByCondition(${beanName} entity) {
 		List<${beanName}> resut = null;
-		resut = ${beanNameUncap_first}Mapper.getList(entity);
+		resut = ${beanNameUncap_first}Mapper.selectByCondition(entity);
 		return resut;
 	}
 
 	@Override
-	public int getListByMapCount(Map<String, Object> paramMap) {
-		return ${beanNameUncap_first}Mapper.getListByMapCount(paramMap);
-	}
-
-	@Override
-	public List<${beanName}> getListByMap(Map<String, Object> paramMap) {
+	public List<${beanName}> getList() {
 		List<${beanName}> resut = null;
-		resut = ${beanNameUncap_first}Mapper.getListByMap(paramMap);
+		resut = ${beanNameUncap_first}Mapper.getList();
 		return resut;
 	}
 
 	@Override
     @Transactional(rollbackFor = Exception.class)
 	public int update(${beanName} entity) {
-		return ${beanNameUncap_first}Mapper.update(entity);
+		return ${beanNameUncap_first}Mapper.updateById(entity);
 	}
 
 	@Override
@@ -72,28 +75,36 @@ public class ${beanName}ServiceImpl implements ${beanName}Service {
 	@Override
     @Transactional(rollbackFor = Exception.class)
 	public int add(${beanName} entity) {
-		return ${beanNameUncap_first}Mapper.add(entity);
+		return ${beanNameUncap_first}Mapper.insert(entity);
 	}
 
 	@Override
     @Transactional(rollbackFor = Exception.class)
 	public int addList(List<${beanName}> entityList) {
-		return ${beanNameUncap_first}Mapper.addList(entityList);
+		return ${beanNameUncap_first}Mapper.insertList(entityList);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Pagination<${beanName}> findPage(Map<String,Object> paramMap, Integer pageNo,
-			Integer pageSize) {
-		return super.findPage(paramMap, pageNo, pageSize);
+    public PageResult<${beanName}> findPage(${beanName} pageInfo){
+  		SqlPageDoing doing = pageResult -> {
+            //查记录数
+            Integer totalCount = ${beanNameUncap_first}Mapper.selectCountByCondition(pageInfo);
+
+            List<${beanName}> list = ${beanNameUncap_first}Mapper.selectByCondition(pageInfo);
+
+   		 	pageResult.list = list;
+    		pageResult.totalCount = totalCount;
+    	};
+    	return doing.go(pageInfo, logger);
 	}
 
 	@Override
 	public List<${beanName}> getActivedList() {
 		List<${beanName}> resut = null;
 		${beanName} entity = new ${beanName}();
-		entity.setIsDeleted(0);
-		resut = ${beanNameUncap_first}Mapper.getList(entity);
+        entity.setDeleteFlag(Whether.NO);
+		resut = ${beanNameUncap_first}Mapper.selectByCondition(entity);
 		return resut;
 	}
 }

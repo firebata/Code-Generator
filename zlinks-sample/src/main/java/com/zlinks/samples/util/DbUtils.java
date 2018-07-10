@@ -365,8 +365,7 @@ public class DbUtils {
 		} else if (columnType.equals("int unsigned") || columnType.equals("tinyint unsigned")) {
 			return "Integer";
 		} else if (columnType.equals("bigint unsigned") || columnType.equals("bigint")) {
-			packages.add("import java.math.BigInteger;");
-			return "BigInteger";
+			return "Long";
 		} else if (columnType.equals("float") || columnType.equals("float unsigned")) {
 			packages.add("import java.math.BigDecimal;");
 			return "BigDecimal";

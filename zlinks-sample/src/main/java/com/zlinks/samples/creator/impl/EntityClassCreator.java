@@ -43,7 +43,7 @@ public class EntityClassCreator extends AbstractFileCreator {
 
 	@Override
 	public String getDirPath() {
-		return javaPath + conf.getDao_dir();
+		return javaPath + conf.getEntity_dir();
 	}
 
 	@Override

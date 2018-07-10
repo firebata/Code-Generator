@@ -3,6 +3,7 @@ package ${conf.controllerPackage}<#if table.prefix!="">.${table.prefix}</#if>;
 <#assign beanNameuncap_first = beanName?uncap_first/>
 <#assign implName = beanNameuncap_first+"ServiceImpl"/>
 <#assign serviceName = beanNameuncap_first+"Service"/>
+import com.zlinks.Routes;
 import ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
 import ${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName}Service;
 import com.zlinks.common.web.BaseController;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
 <#--
 import javax.validation.Valid;
 
@@ -25,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 -->
 /**
- * Copyright (C), 2017-2020, BBG
+ * Copyright (C), 2017-2020, cn.zlinks
  * FileName: ${beanName}Controller
  * Author:   zhangjh
  * Date:     ${.now}
@@ -67,10 +71,10 @@ public class ${beanName}Controller extends BaseController {
      * }
      */
 	@RequestMapping(value = "/${beanNameuncap_first}s/delete/{id}", method = RequestMethod.DELETE)
-	public JsonResult deleteJson(@PathVariable("id") int id) {
+	public JsonResult deleteJson(HttpServletRequest request, @PathVariable("id") int id) {
 		RestDoing doing = jsonResult -> {
 
-            int counts = ${serviceName}.delete(${beanNameuncap_first});
+            int counts = ${serviceName}.deleteById(id);
             jsonResult.data = counts;
         };
         return doing.go(request, logger);
@@ -103,7 +107,7 @@ public class ${beanName}Controller extends BaseController {
      * }
      */
 	@RequestMapping(value = "/${beanNameuncap_first}s/info/{id}")
-	public JsonResult info(@PathVariable("id") Long id) {
+	public JsonResult info(HttpServletRequest request, @PathVariable("id") Long id) {
 
 		RestDoing doing = jsonResult -> {
 
@@ -137,15 +141,14 @@ public class ${beanName}Controller extends BaseController {
      * }
      */
 	@RequestMapping(value = "/${beanNameuncap_first}s/list")
-	public String list(String findContent, ModelMap modelMap, Integer pageNo) {
-		try {
-			Pagination<${beanName}> data = ${serviceName}.findPage(modelMap, pageNo, pageSize);
-			modelMap.addAttribute("data", data);
-		} catch (Exception e) {
-			logger.error(HPXSConstants.ERROR_STRING, e);
-			redirect404();
-		}
-		return BASE_PATH + "list";
+	public JsonResult page(HttpServletRequest request, ${beanName} ${beanNameuncap_first}) {
+
+        RestDoing doing = jsonResult -> {
+            ${beanName} pageInfo = getPage(${beanNameuncap_first}, ${beanName}.class);
+            PageResult<${beanName}> pageResult = ${serviceName}.findPage(${beanNameuncap_first});
+            jsonResult.data = pageResult;
+        };
+        return doing.go(request, logger);
 	}
 
 
@@ -175,7 +178,7 @@ public class ${beanName}Controller extends BaseController {
      * }
      */
 	@RequestMapping(value = "/${beanNameuncap_first}s/save", method = RequestMethod.POST)
-	public JsonResult add(@RequestBody ${beanName} ${beanNameuncap_first}) {
+	public JsonResult add(HttpServletRequest request, @RequestBody ${beanName} ${beanNameuncap_first}) {
 
   		RestDoing doing = jsonResult -> {
 
@@ -212,11 +215,11 @@ public class ${beanName}Controller extends BaseController {
      * }
      */
 	@RequestMapping(value = "/${beanNameuncap_first}s/save", method = RequestMethod.PUT)
-	public JsonResult add(@RequestBody ${beanName} ${beanNameuncap_first}) {
+	public JsonResult update(HttpServletRequest request, @RequestBody ${beanName} ${beanNameuncap_first}) {
 
   		RestDoing doing = jsonResult -> {
 
-            int counts = ${serviceName}.add(${beanNameuncap_first});
+            int counts = ${serviceName}.update(${beanNameuncap_first});
             jsonResult.data = counts;
         };
         return doing.go(request, logger);

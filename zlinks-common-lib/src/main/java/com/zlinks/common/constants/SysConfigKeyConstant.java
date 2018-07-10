@@ -40,7 +40,7 @@ public class SysConfigKeyConstant {
 
     public final static String SMS_REGION_HK = "HK";
 
-    public final static String SMS_SIGNNAME = "BBGAME";
+    public final static String SMS_SIGNNAME = "ZLINKS";
 
     //
     public final static String DEVICE_KEY = "device";

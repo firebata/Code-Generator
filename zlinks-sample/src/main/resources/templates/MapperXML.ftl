@@ -17,10 +17,10 @@
 <#--<#macro batchMapperEl value>${r"#{"}${value}}</#batchMapperEl>-->
 <#if table.prefix!="">
 <#assign bean = conf.entityPackage+"."+table.prefix+"."+beanName/>
-<#assign mapper = conf.daoPackage+"."+table.prefix+"."+beanName+"Dao"/>
+<#assign mapper = conf.daoPackage+"."+table.prefix+"."+beanName+"Mapper"/>
 <#else>
 <#assign bean = conf.entityPackage+"."+beanName/>
-<#assign mapper = conf.daoPackage+"."+beanName+"Dao"/>
+<#assign mapper = conf.daoPackage+"."+beanName+"Mapper"/>
 </#if>
 <#assign propertiesAnColumns = table.propertiesAnColumns/>
 <#assign keys = propertiesAnColumns?keys/>
@@ -56,7 +56,7 @@
 		</where>
 	</sql>
 
-	<select id="getById" resultType="${bean}">
+	<select id="queryInfoById" resultType="${bean}">
 		SELECT
 		<include refid="basicSelectSql"/>
 		FROM `${tableName}`
@@ -68,27 +68,33 @@
 		LIMIT 1;
 	</select>
 
-	<select id="getListCount" resultType="Integer">
+	<select id="selectCount" resultType="Integer">
 		SELECT COUNT(*)
 		FROM `${tableName}`
-		<include refid="basicWhereEntitySql"/>
 		;
 	</select>
 
-	<select id="getList" resultType="${bean}">
-		SELECT
-		<include refid="basicSelectSql"/>
-		FROM `${tableName}`
-		<include refid="basicWhereEntitySql"/>
-		;
-	</select>
+    <select id="selectByCondition" resultType="Integer">
+        SELECT COUNT(*)
+        FROM `${tableName}`
+        <include refid="basicWhereEntitySql"/>
+        ;
+    </select>
 
-	<select id="getListByMapCount" resultType="Integer">
-		SELECT COUNT(*)
-		FROM `${tableName}`
-		<include refid="basicWhereMapSql"/>
-		;
-	</select>
+<select id="getList" resultType="${bean}">
+    SELECT
+    <include refid="basicSelectSql"/>
+    FROM `${tableName}`
+    ;
+</select>
+
+<#--
+<select id="getListByMapCount" resultType="Integer">
+    SELECT COUNT(*)
+    FROM `${tableName}`
+    <include refid="basicWhereMapSql"/>
+    ;
+</select>
 
 	<select id="getListByMap" resultType="${bean}">
 		SELECT
@@ -96,7 +102,7 @@
 		FROM `${tableName}`
 		<include refid="basicWhereMapSql"/>
 		;
-	</select>
+	</select>-->
 
 	<update id="update">
 		UPDATE `${tableName}`

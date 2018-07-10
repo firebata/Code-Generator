@@ -1,22 +1,19 @@
 <#-- bean template -->
 package ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>;
 
-import com.hpxs.base.BaseEntity;
-import java.io.Serializable;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.alibaba.fastjson.JSON;
+import com.zlinks.common.dto.pager.PagerInfo;
 <#list table.propTypePackages as package>
 ${package}
 </#list>
-
 /**
- * 实体bean
- * <p>
- * 表名：${table.tableName}
- * <p>
- * 描述：${table.tableDesc}
- */
-public class ${table.beanName} extends BaseEntity implements Serializable {
+* Copyright (C), 2017-2020, cn.zlinks
+* FileName: ${table.beanName}
+* Author:   zhangjh
+* Date:     ${.now}
+* Description: 表名：${table.tableName},描述：${table.tableDesc}
+*/
+public class ${table.beanName} extends PagerInfo  {
 	/**
 	 * serialVersionUID
 	 */
@@ -68,7 +65,8 @@ public class ${table.beanName} extends BaseEntity implements Serializable {
 
 </#list>
 -->
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-	}
+    @Override
+    public String toString() {
+    	return JSON.toJSONStringWithDateFormat(this, "yyyy-MM-dd HH:mm:ss");
+    }
 }

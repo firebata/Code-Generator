@@ -1,16 +1,39 @@
 package ${conf.servicePackage}<#if table.prefix!="">.${table.prefix}</#if>;
 
 <#assign beanName = table.beanName/>
-import com.hpxs.base.BaseService;
+import java.util.List;
+import java.util.Map;
+
+import com.zlinks.common.web.PageResult;
 import ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${beanName};
 
 /**
- * Copyright (C), 2017-2020, BBG
- * FileName: AccountController
+ * Copyright (C), 2017-2020, cn.zlinks
+ * FileName: ${beanName}Service
  * Author:   zhangjh
  * Date:     ${.now}
- * Description:
+ * Description:${beanName}Service接口
  */
-public interface ${beanName}Service extends BaseService<${table.beanName}> {
+public interface ${beanName}Service {
 
+
+	${beanName} queryInfoById(Long id);
+
+	int getListCount(${beanName} entity);
+
+	public List<${beanName}> selectByCondition(${beanName} entity) ;
+
+	public List<${beanName}> getList();
+
+	int update(${beanName} entity);
+
+	int deleteById(int id);
+
+	int add(${beanName} entity);
+
+	int addList(List<${beanName}> entityList);
+
+    PageResult<${beanName}> findPage(${beanName} pageInfo);
+
+	List<${beanName}> getActivedList();
 }

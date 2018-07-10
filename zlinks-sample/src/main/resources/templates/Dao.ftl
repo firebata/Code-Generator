@@ -6,25 +6,26 @@ import java.util.List;
 import ${conf.entityPackage}<#if table.prefix!="">.${table.prefix}</#if>.${table.beanName};
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 /**
- * Copyright (C), 2017-2018, BBG
+ * Copyright (C), 2017-2018, cn.zlinks
  * FileName: AccountMapper
  * Author:   zhangjh
  * Date:     ${.now}
- * Description: 账号
+ * Description: ${table.beanName}Mapper
  */
 @Mapper
 public interface ${table.beanName}Mapper{
 
-<#--
 
-	${table.beanName} selectById(int id);
+
+${table.beanName} queryInfoById(Long id);
 
 	int selectCount();
 
-	int selectCountByCondition();
+	int selectCountByCondition(${table.beanName} entity);
 
-	List<${table.beanName}> selectByCondition();
+	List<${table.beanName}> selectByCondition(${table.beanName} entity);
 
 	int updateById(${table.beanName} entity);
 
@@ -34,5 +35,9 @@ public interface ${table.beanName}Mapper{
 
 	int insertList(List<${table.beanName}> entityList);
 
--->
+	List<${table.beanName}>  getList();
+
+
+
+
 }

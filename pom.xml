@@ -107,6 +107,7 @@
         <module>zlinks-service</module>
         <module>zlinks-sample</module>
         <module>zlinks-controller</module>
+        <module>zlinks-mapper</module>
     </modules>
 
 

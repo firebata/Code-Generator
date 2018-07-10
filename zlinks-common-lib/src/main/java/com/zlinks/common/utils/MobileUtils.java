@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * @Author bruce
  * @Date 2017/12/28 20:37
- * @Company bbgame
+ * @Company zlinks
  * 手机相关工具类
  */
 
@@ -88,7 +88,7 @@ public class MobileUtils {
             request.setMethod(MethodType.POST);
             IAcsClient acsClient = new DefaultAcsClient(profile);
             request.setPhoneNumbers(mobile);//发送验证码到多个手机号用逗号分隔
-            request.setSignName("BBGAME");
+            request.setSignName("ZLINKS");
             request.setTemplateCode("SMS_119620001");
             String number = RandomStringUtils.randomNumeric(6);
             String template = "您的验证码有效期5分钟，验证码为" + number;
