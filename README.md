@@ -11,10 +11,11 @@
 3.  开除所有初级程序员 
 
 ### 版本说明
-1.  从之前的单module变成多module
-2.  直接支持微服务
-3.  springboot版本为2.0.x
-4.  其他常见的配置都有：redis集群，邮箱，不同的环境变量
+1.  clone请选择1.0.x分支
+2.  从之前的单module变成多module
+3.  直接支持微服务
+4.  springboot版本为2.0.x
+5.  其他常见的配置都有：redis集群，邮箱，不同的环境变量
 
 ### 工具的使用范围
 1.  该生成springmvc+spring+mybatis的服务端代码

@@ -34,8 +34,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="240">
-                <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+              <first_editor relative-caret-position="15">
+                <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
                 <folding>
                   <element signature="imports" expanded="true" />
                   <element signature="imports" expanded="true" />
@@ -849,12 +849,12 @@
       <workItem from="1530867038290" duration="357000" />
       <workItem from="1530945037461" duration="6256000" />
       <workItem from="1530952521300" duration="19778000" />
-      <workItem from="1531206120078" duration="15299000" />
+      <workItem from="1531206120078" duration="15374000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85037000" />
+    <option name="totallyTimeSpent" value="85112000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1377,8 +1377,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="240">
-            <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+          <first_editor relative-caret-position="15">
+            <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
             <folding>
               <element signature="imports" expanded="true" />
               <element signature="imports" expanded="true" />
