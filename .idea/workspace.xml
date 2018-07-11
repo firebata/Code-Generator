@@ -98,8 +98,8 @@
       <file leaf-file-name="jdbc.properties" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zlinks-sample/src/main/resources/jdbc.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="43" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
+            <state relative-caret-position="45">
+              <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -274,32 +274,6 @@
             <path>
               <item name="Code-Generator" type="b2602c69:ProjectViewProjectNode" />
               <item name="Code-Generator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Code-Generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Code-Generator" type="462c0819:PsiDirectoryNode" />
-              <item name="zlinks-sample" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Code-Generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Code-Generator" type="462c0819:PsiDirectoryNode" />
-              <item name="zlinks-sample" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Code-Generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Code-Generator" type="462c0819:PsiDirectoryNode" />
-              <item name="zlinks-sample" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Code-Generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Code-Generator" type="462c0819:PsiDirectoryNode" />
-              <item name="zlinks-sample" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Code-Generator" type="b2602c69:ProjectViewProjectNode" />
@@ -801,12 +775,12 @@
       <workItem from="1530867038290" duration="357000" />
       <workItem from="1530945037461" duration="6256000" />
       <workItem from="1530952521300" duration="19778000" />
-      <workItem from="1531206120078" duration="16030000" />
+      <workItem from="1531206120078" duration="17237000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85768000" />
+    <option name="totallyTimeSpent" value="86975000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -831,7 +805,7 @@
       <window_info anchor="right" id="Database" order="8" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.301061" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.301061" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3290461" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.33289126" />
       <window_info id="Palette&#9;" order="6" />
@@ -842,7 +816,7 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.3408488" />
       <window_info anchor="bottom" id="Spring" order="12" />
       <window_info anchor="bottom" id="Terminal" order="13" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23888889" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23888889" />
       <window_info anchor="right" id="Bean Validation" order="11" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32891247" />
@@ -1345,8 +1319,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zlinks-sample/src/main/resources/jdbc.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="43" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
+        <state relative-caret-position="45">
+          <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
         </state>
       </provider>
     </entry>
